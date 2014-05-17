@@ -4,7 +4,7 @@
 // @description	Keep and manage IRC-like logs for IP.Chat clients.
 // @include	*
 // @grant	none
-// @version	1.3.2
+// @version	1.3.3
 // ==/UserScript==
 
 var IPChatMenuItems,
@@ -625,6 +625,7 @@ if (window.location.href === window.location.origin + '/IP.Chat_Logs' && localSt
 
 	document.body.appendChild(createElement('pre', function(pre) {
 		pre.id = 'logs';
+		pre.style.whiteSpace = 'pre-wrap';
 	}));
 
 	for (i = 0; i < localStorage.length; i++) {
