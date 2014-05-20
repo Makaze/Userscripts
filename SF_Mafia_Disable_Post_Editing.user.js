@@ -4,7 +4,7 @@
 // @description	Disables the post editing button in the mafia subforum.
 // @include	*
 // @grant	none
-// @version	1.0.1
+// @version	1.0.2
 // ==/UserScript==
 
 var mafia_flag = false,
@@ -24,6 +24,7 @@ if (document.body.id === 'ipboard_body' && document.getElementsByClassName('brea
 	for (i = 0, breadcrumbs = document.getElementsByClassName('breadcrumb')[0].getElementsByTagName('span'); i < breadcrumbs.length; i++) {
 		if (breadcrumbs[i].textContent.trim() === 'Mafia') {
 			mafia_flag = true;
+			break;
 		}
 	}
 
