@@ -4,7 +4,7 @@
 // @description	Allows you to ignore chat messages from specific users.
 // @include	*
 // @grant	none
-// @version	1.1.7
+// @version	1.1.8
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -224,7 +224,9 @@ function toggleIgnoreStatus(userID, elem) {
 
 		name = currRef.getElementsByTagName('span')[0].textContent.trim();
 
-		opts.ipc_ignores.push({ 'user': userID, 'name': name });
+		ignoreList.push({ 'user': userID, 'name': name });
+
+		opts.ipc_ignores = ignoreList;
 
 		localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
 	}
