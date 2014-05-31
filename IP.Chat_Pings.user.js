@@ -352,7 +352,7 @@ function pingsInit() {
 				row.appendChild(createElement('td', function(cell) {
 					cell.appendChild(createElement('textarea', function(input) {
 						input.id = 'userPingList';
-						input.placeholder = 'Enter users to ping on join seperated by newlines';
+						input.placeholder = 'Enter User IDs to ping on join seperated by newlines';
 
 						var tempUserPingList = [];
 
