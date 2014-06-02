@@ -151,7 +151,7 @@ if (document.documentElement.id === 'XenForo') {
 			controls = macros[i].getElementsByClassName('macroControls')[0];
 			macro = header.textContent.trim();
 
-			if (auto && name === auto) {
+			if (auto && macro === auto) {
 				header.insertBefore(createPrefix(), header.firstChild);
 			}
 
