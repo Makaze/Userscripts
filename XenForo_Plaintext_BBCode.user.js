@@ -4,7 +4,7 @@
 // @description	Adds BBCode buttons to Plaintext Mode on XenForo.
 // @include	*
 // @grant	none
-// @version	1.0
+// @version	1.0.1
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -277,6 +277,8 @@ function addButton(field, button) {
 
 			fade(document.getElementById('plainBBCodeRequest-background'), 'in');
 			fade(document.getElementById('plainBBCodeRequest'), 'in');
+
+			document.getElementById('plainBBCode_contentField').focus();
 
 			document.getElementById('plainBBCodeRequest').style.marginTop = '-' + (document.getElementById('plainBBCodeRequest').offsetHeight / 2) + 'px';
 		}
