@@ -4,13 +4,85 @@
 // @description	Adds BBCode buttons to Plaintext Mode on XenForo.
 // @include	*
 // @grant	none
-// @version	1.0.1
+// @version	1.0.2
 // ==/UserScript==
 
 var MakazeScriptStyles,
 styleElem,
 BUTTONS,
 i = 0;
+
+// Classes constructor
+
+function ClassHandler() {
+	var self = this;
+
+	this.classList = function(elem) {
+		return elem.className.trim().split(/[\b\s]/);
+	};
+
+	this.hasClass = function(elem, className) {
+		var classes = self.classList(elem),
+		has = false,
+		i = 0;
+
+		for (i = 0; i < classes.length; i++) {
+			if (classes[i] === className) {
+				has = true;
+				break;
+			}
+		}
+
+		return (has);
+	};
+
+	this.addClass = function(elem, className) {
+		var classes;
+
+		if (!self.hasClass(elem, className)) {
+			classes = self.classList(elem);
+			classes.push(className);
+			elem.className = classes.join(' ').trim();
+		}
+
+		return self;
+	};
+
+	this.removeClass = function(elem, className) {
+		var classes = self.classList(elem),
+		i = 0;
+
+		for (i = 0; i < classes.length; i++) {
+			if (classes[i] === className) {
+				classes.splice(i, 1);
+			}
+		}
+
+		elem.className = classes.join(' ').trim();
+
+		return self;
+	};
+
+	this.toggleClass = function(elem, className) {
+		var classes;
+
+		if (self.hasClass(elem, className)) {
+			self.removeClass(elem, className);
+		} else {
+			classes = self.classList(elem);
+			classes.push(className);
+			elem.className = classes.join(' ').trim();
+		}
+
+		return self;
+	};
+}
+
+// Initilize
+
+var Classes = new ClassHandler();
+
+// End Classes constructor
 
 function createElement(type, callback) {
 	var element = document.createElement(type);
@@ -298,7 +370,7 @@ function addButton(field, button) {
 	});
 }
 
-if (document.documentElement.id === 'XenForo' && document.getElementById('ctrl_message') != null) {
+if (document.documentElement.id === 'XenForo') {
 	BUTTONS = [
 		{ 'title': '<strong>B</strong>', 'hover': 'Bold', 'open': '[B]', 'close': '[/B]' },
 		{ 'title': '<em>I</em>', 'hover': 'Italic', 'open': '[I]', 'close': '[/I]' },
@@ -391,13 +463,45 @@ if (document.documentElement.id === 'XenForo' && document.getElementById('ctrl_m
 		}
 	}
 
-	document.getElementById('ctrl_message').parentNode.insertBefore(createElement('div', function(bbcodecontainer) {
-		bbcodecontainer.className = 'plainBBCodeContainer';
+	var initBBCodeHandler = function(event) {
+		var parent;
 
-		for (i = 0; i < BUTTONS.length; i++) {
-			bbcodecontainer.appendChild(addButton(document.getElementById('ctrl_message'), BUTTONS[i]));
+		if (!event.target.tagName || event.target.tagName !== 'TEXTAREA') {
+			return false;
 		}
-	}), document.getElementById('ctrl_message'));
 
-	fade(document.getElementsByClassName('plainBBCodeContainer')[0], 'in');
+		if (Classes.hasClass(event.target, 'textCtrl')) {
+			if (Classes.hasClass(event.target, 'MessageEditor') || Classes.hasClass(event.target.parentNode, 'bbCodeEditorContainer')) {
+				parent = event.target.parentNode;
+
+				if (parent.getElementsByClassName('plainBBCodeContainer')[0] != null) {
+					return false;
+				}
+
+				parent.insertBefore(createElement('div', function(bbcodecontainer) {
+					bbcodecontainer.className = 'plainBBCodeContainer';
+
+					for (i = 0; i < BUTTONS.length; i++) {
+						bbcodecontainer.appendChild(addButton(event.target, BUTTONS[i]));
+					}
+				}), parent.getElementsByClassName('textCtrl')[0]);
+
+				fade(parent.getElementsByClassName('plainBBCodeContainer')[0], 'in');
+			}
+		}
+	};
+
+	document.addEventListener('mouseover', initBBCodeHandler, false);
+
+	if (document.getElementById('ctrl_message') != null) {
+		document.getElementById('ctrl_message').parentNode.insertBefore(createElement('div', function(bbcodecontainer) {
+			bbcodecontainer.className = 'plainBBCodeContainer';
+
+			for (i = 0; i < BUTTONS.length; i++) {
+				bbcodecontainer.appendChild(addButton(document.getElementById('ctrl_message'), BUTTONS[i]));
+			}
+		}), document.getElementById('ctrl_message'));
+
+		fade(document.getElementsByClassName('plainBBCodeContainer')[0], 'in');
+	}
 }
