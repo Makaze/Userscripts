@@ -1,18 +1,92 @@
 // ==UserScript==
 // @name	XenForo - Post Style
 // @namespace	Makaze
+// @description	Adds options to apply a predefined style to posts in a variety of ways.
 // @include	*
 // @grant	none
-// @version	5.0.5
+// @version	5.0.6
 // ==/UserScript==
 
-/*
- XENFORO POST TEMPLATE SCRIPT
- 
- PRESS Alt+T TO APPLY ON ANY PAGE
+var opts,
+autoApply,
+htmlPrefix,
+htmlSuffix,
+bbPrefix,
+bbSuffix,
+field,
+i = 0;
 
- AUTOMATIC FORMATTING OPTIONAL
-*/
+// Classes constructor
+
+function ClassHandler() {
+	var self = this;
+
+	this.classList = function(elem) {
+		return elem.className.trim().split(/[\b\s]/);
+	};
+
+	this.hasClass = function(elem, className) {
+		var classes = self.classList(elem),
+		has = false,
+		i = 0;
+
+		for (i = 0; i < classes.length; i++) {
+			if (classes[i] === className) {
+				has = true;
+				break;
+			}
+		}
+
+		return (has);
+	};
+
+	this.addClass = function(elem, className) {
+		var classes;
+
+		if (!self.hasClass(elem, className)) {
+			classes = self.classList(elem);
+			classes.push(className);
+			elem.className = classes.join(' ').trim();
+		}
+
+		return self;
+	};
+
+	this.removeClass = function(elem, className) {
+		var classes = self.classList(elem),
+		i = 0;
+
+		for (i = 0; i < classes.length; i++) {
+			if (classes[i] === className) {
+				classes.splice(i, 1);
+			}
+		}
+
+		elem.className = classes.join(' ').trim();
+
+		return self;
+	};
+
+	this.toggleClass = function(elem, className) {
+		var classes;
+
+		if (self.hasClass(elem, className)) {
+			self.removeClass(elem, className);
+		} else {
+			classes = self.classList(elem);
+			classes.push(className);
+			elem.className = classes.join(' ').trim();
+		}
+
+		return self;
+	};
+}
+
+// Initilize
+
+var Classes = new ClassHandler();
+
+// End Classes constructor
 
 function getPosition(element) {
 	var xPosition = 0,
@@ -55,14 +129,53 @@ function scrollTo(element, to, duration) {
 	animateScroll();
 }
 
-function selectRange(elem, start, end) {
-	var range;
+function isChildOf(selector, element) {
+	switch (selector.charAt(0)) {
+		case '.':
+			if (document.getElementsByClassName(selector.slice(1))[0] == null) {
+				return false;
+			}
 
+			while (element.getElementsByClassName(selector.slice(1))[0] == null && element.parentNode) {
+				if (Classes.hasClass(element, selector.slice(1))) {
+					return true;
+				}
+				element = element.parentNode;
+			}
+		break;
+		case '#':
+			if (document.getElementById(selector.slice(1)) == null) {
+				return false;
+			}
+
+			while (element.parentNode) {
+				if (element.id === selector.slice(1)) {
+					return true;
+				}
+				element = element.parentNode;
+			}
+		break;
+		default:
+			if (document.getElementsByTagName(selector)[0] == null) {
+				return false;
+			}
+
+			while (element.getElementsByTagName(selector) == null && element.parentNode) {
+				if (element.tagName === selector.toUpperCase()) {
+					return true;
+				}
+				element = element.parentNode;
+			}
+	}
+	return false;
+}
+
+function selectRange(elem, start, end) {
 	if (elem.setSelectionRange) {
 		elem.focus();
 		elem.setSelectionRange(start, end);
 	} else if (elem.createTextRange) {
-		range = elem.createTextRange();
+		var range = elem.createTextRange();
 		range.collapse(true);
 		range.moveEnd('character', end);
 		range.moveStart('character', start);
@@ -70,20 +183,32 @@ function selectRange(elem, start, end) {
 	}
 }
 
-function cursor(elem, position) {
-	selectRange(elem, position, position);
+function wrapText(elementSelector, openTag, closeTag) {
+	var textArea = elementSelector,
+	len = textArea.value.length,
+	start = textArea.selectionStart,
+	end = textArea.selectionEnd,
+	selectedText = textArea.value.substring(start, end),
+	replacement,
+	paste = document.createEvent('TextEvent');
+	replacement = openTag + selectedText + closeTag;
+	if (paste.initTextEvent) {
+		paste.initTextEvent('textInput', true, true, null, replacement);
+		textArea.dispatchEvent(paste);
+	} else {
+		textArea.value = textArea.value.substring(0, start) + replacement + textArea.value.substring(end, len);
+	}
+	selectRange(textArea, start + openTag.length, start + replacement.length - closeTag.length);
 }
 
-function applyTemplate(elem) {
-	var formContext = elem,
-	opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
-	htmlPrefix = (opts.hasOwnProperty('xf_template_htmlPrefix')) ? opts.xf_template_htmlPrefix : '',
-	htmlSuffix = (opts.hasOwnProperty('xf_template_htmlSuffix')) ? opts.xf_template_htmlSuffix : '',
-	bbPrefix = (opts.hasOwnProperty('xf_template_bbPrefix')) ? opts.xf_template_bbPrefix : '',
-	bbSuffix = (opts.hasOwnProperty('xf_template_bbSuffix')) ? opts.xf_template_bbSuffix : '',
+function applyTemplate(instance) {
+	var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
+	htmlPrefix = (opts.hasOwnProperty('xf_style_htmlPrefix')) ? opts.xf_style_htmlPrefix : '',
+	htmlSuffix = (opts.hasOwnProperty('xf_style_htmlSuffix')) ? opts.xf_style_htmlSuffix : '',
+	bbPrefix = (opts.hasOwnProperty('xf_style_bbPrefix')) ? opts.xf_style_bbPrefix : '',
+	bbSuffix = (opts.hasOwnProperty('xf_style_bbSuffix')) ? opts.xf_style_bbSuffix : '',
 	thisList,
 	thisLink,
-	instance,
 	postForm,
 	plainText,
 	i = 0;
@@ -97,38 +222,47 @@ function applyTemplate(elem) {
 	var applyToChildren = function(parent) {
 		var thisChild,
 		applyTo,
+		open = false,
 		i = 0;
 
 		for (i = 0; i < parent.childNodes.length; i++) {
 			thisChild = parent.childNodes[i];
+
+			
 			if (thisChild.innerHTML) {
 				applyTo = thisChild.innerHTML.replace(
-					/\[quote([^]+)\[\/quote\]/gi, htmlSuffix + '[quote$1[/quote]' + htmlPrefix
+					/\[quote/gi, htmlSuffix + '[quote'
+				).replace(
+					/\[\/quote\]/gi, '[/quote]' + htmlPrefix
 				);
 
-				thisChild.innerHTML = htmlPrefix + applyTo + htmlSuffix;
+				if (thisChild.innerHTML.match(/\[quote/i) && !thisChild.innerHTML.match(/\[\/quote\]/i)) {
+					thisChild.innerHTML = htmlPrefix + applyTo;
+					open = true;
+				} else if (!thisChild.innerHTML.match(/\[quote/i) && thisChild.innerHTML.match(/\[\/quote\]/i)) {
+					thisChild.innerHTML = applyTo + htmlSuffix;
+					open = false;
+				} else {
+					if (!open) {
+						thisChild.innerHTML = htmlPrefix + applyTo + htmlSuffix;
+					}
+				}
 			}
 		}
 	};
 
-	while (formContext.getElementsByClassName('redactor_box')[0] == null && formContext.parentNode) {
-		formContext = formContext.parentNode;
-	}
+	if (opts.hasOwnProperty('xf_style_auto')) {
+		if (instance.getElementsByClassName('redactor_MessageEditor')[0] != null) {
+			postForm = instance.getElementsByClassName('redactor_MessageEditor')[0].contentWindow.document;
 
-	if (opts.hasOwnProperty('xf_template_auto')) {
-		for (i = 0; i < formContext.getElementsByClassName('redactor_MessageEditor').length; i++) {
-			instance = formContext.getElementsByClassName('redactor_MessageEditor')[i];
-			postForm = instance.contentWindow.document;
 			if (!postForm.body.textContent.length) {
 				postForm.body.addEventListener('keydown', applyTemplateEvent, false);
 			} else {
 				applyToChildren(postForm.body);
 			}
-		}
-		for (i = 0; i < formContext.getElementsByClassName('bbCodeEditorContainer').length; i++) {
-			plainText = formContext.getElementsByClassName('bbCodeEditorContainer')[i].getElementsByTagName('textarea')[0];
-			plainText.value = bbPrefix + plainText.value + bbSuffix;
-			cursor(plainText, plainText.value.length - bbSuffix.length);
+		} else {
+			plainText = instance.getElementsByClassName('textCtrl')[0];
+			wrapText(plainText, bbPrefix, bbSuffix);
 		}
 	} else {
 		thisList = document.getElementById('AccountMenu').getElementsByClassName('blockLinksList')[0];
@@ -168,15 +302,14 @@ function runInGlobal(code) {
 	scripts.type = 'text/javascript';
 	scripts.id = 'runInGlobal';
 	scripts.appendChild(document.createTextNode(
-		'(function() { ' + code + '})();' +
-		'\n\n' +
+		code + '\n\n' +
 		'document.getElementById(\'runInGlobal\').remove();'
 	));
 
 	(document.head || document.body || document.documentElement).appendChild(scripts);
 }
 
-function saveTemplateSettings() {
+function saveStyleSettings() {
 	if (!document.getElementById('htmlPrefixField').value.length) {
 		xenForoMessage('HTML prefix required.', false);
 		return false;
@@ -199,95 +332,86 @@ function saveTemplateSettings() {
 	
 	var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {};
 
-	opts.xf_template_auto = (document.getElementById('autoApplyField').options[document.getElementById('autoApplyField').selectedIndex].value === 'true');
-	opts.xf_template_htmlPrefix = document.getElementById('htmlPrefixField').value;
-	opts.xf_template_htmlSuffix = document.getElementById('htmlSuffixField').value;
-	opts.xf_template_bbPrefix = document.getElementById('bbPrefixField').value;
-	opts.xf_template_bbSuffix = document.getElementById('bbSuffixField').value;
+	opts.xf_style_auto = (document.getElementById('autoApplyField').options[document.getElementById('autoApplyField').selectedIndex].value === 'true');
+	opts.xf_style_htmlPrefix = document.getElementById('htmlPrefixField').value;
+	opts.xf_style_htmlSuffix = document.getElementById('htmlSuffixField').value;
+	opts.xf_style_bbPrefix = document.getElementById('bbPrefixField').value;
+	opts.xf_style_bbSuffix = document.getElementById('bbSuffixField').value;
 	localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
 
 	xenForoMessage('Your settings have been saved.', true);
 }
 
-var applyHandler = function() {
-	applyTemplate(this);
-};
-
 if (document.documentElement.id === "XenForo") {
-	var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
-	autoApply = (opts.hasOwnProperty('xf_template_auto')) ? opts.xf_template_auto : false,
-	htmlPrefix = (opts.hasOwnProperty('xf_template_htmlPrefix')) ? opts.xf_template_htmlPrefix : '',
-	htmlSuffix = (opts.hasOwnProperty('xf_template_htmlSuffix')) ? opts.xf_template_htmlSuffix : '',
-	bbPrefix = (opts.hasOwnProperty('xf_template_bbPrefix')) ? opts.xf_template_bbPrefix : '',
-	bbSuffix = (opts.hasOwnProperty('xf_template_bbSuffix')) ? opts.xf_template_bbSuffix : '',
-	instance,
-	buttonsContext,
-	richInstance,
-	richDoc,
-	field,
-	i = 0;
+	opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {};
+	autoApply = (opts.hasOwnProperty('xf_style_auto')) ? opts.xf_style_auto : false;
+	htmlPrefix = (opts.hasOwnProperty('xf_style_htmlPrefix')) ? opts.xf_style_htmlPrefix : '';
+	htmlSuffix = (opts.hasOwnProperty('xf_style_htmlSuffix')) ? opts.xf_style_htmlSuffix : '';
+	bbPrefix = (opts.hasOwnProperty('xf_style_bbPrefix')) ? opts.xf_style_bbPrefix : '';
+	bbSuffix = (opts.hasOwnProperty('xf_style_bbSuffix')) ? opts.xf_style_bbSuffix : '';
 
 	// Button creation and auto-application
 
-	if (document.getElementsByClassName('MessageEditor')[0] != null) {
-		for (i = 0; i < document.getElementsByClassName('MessageEditor').length; i++) {
-			instance = document.getElementsByClassName('MessageEditor')[i];
-			buttonsContext = instance;
+	var applyHandler = function(event) {
+		var applyButton,
+		cont,
+		instance;
 
-			while (buttonsContext.getElementsByClassName('submitUnit')[0] == null && buttonsContext.parentNode) {
-				buttonsContext = buttonsContext.parentNode;
-			}
-
-			buttonsContext = buttonsContext.getElementsByClassName('submitUnit')[0].getElementsByClassName('button primary')[0].parentNode;
-
-			var applyButton = document.createElement('input'),
-			applyButtonSpacer = document.createTextNode(String.fromCharCode(160));
-			applyButton.type = 'button';
-			applyButton.value = 'Apply Style';
-			applyButton.className = 'button JsOnly applyButton';
-			applyButton.onclick = applyHandler;
-
-			buttonsContext.appendChild(applyButtonSpacer);
-			buttonsContext.appendChild(applyButton);
-
-			if (autoApply.toString() === 'true') {
-				applyTemplate(instance);
-			}
+		if (!event.target.tagName || (event.target.tagName !== 'TEXTAREA' && event.target.tagName !== 'IFRAME')) {
+			return false;
 		}
 
-		document.addEventListener('keydown', function(e) {
-			var i = 0,
-			keyInstance;
+		if (isChildOf('.redactor_box', event.target) || isChildOf('.bbCodeEditorContainer', event.target) || Classes.hasClass(event.target, 'MessageEditor')) {
+			instance = event.target.parentNode;
+		} else {
+			return false;
+		}
 
-			if (e.keyCode == 84 && e.altKey) {
-				for (i = 0; i < document.getElementsByClassName('MessageEditor').length; i++) {
-					keyInstance = document.getElementsByClassName('MessageEditor')[i];
-					applyTemplate(keyInstance);
-				}
-			}
-		}, false);
+		console.log(instance);
 
-		var applyToRichHandler = function(e) {
-			if (e.keyCode == 84 && e.altKey) {
-				applyTemplate(richInstance);
-			}
+		if (instance.getElementsByClassName('applyButton')[0] != null) {
+			return false;
+		}
+
+		cont = document.createElement('div');
+		applyButton = document.createElement('input');
+
+		cont.style.textAlign = 'right';
+
+		applyButton.type = 'button';
+		applyButton.value = 'Apply Style';
+		applyButton.className = 'button JsOnly applyButton';
+		applyButton.style.fontSize = '10px';
+		applyButton.style.lineHeight = '100%';
+		applyButton.onclick = function() {
+			applyTemplate(instance);
 		};
 
-		if (document.getElementsByClassName('redactor_MessageEditor')[0] != null) {
-			for (i = 0; i < document.getElementsByClassName('redactor_MessageEditor').length; i++) {
-				richInstance = document.getElementsByClassName('redactor_MessageEditor')[i];
-				richDoc = richInstance.contentWindow.document;
-				richDoc.addEventListener('keydown', applyToRichHandler, false);
+		cont.appendChild(applyButton);
+
+		instance.appendChild(cont);
+
+		if (autoApply) {
+			if (isChildOf('.InlineMessageEditor', event.target)) {
+				return false;
 			}
+
+			if (!isChildOf('.redactor_box', event.target)) {
+				selectRange(instance.getElementsByClassName('textCtrl')[0], instance.getElementsByClassName('textCtrl')[0].value.length, instance.getElementsByClassName('textCtrl')[0].value.length);
+			}
+
+			applyTemplate(instance);
 		}
-	}
+	};
+
+	document.addEventListener('mouseover', applyHandler, false);
 	
 	if (window.location.href.match(/account\/personal\-details/gi)) {
-		// Define xenForoMessage and saveTemplateSettings
+		// Define xenForoMessage and saveStyleSettings
 
 		runInGlobal(
 			xenForoMessage.toString() +
-			saveTemplateSettings.toString()
+			saveStyleSettings.toString()
 		);
 
 		// Settings creation
@@ -441,7 +565,7 @@ if (document.documentElement.id === "XenForo") {
 		submitFieldDD_input.id = 'submitTemplate';
 		submitFieldDD_input.className = 'button';
 		submitFieldDD_input.value = 'Save';
-		submitFieldDD_input.setAttribute('onClick', 'saveTemplateSettings();');
+		submitFieldDD_input.setAttribute('onClick', 'saveStyleSettings();');
 
 		submitFieldDD.appendChild(submitFieldDD_input);
 
@@ -485,7 +609,7 @@ if (document.documentElement.id === "XenForo") {
 		
 		if (window.location.href.substr(window.location.href.length - 14, 14) === '#Post_Template') {
 			scrollTo(document.body, getPosition(document.getElementById('templateOptionsContainer')).y, 100);
-			runInGlobal('xenForoMessage(\'Post Template installed. Customize your settings.\', true);');
+			runInGlobal('xenForoMessage(\'Please customize your settings.\', true);');
 		}
 	}
 }
