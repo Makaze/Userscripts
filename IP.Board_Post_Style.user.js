@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name	IP.Board - Post Style
 // @namespace	Makaze
+// @description	Adds options to apply a predefined style to posts in a variety of ways.
 // @include	*
 // @grant	none
 // @version	1.0

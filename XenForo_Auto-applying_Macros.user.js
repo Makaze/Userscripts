@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name	XenForo - Auto-applying Macros
 // @namespace	Makaze
-// @description	Automatically applies a XenForo Macro.
+// @description	Adds an option to automatically apply XenForo Macros.
 // @include	*
 // @grant	none
 // @version	1.0
