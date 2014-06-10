@@ -47,7 +47,7 @@ function createToggle(macro) {
 			toggle.href = 'javascript:void(0)';
 
 			if (auto && id === auto) {
-				toggle.appendChild(document.createTextNode('Do Not Auto-apply Macro'));
+				toggle.appendChild(document.createTextNode('Stop Auto-applying Macro'));
 			} else {
 				toggle.appendChild(document.createTextNode('Auto-apply Macro'));
 			}
@@ -90,7 +90,7 @@ function toggleAuto(macro, context) {
 			prefix.appendChild(document.createTextNode('Auto'));
 		}), header.firstChild);
 
-		context.getElementsByClassName('toggleAuto')[0].childNodes[0].nodeValue = 'Do Not Auto-apply Macro';
+		context.getElementsByClassName('toggleAuto')[0].childNodes[0].nodeValue = 'Stop Auto-applying Macro';
 
 		opts.XenForo_auto_apply_macro = macro;
 		localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
