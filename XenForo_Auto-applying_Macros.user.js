@@ -46,7 +46,7 @@ function createToggle(macro) {
 			toggle.className = 'toggleAuto';
 			toggle.href = 'javascript:void(0)';
 
-			if (auto && id === auto) {
+			if (auto && macro === auto) {
 				toggle.appendChild(document.createTextNode('Stop Auto-applying Macro'));
 			} else {
 				toggle.appendChild(document.createTextNode('Auto-apply Macro'));
