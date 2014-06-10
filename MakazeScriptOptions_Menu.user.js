@@ -4,7 +4,7 @@
 // @description	Creates, edits and deletes options for my scripts.
 // @include	*
 // @grant	none
-// @version	1.0.2
+// @version	1.0.4
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -99,7 +99,7 @@ function fade(elem, type, speed) {
 	}
 }
 
-if (document.body.id === 'ipboard_body') {
+if (localStorage && localStorage.getItem('MakazeScriptOptions')) {
 	opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {};
 	optsMenu = createElement('div', function(menu) {
 		var evt;
@@ -107,6 +107,7 @@ if (document.body.id === 'ipboard_body') {
 		menu.id = 'MakazeScriptOptions_menu';
 		menu.className = 'MakazeScriptMenu';
 		menu.style.display = 'none';
+		menu.style.color = '#222';
 
 		menu.appendChild(createElement('select', function(select) {
 			select.id = 'MakazeScriptOptions_menu_opts';
@@ -384,6 +385,16 @@ if (document.body.id === 'ipboard_body') {
 						case 'number':
 							opts[select.options[select.selectedIndex].value] = parseInt(content.getElementsByTagName('input')[0].value);
 						break;
+					}
+
+					select.selectedIndex = 0;
+
+					if ("createEvent" in document) {
+						evt = document.createEvent("HTMLEvents");
+						evt.initEvent("change", false, true);
+						select.dispatchEvent(evt);
+					} else {
+						select.fireEvent("onchange");
 					}
 
 					localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
