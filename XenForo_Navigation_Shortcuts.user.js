@@ -1184,7 +1184,7 @@ function shortcutsMenu() {
 
 							save.onclick = function() {
 								opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {};
-								shortcuts = (opts.hasOwnProperty('xf_NavigationShortcuts')) ? opts.xf_NavigationShortcuts : {
+								shortcuts = (opts.hasOwnProperty('xf_navigation_shortcuts')) ? opts.xf_navigation_shortcuts : {
 									'next_post': 74,
 									'previous_post': 75,
 									'next_page': 72,
@@ -1200,7 +1200,7 @@ function shortcutsMenu() {
 								getChanges(shortcuts, 'last_page', 'LastPage');
 								getChanges(shortcuts, 'first_page', 'FirstPage');
 
-								opts.xf_NavigationShortcuts = shortcuts;
+								opts.xf_navigation_shortcuts = shortcuts;
 
 								localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
 
@@ -1246,7 +1246,6 @@ var shortcutsHandler = function(event) {
 			event.preventDefault();
 			scrollToNext(document.body, document.getElementsByClassName('message'), 'down');
 	} else if (event.keyCode === shortcuts['previous_post'] && checkModifiers('previous_post', event, shortcuts)) {
-		
 			event.preventDefault();
 			scrollToNext(document.body, document.getElementsByClassName('message'), 'up');
 	} else if (event.keyCode === shortcuts['next_page'] && checkModifiers('next_page', event, shortcuts)) {
@@ -1332,7 +1331,7 @@ var shortcutsHandler = function(event) {
 
 if (document.documentElement.id === 'XenForo') {
 	opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {};
-	shortcuts = (opts.hasOwnProperty('xf_NavigationShortcuts')) ? opts.xf_NavigationShortcuts : {
+	shortcuts = (opts.hasOwnProperty('xf_navigation_shortcuts')) ? opts.xf_navigation_shortcuts : {
 		'next_post': 74,
 		'previous_post': 75,
 		'next_page': 72,
