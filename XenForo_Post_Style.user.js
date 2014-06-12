@@ -554,6 +554,7 @@ if (document.documentElement.id === "XenForo") {
 		
 		if (window.location.href.substr(window.location.href.length - 14, 14) === '#Post_Style') {
 			scrollTo(document.body, getPosition(document.getElementById('styleOptionsContainer')).y, 100);
+			scrollTo(document.documentElement, getPosition(document.getElementById('styleOptionsContainer')).y, 100);
 			runInGlobal('xenForoMessage(\'Please customize your settings.\', true);');
 		}
 	}

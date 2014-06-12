@@ -4,7 +4,7 @@
 // @description	Adds keyboard navigation shortcuts to XenForo.
 // @include	*
 // @grant	none
-// @version	2.0.2
+// @version	2.0.3
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -1257,9 +1257,11 @@ var shortcutsHandler = function(event) {
 	if (event.keyCode === shortcuts['next_post'] && checkModifiers('next_post', event, shortcuts)) {
 			event.preventDefault();
 			scrollToNext(document.body, document.getElementsByClassName('message'), 'down');
+			scrollToNext(document.documentElement, document.getElementsByClassName('message'), 'down');
 	} else if (event.keyCode === shortcuts['previous_post'] && checkModifiers('previous_post', event, shortcuts)) {
 			event.preventDefault();
 			scrollToNext(document.body, document.getElementsByClassName('message'), 'up');
+			scrollToNext(document.documentElement, document.getElementsByClassName('message'), 'up');
 	} else if (event.keyCode === shortcuts['next_page'] && checkModifiers('next_page', event, shortcuts)) {
 		context = document.getElementsByClassName('PageNav')[0];
 

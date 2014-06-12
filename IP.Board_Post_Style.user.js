@@ -371,7 +371,7 @@ if (document.body.id === 'ipboard_body') {
 	if (document.getElementsByClassName('ipsSettings_pagetitle')[0] != null && document.getElementsByClassName('ipsSettings_pagetitle')[0].textContent.trim() === 'General Account Settings') {
 		document.getElementsByClassName('ipsSettings')[0].appendChild(createElement('fieldset', function(fieldset) {
 			fieldset.className = 'ipsSettings_section';
-			fieldset.id = 'template_settings';
+			fieldset.id = 'style_settings';
 			fieldset.appendChild(createElement('h3', function(header) {
 				header.className = 'ipsSettings_sectiontitle';
 				header.appendChild(document.createTextNode('Post Template'));
@@ -538,7 +538,8 @@ if (document.body.id === 'ipboard_body') {
 		}));
 
 		if (window.location.href.slice(-14) === '#Post_Style') {
-			scrollTo(document.body, getPosition(document.getElementById('template_settings')).y, 100);
+			scrollTo(document.body, getPosition(document.getElementById('style_settings')).y, 100);
+			scrollTo(document.documentElement, getPosition(document.getElementById('style_settings')).y, 100);
 		}
 	}
 
