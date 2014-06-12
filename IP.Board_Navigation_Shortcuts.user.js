@@ -4,7 +4,7 @@
 // @description	Adds keyboard navigation shortcuts to XenForo.
 // @include	*
 // @grant	none
-// @version	2.0
+// @version	2.0.1
 // ==/UserScript==
 
 var MakazeScriptStyles,
