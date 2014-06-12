@@ -4,7 +4,7 @@
 // @description	Adds options to apply a predefined style to posts in a variety of ways.
 // @include	*
 // @grant	none
-// @version	1.0
+// @version	1.0.3
 // ==/UserScript==
 
 var opts,
@@ -119,7 +119,7 @@ function scrollTo(element, to, duration) {
 		var val = Math.easeInOutQuad(currentTime, start, change, duration);
 		element.scrollTop = val; 
 		currentTime += increment;
-		if (currentTime < duration) {
+		if (currentTime <= duration) {
 			setTimeout(animateScroll, increment);
 		}
 	};
@@ -221,7 +221,7 @@ function applyTemplate(instance) {
 	} else {
 		ucp = document.getElementById('user_ucp').getElementsByTagName('a')[0];
 
-		ucp.href = ucp.href + '#Post_Template';
+		ucp.href = ucp.href + '#Post_Style';
 		ucp.click();
 	}
 }
@@ -537,7 +537,7 @@ if (document.body.id === 'ipboard_body') {
 			}));
 		}));
 
-		if (window.location.href.slice(-14) === '#Post_Template') {
+		if (window.location.href.slice(-14) === '#Post_Style') {
 			scrollTo(document.body, getPosition(document.getElementById('template_settings')).y, 100);
 		}
 	}
