@@ -4,17 +4,15 @@
 // @description	Adds options to apply a predefined style to posts in a variety of ways.
 // @include	*
 // @grant	none
-// @version	5.0.6
+// @version	5.1.1
 // ==/UserScript==
 
 var opts,
 autoApply,
-htmlPrefix,
-htmlSuffix,
-bbPrefix,
-bbSuffix,
-field,
-i = 0;
+richPrefix,
+richSuffix,
+plainPrefix,
+plainSuffix;
 
 // Classes constructor
 
@@ -88,6 +86,14 @@ var Classes = new ClassHandler();
 
 // End Classes constructor
 
+function createElement(type, callback) {
+	var element = document.createElement(type);
+
+	callback(element);
+
+	return element;
+}
+
 function getPosition(element) {
 	var xPosition = 0,
 	yPosition = 0;
@@ -117,11 +123,13 @@ function scrollTo(element, to, duration) {
 	currentTime = 0,
 	increment = 1;
 
+	console.log(to);
+
 	var animateScroll = function() {
 		var val = Math.easeInOutQuad(currentTime, start, change, duration);
 		element.scrollTop = val;
 		currentTime += increment;
-		if (currentTime < duration) {
+		if (currentTime <= duration) {
 			setTimeout(animateScroll, increment);
 		}
 	};
@@ -203,10 +211,10 @@ function wrapText(elementSelector, openTag, closeTag) {
 
 function applyTemplate(instance) {
 	var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
-	htmlPrefix = (opts.hasOwnProperty('xf_style_htmlPrefix')) ? opts.xf_style_htmlPrefix : '',
-	htmlSuffix = (opts.hasOwnProperty('xf_style_htmlSuffix')) ? opts.xf_style_htmlSuffix : '',
-	bbPrefix = (opts.hasOwnProperty('xf_style_bbPrefix')) ? opts.xf_style_bbPrefix : '',
-	bbSuffix = (opts.hasOwnProperty('xf_style_bbSuffix')) ? opts.xf_style_bbSuffix : '',
+	richPrefix = (opts.hasOwnProperty('xf_style_richPrefix')) ? opts.xf_style_richPrefix : '',
+	richSuffix = (opts.hasOwnProperty('xf_style_richSuffix')) ? opts.xf_style_richSuffix : '',
+	plainPrefix = (opts.hasOwnProperty('xf_style_plainPrefix')) ? opts.xf_style_plainPrefix : '',
+	plainSuffix = (opts.hasOwnProperty('xf_style_plainSuffix')) ? opts.xf_style_plainSuffix : '',
 	thisList,
 	thisLink,
 	postForm,
@@ -231,20 +239,20 @@ function applyTemplate(instance) {
 			
 			if (thisChild.innerHTML) {
 				applyTo = thisChild.innerHTML.replace(
-					/\[quote/gi, htmlSuffix + '[quote'
+					/\[quote/gi, richSuffix + '[quote'
 				).replace(
-					/\[\/quote\]/gi, '[/quote]' + htmlPrefix
+					/\[\/quote\]/gi, '[/quote]' + richPrefix
 				);
 
 				if (thisChild.innerHTML.match(/\[quote/i) && !thisChild.innerHTML.match(/\[\/quote\]/i)) {
-					thisChild.innerHTML = htmlPrefix + applyTo;
+					thisChild.innerHTML = richPrefix + applyTo;
 					open = true;
 				} else if (!thisChild.innerHTML.match(/\[quote/i) && thisChild.innerHTML.match(/\[\/quote\]/i)) {
-					thisChild.innerHTML = applyTo + htmlSuffix;
+					thisChild.innerHTML = applyTo + richSuffix;
 					open = false;
 				} else {
 					if (!open) {
-						thisChild.innerHTML = htmlPrefix + applyTo + htmlSuffix;
+						thisChild.innerHTML = richPrefix + applyTo + richSuffix;
 					}
 				}
 			}
@@ -262,14 +270,14 @@ function applyTemplate(instance) {
 			}
 		} else {
 			plainText = instance.getElementsByClassName('textCtrl')[0];
-			wrapText(plainText, bbPrefix, bbSuffix);
+			wrapText(plainText, plainPrefix, plainSuffix);
 		}
 	} else {
 		thisList = document.getElementById('AccountMenu').getElementsByClassName('blockLinksList')[0];
 		for (i = 0; i < thisList.getElementsByTagName('a').length; i++) {
 			thisLink = thisList.getElementsByTagName('a')[i];
-			if (thisLink.href.match(/account\/personal\-details/gi) && thisLink.href.substr(window.location.href.length - 14, 14) !== '#Post_Template') {
-				thisLink.href = thisLink.href + '#Post_Template';
+			if (thisLink.href.match(/account\/personal\-details/gi) && thisLink.href.substr(window.location.href.length - 14, 14) !== '#Post_Style') {
+				thisLink.href = thisLink.href + '#Post_Style';
 				thisLink.click();
 				break;
 			}
@@ -279,19 +287,19 @@ function applyTemplate(instance) {
 
 function xenForoMessage(msg, success) {
 	if (success) {
-		$('#templateMessage .content').html(msg);
+		$('#postStyleMessage .content').html(msg);
 		console.log(msg);
 	} else {
-		$('#templateMessage .content').html('<strong>Error:</strong> ' + msg);
+		$('#postStyleMessage .content').html('<strong>Error:</strong> ' + msg);
 		console.log('Error:', msg);
 	}
-	$('#templateMessage').slideDown('medium');
-	$('#templateMessage .content').animate({
+	$('#postStyleMessage').slideDown('medium');
+	$('#postStyleMessage .content').animate({
 		'opacity': 1
 	}, 'fast');
 	setTimeout(function() {
-		$('#templateMessage').slideUp('medium');
-		$('#templateMessage .content').animate({
+		$('#postStyleMessage').slideUp('medium');
+		$('#postStyleMessage .content').animate({
 			'opacity': 0
 		}, 'fast');
 	}, 1500);
@@ -310,33 +318,33 @@ function runInGlobal(code) {
 }
 
 function saveStyleSettings() {
-	if (!document.getElementById('htmlPrefixField').value.length) {
-		xenForoMessage('HTML prefix required.', false);
+	if (!document.getElementById('richPrefixField').value.length) {
+		xenForoMessage('Rich Text (HTML) prefix required.', false);
 		return false;
 	}
 
-	if (!document.getElementById('htmlSuffixField').value.length) {
-		xenForoMessage('HTML suffix required.', false);
+	if (!document.getElementById('richSuffixField').value.length) {
+		xenForoMessage('Rich Text (HTML) suffix required.', false);
 		return false;
 	}
 
-	if (!document.getElementById('bbPrefixField').value.length) {
-		xenForoMessage('BBCode prefix required.', false);
+	if (!document.getElementById('plainPrefixField').value.length) {
+		xenForoMessage('Plaintext (BBCode) prefix required.', false);
 		return false;
 	}
 
-	if (!document.getElementById('bbSuffixField').value.length) {
-		xenForoMessage('BBCode suffix required.', false);
+	if (!document.getElementById('plainSuffixField').value.length) {
+		xenForoMessage('Plaintext (BBCode) suffix required.', false);
 		return false;
 	}
 	
 	var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {};
 
 	opts.xf_style_auto = (document.getElementById('autoApplyField').options[document.getElementById('autoApplyField').selectedIndex].value === 'true');
-	opts.xf_style_htmlPrefix = document.getElementById('htmlPrefixField').value;
-	opts.xf_style_htmlSuffix = document.getElementById('htmlSuffixField').value;
-	opts.xf_style_bbPrefix = document.getElementById('bbPrefixField').value;
-	opts.xf_style_bbSuffix = document.getElementById('bbSuffixField').value;
+	opts.xf_style_richPrefix = document.getElementById('richPrefixField').value;
+	opts.xf_style_richSuffix = document.getElementById('richSuffixField').value;
+	opts.xf_style_plainPrefix = document.getElementById('plainPrefixField').value;
+	opts.xf_style_plainSuffix = document.getElementById('plainSuffixField').value;
 	localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
 
 	xenForoMessage('Your settings have been saved.', true);
@@ -345,10 +353,10 @@ function saveStyleSettings() {
 if (document.documentElement.id === "XenForo") {
 	opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {};
 	autoApply = (opts.hasOwnProperty('xf_style_auto')) ? opts.xf_style_auto : false;
-	htmlPrefix = (opts.hasOwnProperty('xf_style_htmlPrefix')) ? opts.xf_style_htmlPrefix : '';
-	htmlSuffix = (opts.hasOwnProperty('xf_style_htmlSuffix')) ? opts.xf_style_htmlSuffix : '';
-	bbPrefix = (opts.hasOwnProperty('xf_style_bbPrefix')) ? opts.xf_style_bbPrefix : '';
-	bbSuffix = (opts.hasOwnProperty('xf_style_bbSuffix')) ? opts.xf_style_bbSuffix : '';
+	richPrefix = (opts.hasOwnProperty('xf_style_richPrefix')) ? opts.xf_style_richPrefix : '';
+	richSuffix = (opts.hasOwnProperty('xf_style_richSuffix')) ? opts.xf_style_richSuffix : '';
+	plainPrefix = (opts.hasOwnProperty('xf_style_plainPrefix')) ? opts.xf_style_plainPrefix : '';
+	plainSuffix = (opts.hasOwnProperty('xf_style_plainSuffix')) ? opts.xf_style_plainSuffix : '';
 
 	// Button creation and auto-application
 
@@ -415,200 +423,141 @@ if (document.documentElement.id === "XenForo") {
 		);
 
 		// Settings creation
+		
+		var optionsContainer = createElement('fieldset', function(fieldset) {
+			fieldset.id = 'styleOptionsContainer';
 
-		var optionsContainer = document.createElement('fieldset'),
+			fieldset.appendChild(createElement('dl', function(cont) {
+				cont.className = 'ctrlUnit';
+				cont.appendChild(createElement('dt', function(title) {}));
 
-		header = document.createElement('dl'),
-		headerDT = document.createElement('dt'),
-		headerDD = document.createElement('dd'),
-		headerDD_Text = document.createTextNode('Post Style'),
+				cont.appendChild(createElement('dd', function(field) {
+					field.style.fontWeight = 'bolder';
+					field.style.fontSize = '130%';
+					field.style.width = '40%';
+					field.style.textDecoration = 'underline';
+					field.appendChild(document.createTextNode('Post Style'));
+				}));
+			}));
 
-		autoApplyField = document.createElement('dl'),
-		autoApplyFieldDT = document.createElement('dt'),
-		autoApplyFieldDT_Text = document.createTextNode('Auto-apply:'),
-		autoApplyFieldDD = document.createElement('dd'),
-		autoApplyFieldDD_Select = document.createElement('select'),
-		autoApplyFieldDD_Select_true = document.createElement('option'),
-		autoApplyFieldDD_Select_true_Text = document.createTextNode('True'),
-		autoApplyFieldDD_Select_false = document.createElement('option'),
-		autoApplyFieldDD_Select_false_Text = document.createTextNode('False'),
+			fieldset.appendChild(createElement('dl', function(cont) {
+				cont.className = 'ctrlUnit';
+				cont.appendChild(createElement('dt', function(title) {
+					title.appendChild(document.createTextNode('Auto-apply:'));
+				}));
 
-		htmlPrefixField = document.createElement('dl'),
-		htmlPrefixFieldDT = document.createElement('dt'),
-		htmlPrefixFieldDT_Text = document.createTextNode('HTML Prefix:'),
-		htmlPrefixFieldDD = document.createElement('dd'),
-		htmlPrefixFieldDD_input = document.createElement('input'),
+				cont.appendChild(createElement('dd', function(field) {
+					field.appendChild(createElement('select', function(select) {
+						select.className = 'textCtrl';
+						select.id = 'autoApplyField';
 
-		htmlSuffixField = document.createElement('dl'),
-		htmlSuffixFieldDT = document.createElement('dt'),
-		htmlSuffixFieldDT_Text = document.createTextNode('HTML Suffix:'),
-		htmlSuffixFieldDD = document.createElement('dd'),
-		htmlSuffixFieldDD_input = document.createElement('input'),
+						select.options[0] = new Option('True', 'true');
+						select.options[1] = new Option('False', 'false');
 
-		bbPrefixField = document.createElement('dl'),
-		bbPrefixFieldDT = document.createElement('dt'),
-		bbPrefixFieldDT_Text = document.createTextNode('BBCode Prefix:'),
-		bbPrefixFieldDD = document.createElement('dd'),
-		bbPrefixFieldDD_input = document.createElement('input'),
+						select.selectedIndex = (autoApply) ? 0 : 1; 
+					}));
+				}));
+			}));
 
-		bbSuffixField = document.createElement('dl'),
-		bbSuffixFieldDT = document.createElement('dt'),
-		bbSuffixFieldDT_Text = document.createTextNode('BBCode Suffix:'),
-		bbSuffixFieldDD = document.createElement('dd'),
-		bbSuffixFieldDD_input = document.createElement('input'),
+			fieldset.appendChild(createElement('dl', function(cont) {
+				cont.className = 'ctrlUnit';
+				cont.appendChild(createElement('dt', function(title) {
+					title.appendChild(document.createTextNode('Rich Prefix:'));
+				}));
 
-		submitField = document.createElement('dl'),
-		submitFieldDT = document.createElement('dt'),
-		submitFieldDD = document.createElement('dd'),
-		submitFieldDD_input = document.createElement('input'),
+				cont.appendChild(createElement('dd', function(field) {
+					field.appendChild(createElement('input', function(input) {
+						input.type = 'text';
+						input.className = 'textCtrl OptOut';
+						input.id = 'richPrefixField';
+						input.value = richPrefix;
+					}));
+				}));
+			}));
 
-		templateMessage = document.createElement('div'),
-		templateMessage_content = document.createElement('div'),
-		templateMessage_content_Text = document.createTextNode('Your settings have been saved.');
+			fieldset.appendChild(createElement('dl', function(cont) {
+				cont.className = 'ctrlUnit';
+				cont.appendChild(createElement('dt', function(title) {
+					title.appendChild(document.createTextNode('Rich Suffix:'));
+				}));
 
-		// Load input settings
+				cont.appendChild(createElement('dd', function(field) {
+					field.appendChild(createElement('input', function(input) {
+						input.type = 'text';
+						input.className = 'textCtrl OptOut';
+						input.id = 'richSuffixField';
+						input.value = richSuffix;
+					}));
+				}));
+			}));
 
-		htmlPrefixFieldDD_input.value = htmlPrefix;
-		htmlSuffixFieldDD_input.value = htmlSuffix;
-		bbPrefixFieldDD_input.value = bbPrefix;
-		bbSuffixFieldDD_input.value = bbSuffix;
+			fieldset.appendChild(createElement('dl', function(cont) {
+				cont.className = 'ctrlUnit';
+				cont.appendChild(createElement('dt', function(title) {
+					title.appendChild(document.createTextNode('Plaintext Prefix:'));
+				}));
 
-		// Header
+				cont.appendChild(createElement('dd', function(field) {
+					field.appendChild(createElement('input', function(input) {
+						input.type = 'text';
+						input.className = 'textCtrl OptOut';
+						input.id = 'plainPrefixField';
+						input.value = plainPrefix;
+					}));
+				}));
+			}));
 
-		headerDD.setAttribute('style', 'font-weight: bolder; font-size: 130%; width: 40%; text-decoration: underline;');
-		headerDD.appendChild(headerDD_Text);
+			fieldset.appendChild(createElement('dl', function(cont) {
+				cont.className = 'ctrlUnit';
+				cont.appendChild(createElement('dt', function(title) {
+					title.appendChild(document.createTextNode('Plaintext Suffix:'));
+				}));
 
-		header.className = 'ctrlUnit';
-		header.appendChild(headerDT);
-		header.appendChild(headerDD);
+				cont.appendChild(createElement('dd', function(field) {
+					field.appendChild(createElement('input', function(input) {
+						input.type = 'text';
+						input.className = 'textCtrl OptOut';
+						input.id = 'plainSuffixField';
+						input.value = plainSuffix;
+					}));
+				}));
+			}));
 
-		// Auto apply field
+			fieldset.appendChild(createElement('dl', function(cont) {
+				cont.className = 'ctrlUnit';
+				cont.appendChild(createElement('dt', function(title) {}));
 
-		autoApplyFieldDT.appendChild(autoApplyFieldDT_Text);
-
-		autoApplyFieldDD_Select_true.value = true;
-		autoApplyFieldDD_Select_true.appendChild(autoApplyFieldDD_Select_true_Text);
-
-		autoApplyFieldDD_Select_false.value = false;
-		autoApplyFieldDD_Select_false.appendChild(autoApplyFieldDD_Select_false_Text);
-
-		autoApplyFieldDD_Select.id = 'autoApplyField';
-		autoApplyFieldDD_Select.className = 'textCtrl';
-		autoApplyFieldDD_Select.appendChild(autoApplyFieldDD_Select_true);
-		autoApplyFieldDD_Select.appendChild(autoApplyFieldDD_Select_false);
-
-		autoApplyFieldDD.appendChild(autoApplyFieldDD_Select);
-
-		autoApplyField.className = 'ctrlUnit';
-		autoApplyField.appendChild(autoApplyFieldDT);
-		autoApplyField.appendChild(autoApplyFieldDD);
-
-		// HTML prefix field
-
-		htmlPrefixFieldDT.appendChild(htmlPrefixFieldDT_Text);
-
-		htmlPrefixFieldDD_input.type = 'text';
-		htmlPrefixFieldDD_input.id = 'htmlPrefixField';
-		htmlPrefixFieldDD_input.className = 'textCtrl OptOut';
-
-		htmlPrefixFieldDD.appendChild(htmlPrefixFieldDD_input);
-
-		htmlPrefixField.className = 'ctrlUnit';
-		htmlPrefixField.appendChild(htmlPrefixFieldDT);
-		htmlPrefixField.appendChild(htmlPrefixFieldDD);
-
-		// HTML suffix field
-
-		htmlSuffixFieldDT.appendChild(htmlSuffixFieldDT_Text);
-
-		htmlSuffixFieldDD_input.type = 'text';
-		htmlSuffixFieldDD_input.id = 'htmlSuffixField';
-		htmlSuffixFieldDD_input.className = 'textCtrl OptOut';
-
-		htmlSuffixFieldDD.appendChild(htmlSuffixFieldDD_input);
-
-		htmlSuffixField.className = 'ctrlUnit';
-		htmlSuffixField.appendChild(htmlSuffixFieldDT);
-		htmlSuffixField.appendChild(htmlSuffixFieldDD);
-
-		// BBCode prefix field
-
-		bbPrefixFieldDT.appendChild(bbPrefixFieldDT_Text);
-
-		bbPrefixFieldDD_input.type = 'text';
-		bbPrefixFieldDD_input.id = 'bbPrefixField';
-		bbPrefixFieldDD_input.className = 'textCtrl OptOut';
-
-		bbPrefixFieldDD.appendChild(bbPrefixFieldDD_input);
-
-		bbPrefixField.className = 'ctrlUnit';
-		bbPrefixField.appendChild(bbPrefixFieldDT);
-		bbPrefixField.appendChild(bbPrefixFieldDD);
-
-		// BBCode suffix field
-
-		bbSuffixFieldDT.appendChild(bbSuffixFieldDT_Text);
-
-		bbSuffixFieldDD_input.type = 'text';
-		bbSuffixFieldDD_input.id = 'bbSuffixField';
-		bbSuffixFieldDD_input.className = 'textCtrl OptOut';
-
-		bbSuffixFieldDD.appendChild(bbSuffixFieldDD_input);
-
-		bbSuffixField.className = 'ctrlUnit';
-		bbSuffixField.appendChild(bbSuffixFieldDT);
-		bbSuffixField.appendChild(bbSuffixFieldDD);
-
-		// Submit field
-
-		submitFieldDD_input.type = 'button';
-		submitFieldDD_input.id = 'submitTemplate';
-		submitFieldDD_input.className = 'button';
-		submitFieldDD_input.value = 'Save';
-		submitFieldDD_input.setAttribute('onClick', 'saveStyleSettings();');
-
-		submitFieldDD.appendChild(submitFieldDD_input);
-
-		submitField.className = 'ctrlUnit';
-		submitField.appendChild(submitFieldDT);
-		submitField.appendChild(submitFieldDD);
-
-		// Template message
-
-		templateMessage_content.className = 'content baseHtml';
-		templateMessage_content.style.opacity = 0;
-		templateMessage_content.appendChild(templateMessage_content_Text);
-
-		templateMessage.id = 'templateMessage';
-		templateMessage.className = 'xenOverlay timedMessage';
-		templateMessage.setAttribute('style', 'top: 0px; left: 0px; position: fixed; display: none;');
-		templateMessage.appendChild(templateMessage_content);
-
-		// Build it all
-
-		optionsContainer.id = 'templateOptionsContainer';
-		optionsContainer.appendChild(header);
-		optionsContainer.appendChild(autoApplyField);
-		optionsContainer.appendChild(htmlPrefixField);
-		optionsContainer.appendChild(htmlSuffixField);
-		optionsContainer.appendChild(bbPrefixField);
-		optionsContainer.appendChild(bbSuffixField);
-		optionsContainer.appendChild(submitField);
+				cont.appendChild(createElement('dd', function(field) {
+					field.appendChild(createElement('input', function(input) {
+						input.type = 'button';
+						input.className = 'button';
+						input.id = 'submitStyle';
+						input.value = 'Save';
+						input.setAttribute('onclick', 'saveStyleSettings();');
+					}));
+				}));
+			}));
+		});
 
 		document.getElementsByClassName('OptOut')[document.getElementsByClassName('OptOut').length - 1].parentNode.insertBefore(optionsContainer, document.getElementsByClassName('OptOut')[document.getElementsByClassName('OptOut').length - 1]);
 
-		(document.body || document.documentElement).appendChild(templateMessage);
+		document.body.appendChild(createElement('div', function(cont) {
+			cont.className = 'xenOverlay timedMessage';
+			cont.id = 'postStyleMessage';
+			cont.style.top = '0px';
+			cont.style.left = '0px';
+			cont.style.position = 'fixed';
+			cont.style.display = 'none';
 
-		// Load auto apply setting
-
-		for (i = 0, field = document.getElementById('autoApplyField'); i < field.options.length; i++) {
-			if (field.options[i].value === autoApply.toString()) {
-				field.selectedIndex = i;
-			}
-		}
+			cont.appendChild(createElement('div', function(content) {
+				content.className = 'content baseHtml';
+				content.style.opacity = 0;
+				content.appendChild(document.createTextNode('Post Style installed.'));
+			}));
+		}));
 		
-		if (window.location.href.substr(window.location.href.length - 14, 14) === '#Post_Template') {
-			scrollTo(document.body, getPosition(document.getElementById('templateOptionsContainer')).y, 100);
+		if (window.location.href.substr(window.location.href.length - 14, 14) === '#Post_Style') {
+			scrollTo(document.body, getPosition(document.getElementById('styleOptionsContainer')).y, 100);
 			runInGlobal('xenForoMessage(\'Please customize your settings.\', true);');
 		}
 	}
