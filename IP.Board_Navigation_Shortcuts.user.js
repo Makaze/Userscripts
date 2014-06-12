@@ -4,7 +4,7 @@
 // @description	Adds keyboard navigation shortcuts to XenForo.
 // @include	*
 // @grant	none
-// @version	2.0.1
+// @version	2.0.2
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -1192,6 +1192,12 @@ function shortcutsMenu() {
 									'first_page': 76, 'first_page_modifier': 'shiftKey'
 								};
 
+								if (document.getElementsByClassName('capturing')[0] != null) {
+									while (document.getElementsByClassName('capturing')[0] != null) {
+										document.getElementsByClassName('capturing')[0].click();
+									}
+								}
+
 								getChanges(shortcuts, 'next_post', 'NextPost');
 								getChanges(shortcuts, 'previous_post', 'PreviousPost');
 								getChanges(shortcuts, 'next_page', 'NextPage');
@@ -1217,6 +1223,12 @@ function shortcutsMenu() {
 							close.appendChild(document.createTextNode('Cancel'));
 
 							close.onclick = function() {
+								if (document.getElementsByClassName('capturing')[0] != null) {
+									while (document.getElementsByClassName('capturing')[0] != null) {
+										document.getElementsByClassName('capturing')[0].click();
+									}
+								}
+
 								fade(document.getElementById('NavigationShortcuts'), 'out');
 								setTimeout(function() {
 									document.getElementById('NavigationShortcuts').remove();
