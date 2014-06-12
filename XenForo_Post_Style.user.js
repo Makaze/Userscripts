@@ -373,8 +373,6 @@ if (document.documentElement.id === "XenForo") {
 			return false;
 		}
 
-		console.log(instance);
-
 		if (instance.getElementsByClassName('applyButton')[0] != null) {
 			return false;
 		}
