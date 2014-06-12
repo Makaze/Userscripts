@@ -123,8 +123,6 @@ function scrollTo(element, to, duration) {
 	currentTime = 0,
 	increment = 1;
 
-	console.log(to);
-
 	var animateScroll = function() {
 		var val = Math.easeInOutQuad(currentTime, start, change, duration);
 		element.scrollTop = val;
