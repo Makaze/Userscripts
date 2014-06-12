@@ -4,7 +4,7 @@
 // @description	Adds options to apply a predefined style to posts in a variety of ways.
 // @include	*
 // @grant	none
-// @version	1.0.3
+// @version	1.0.4
 // ==/UserScript==
 
 var opts,
