@@ -493,7 +493,7 @@ function archive(buffer) {
 		link.click();
 	} else {
 		loadArchive(true);
-		pushMessage('Archive retrieved. Copy it to a text file to save it.', true);
+		pushMessage('Archive retrieved. Copy it to a text file to save it permanently.', true);
 	}
 }
 
