@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name	XenForo - Archiver
 // @namespace	Makaze
-// @description	Convert XenForo thread and conversation messages into text format for easy archiving.
+// @description	Converts XenForo thread and conversation messages into text format for easy archiving.
 // @include	*
 // @grant	none
 // @version	1.0
