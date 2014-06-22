@@ -357,7 +357,7 @@ function addNick(nickobj, context, specialClass) {
 			dd.appendChild(createElement('a', function(link) {
 				link.className = 'concealed';
 				link.href = 'javascript:void(0)';
-				link.title = 'Edit';
+				link.title = 'Change Nickname';
 				link.appendChild(document.createTextNode(nickobj.nickname));
 
 				link.onclick = function() {
