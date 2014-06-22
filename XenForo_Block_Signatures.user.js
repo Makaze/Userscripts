@@ -4,7 +4,7 @@
 // @description	Adds an option to hide users' signatures on XenForo.
 // @include	*
 // @grant	none
-// @version	2.2.0
+// @version	2.2.1
 // ==/UserScript==
 
 function createElement(type, callback) {
@@ -58,7 +58,7 @@ function addButton(userID, isBlocked) {
 					context = document.getElementsByClassName('messageUserInfo')[i];
 
 					if (context.getElementsByClassName('username')[0] != null) {
-						postAuthor = context.getElementsByClassName('username')[0].href.replace(/.*?members\/.*?\.(\d+)\//i, '$1');
+						postAuthor = context.getElementsByClassName('username')[0].href.replace(/members\/.*?\.(\d+)\//i, '$1');
 						signature = context.parentNode.getElementsByClassName('signature')[0];
 
 						if (postAuthor === userID) {
@@ -78,7 +78,7 @@ function addButton(userID, isBlocked) {
 }
 
 if (document.documentElement.id === 'XenForo') {
-	if (document.getElementsByClassName('signature').length && document.getElementsByClassName('messageUserInfo').length) {
+	if (document.getElementsByClassName('signature')[0] != null && document.getElementsByClassName('messageUserInfo')[0] != null) {
 		var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {}, 
 		users = (opts.hasOwnProperty('xf_hidden_sigs')) ? opts.xf_hidden_sigs : [],
 		context,
@@ -91,17 +91,18 @@ if (document.documentElement.id === 'XenForo') {
 
 		for (i = 0; i < document.getElementsByClassName('messageUserInfo').length; i++) {
 			context = document.getElementsByClassName('messageUserInfo')[i];
-			if (context.getElementsByClassName('username')[0] != null) {
-				userID = context.getElementsByClassName('username')[0].href.replace(/.*?members\/.*?\.(\d+)\//i, '$1');
-				appendLocation = context.getElementsByClassName('extraUserInfo')[0];
-				signature = context.parentNode.getElementsByClassName('signature')[0];
+			isBlocked = false;
 
-				if (users.length) {
-					for (j = 0; j < users.length; j++) {
-						if (userID === users[j]) {
-							signature.style.display = 'none';
-							isBlocked = true;
-						}
+			if (context.getElementsByClassName('username')[0] != null) {
+				userID = context.getElementsByClassName('username')[0].href.match(/members\/.*?\.(\d+)\//i)[1];
+				appendLocation = context.getElementsByClassName('extraUserInfo')[0];
+				
+				for (j = 0; j < users.length; j++) {
+					if (userID === users[j]) {
+						signature = context.parentNode.getElementsByClassName('signature')[0];
+						signature.style.display = 'none';
+						isBlocked = true;
+						break;
 					}
 				}
 
