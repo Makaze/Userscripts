@@ -478,7 +478,7 @@ if (document.documentElement.id === 'XenForo') {
 		userLinks,
 		userID;
 
-		if (!event.target.hasAttribute('data-overlayclass') || event.target.getAttribute('data-overlayclass').indexOf('memberCard') < 0) {
+		if (!event.target.hasAttribute || !event.target.hasAttribute('data-overlayclass') || event.target.getAttribute('data-overlayclass').indexOf('memberCard') < 0) {
 			return false;
 		}
 
