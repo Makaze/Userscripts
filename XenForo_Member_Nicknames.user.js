@@ -181,7 +181,7 @@ function editNick(user) {
 
 			overlay.appendChild(createElement('div', function(heading) {
 				heading.className = 'heading';
-				heading.appendChild(document.createTextNode('Member Nickname'));
+				heading.appendChild(document.createTextNode('Nickname'));
 			}));
 
 			overlay.appendChild(createElement('div', function(inner) {
