@@ -4,7 +4,7 @@
 // @description	Adds an optional customized Nickname field to the profiles of members of your choice. 
 // @include	*
 // @grant	none
-// @version	1.0
+// @version	1.0.1
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -415,9 +415,12 @@ if (document.documentElement.id === 'XenForo') {
 
 	for (i = 0; i < document.head.getElementsByTagName('link').length; i++) {
 		if (document.head.getElementsByTagName('link')[i].getAttribute('href').substr(0, 12) === 'css.php?css=') {
-			document.head.getElementsByTagName('link')[i].setAttribute('href',
-				document.head.getElementsByTagName('link')[i].getAttribute('href').substr(0, 12) + 'editor_ui,' + document.head.getElementsByTagName('link')[i].getAttribute('href').slice(12)
-			);
+			insertAfter(createElement('link', function(css) {
+				css.rel = 'stylesheet';
+				css.setAttribute('href',
+					document.head.getElementsByTagName('link')[i].getAttribute('href').substr(0, 12) + 'editor_ui,' + document.head.getElementsByTagName('link')[i].getAttribute('href').slice(12)
+				);
+			}), document.head.getElementsByTagName('link')[i]);
 			break;
 		}
 	}
