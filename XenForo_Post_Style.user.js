@@ -4,7 +4,7 @@
 // @description	Adds options to apply a predefined style to posts in a variety of ways.
 // @include	*
 // @grant	none
-// @version	5.1.2
+// @version	5.1.3
 // ==/UserScript==
 
 var opts,
@@ -121,7 +121,7 @@ function scrollTo(element, to, duration) {
 	var start = element.scrollTop,
 	change = to - start,
 	currentTime = 0,
-	increment = 1;
+	increment = 5;
 
 	var animateScroll = function() {
 		var val = Math.easeInOutQuad(currentTime, start, change, duration);
