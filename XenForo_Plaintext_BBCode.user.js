@@ -456,12 +456,12 @@ if (document.documentElement.id === 'XenForo') {
 
 	for (i = 0; i < document.head.getElementsByTagName('link').length; i++) {
 		if (document.head.getElementsByTagName('link')[i].getAttribute('href').substr(0, 12) === 'css.php?css=') {
-			insertAfter(createElement('link', function(css) {
+			document.head.getElementsByTagName('link')[i].parentNode.insertBefore(createElement('link', function(css) {
 				css.rel = 'stylesheet';
 				css.setAttribute('href',
 					document.head.getElementsByTagName('link')[i].getAttribute('href').substr(0, 12) + 'editor_ui,' + document.head.getElementsByTagName('link')[i].getAttribute('href').slice(12)
 				);
-			}), document.head.getElementsByTagName('link')[i]);
+			}), document.head.getElementsByTagName('link')[i].nextSibling);
 			break;
 		}
 	}
