@@ -4,7 +4,7 @@
 // @description	Keep and manage IRC-like logs for IP.Chat clients.
 // @include	*
 // @grant	none
-// @version	1.3.3
+// @version	1.3.4
 // ==/UserScript==
 
 var IPChatMenuItems,
@@ -477,7 +477,7 @@ if (document.body.id === 'ipboard_body' && document.getElementById('chat-form') 
 	menuButton = createElement('a', function(button) {
 		button.id = 'viewIPChatLogs';
 		button.className = 'ipsButton_secondary';
-		button.href = window.location.origin + '/IP.Chat_Logs';
+		button.href = window.location.origin + '/#IP.Chat_Logs';
 		button.target = '_blank';
 		button.style.marginTop = '10px';
 		button.appendChild(document.createTextNode('View Logs'));
@@ -486,7 +486,7 @@ if (document.body.id === 'ipboard_body' && document.getElementById('chat-form') 
 	document.getElementById('IPChatMenuItems').appendChild(menuButton);
 }
 
-if (window.location.href === window.location.origin + '/IP.Chat_Logs' && localStorage.getItem('IP.Chat Logs')) {
+if (window.location.href === window.location.origin + '/#IP.Chat_Logs' && localStorage.getItem('IP.Chat Logs')) {
 	var style,
 	funcs;
 
@@ -577,6 +577,8 @@ if (window.location.href === window.location.origin + '/IP.Chat_Logs' && localSt
 			'}'
 		));
 	});
+
+	empty(document.getElementsByTagName('head')[0]);
 
 	document.title = 'IP.Chat Logs';
 	document.body.style.fontFamily = 'monospace';
