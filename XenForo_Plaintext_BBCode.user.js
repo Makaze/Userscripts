@@ -4,7 +4,7 @@
 // @description	Adds BBCode buttons to Plaintext Mode on XenForo.
 // @include	*
 // @grant	none
-// @version	1.0.3
+// @version	1.0.4
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -372,24 +372,24 @@ function addButton(field, button) {
 
 if (document.documentElement.id === 'XenForo') {
 	BUTTONS = [
-		{ 'title': '<strong>B</strong>', 'hover': 'Bold', 'open': '[B]', 'close': '[/B]' },
-		{ 'title': '<em>I</em>', 'hover': 'Italic', 'open': '[I]', 'close': '[/I]' },
-		{ 'title': '<span style="text-decoration: underline;">U</span>', 'hover': 'Underline', 'open': '[U]', 'close': '[/U]' },
-		{ 'title': '<span style="text-decoration: line-through;">S</span>', 'hover': 'Strike-through', 'open': '[S]', 'close': '[/S]' },
-		{ 'title': 'Size', 'hover': 'Change font size', 'open': '[SIZE=3]', 'close': '[/SIZE]' },
-		{ 'title': 'Font', 'hover': 'Change font face', 'open': '[FONT=Arial]', 'close': '[/FONT]' },
-		{ 'title': 'Color', 'hover': 'Change font color', 'open': '[COLOR=#000000]', 'close': '[/COLOR]' },
-		{ 'title': 'URL', 'hover': 'Insert a link', 'request': true, 'type': 'Link', 'key': 'URL', 'desc': 'URL' },
-		{ 'title': 'IMG', 'hover': 'Insert an image', 'request': true, 'type': 'Image', 'key': 'IMG', 'desc': 'URL' },
-		{ 'title': 'Quote', 'hover': 'Insert a quote', 'open': '[QUOTE]', 'close': '[/QUOTE]' },
-		{ 'title': 'Code', 'hover': 'Insert a code block', 'open': '[CODE]', 'close': '[/CODE]' },
-		{ 'title': 'List (*)', 'hover': 'Create an unordered list', 'open': '[LIST]\n[*]', 'close': '\n[/LIST]' },
-		{ 'title': 'List (#)', 'hover': 'Create an ordered list', 'open': '[LIST=1]\n[*]', 'close': '\n[/LIST]' },
-		{ 'title': 'Indent', 'hover': 'Indent text', 'open': '[INDENT=1]', 'close': '[/INDENT]' },
-		{ 'title': 'Right', 'hover': 'Align text to the right', 'open': '[RIGHT]', 'close': '[/RIGHT]' },
-		{ 'title': 'Justify', 'hover': 'Justify text', 'open': '[JUSTIFY]', 'close': '[/JUSTIFY]' },
-		{ 'title': 'Center', 'hover': 'Align text to the center', 'open': '[CENTER]', 'close': '[/CENTER]' },
-		{ 'title': 'Spoiler', 'hover': 'Hide content until clicked', 'open': '[SPOILER]', 'close': '[/SPOILER]' }
+		{ 'title': '<strong>B</strong>', 'hover': 'Bold', 'open': '[B]', 'close': '[/B]', 'comment': true },
+		{ 'title': '<em>I</em>', 'hover': 'Italic', 'open': '[I]', 'close': '[/I]', 'comment': true },
+		{ 'title': '<span style="text-decoration: underline;">U</span>', 'hover': 'Underline', 'open': '[U]', 'close': '[/U]', 'comment': true },
+		{ 'title': '<span style="text-decoration: line-through;">S</span>', 'hover': 'Strike-through', 'open': '[S]', 'close': '[/S]', 'comment': true },
+		{ 'title': 'Size', 'hover': 'Change font size', 'open': '[SIZE=3]', 'close': '[/SIZE]', 'comment': false },
+		{ 'title': 'Font', 'hover': 'Change font face', 'open': '[FONT=Arial]', 'close': '[/FONT]', 'comment': false },
+		{ 'title': 'Color', 'hover': 'Change font color', 'open': '[COLOR=#000000]', 'close': '[/COLOR]', 'comment': false },
+		{ 'title': 'URL', 'hover': 'Insert a link', 'request': true, 'type': 'Link', 'key': 'URL', 'desc': 'URL', 'comment': true },
+		{ 'title': 'IMG', 'hover': 'Insert an image', 'request': true, 'type': 'Image', 'key': 'IMG', 'desc': 'URL', 'comment': false },
+		{ 'title': 'Quote', 'hover': 'Insert a quote', 'open': '[QUOTE]', 'close': '[/QUOTE]', 'comment': false },
+		{ 'title': 'Code', 'hover': 'Insert a code block', 'open': '[CODE]', 'close': '[/CODE]', 'comment': false },
+		{ 'title': 'List (*)', 'hover': 'Create an unordered list', 'open': '[LIST]\n[*]', 'close': '\n[/LIST]', 'comment': false },
+		{ 'title': 'List (#)', 'hover': 'Create an ordered list', 'open': '[LIST=1]\n[*]', 'close': '\n[/LIST]', 'comment': false },
+		{ 'title': 'Indent', 'hover': 'Indent text', 'open': '[INDENT=1]', 'close': '[/INDENT]', 'comment': false },
+		{ 'title': 'Right', 'hover': 'Align text to the right', 'open': '[RIGHT]', 'close': '[/RIGHT]', 'comment': false },
+		{ 'title': 'Justify', 'hover': 'Justify text', 'open': '[JUSTIFY]', 'close': '[/JUSTIFY]', 'comment': false },
+		{ 'title': 'Center', 'hover': 'Align text to the center', 'open': '[CENTER]', 'close': '[/CENTER]', 'comment': false },
+		{ 'title': 'Spoiler', 'hover': 'Hide content until clicked', 'open': '[SPOILER]', 'close': '[/SPOILER]', 'comment': false }
 	];
 
 	// Styling
@@ -467,14 +467,15 @@ if (document.documentElement.id === 'XenForo') {
 	}
 
 	var initBBCodeHandler = function(event) {
-		var parent;
+		var parent,
+		comment = false;
 
 		if (!event.target.tagName || event.target.tagName !== 'TEXTAREA') {
 			return false;
 		}
 
 		if (Classes.hasClass(event.target, 'textCtrl')) {
-			if (Classes.hasClass(event.target, 'MessageEditor') || Classes.hasClass(event.target.parentNode, 'bbCodeEditorContainer')) {
+			if (Classes.hasClass(event.target, 'MessageEditor') || Classes.hasClass(event.target.parentNode, 'bbCodeEditorContainer') || Classes.hasClass(event.target.parentNode.parentNode, 'comment') || Classes.hasClass(event.target.parentNode.parentNode, 'profilePoster')) {
 				parent = event.target.parentNode;
 
 				if (parent.getElementsByClassName('plainBBCodeContainer')[0] != null) {
@@ -484,8 +485,18 @@ if (document.documentElement.id === 'XenForo') {
 				parent.insertBefore(createElement('div', function(bbcodecontainer) {
 					bbcodecontainer.className = 'plainBBCodeContainer';
 
+					if (Classes.hasClass(event.target.parentNode.parentNode, 'comment') || Classes.hasClass(event.target.parentNode.parentNode, 'profilePoster')) {
+						comment = true;
+					}
+
 					for (i = 0; i < BUTTONS.length; i++) {
-						bbcodecontainer.appendChild(addButton(event.target, BUTTONS[i]));
+						if (comment) {
+							if (BUTTONS[i].comment) {
+								bbcodecontainer.appendChild(addButton(event.target, BUTTONS[i]));
+							}
+						} else {
+							bbcodecontainer.appendChild(addButton(event.target, BUTTONS[i]));
+						}
 					}
 				}), parent.getElementsByClassName('textCtrl')[0]);
 
