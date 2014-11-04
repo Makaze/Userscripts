@@ -4,7 +4,7 @@
 // @description	Adds an optional customized Nickname field to the profiles of members of your choice. 
 // @include	*
 // @grant	none
-// @version	1.0.1
+// @version	1.0.2
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -118,6 +118,8 @@ function editNick(event) {
 				opts.ipb_member_nicknames = nicks;
 				localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
 			}
+
+			event.target.removeEventListener('keydown', submitNick, false);
 		}
 	};
 
