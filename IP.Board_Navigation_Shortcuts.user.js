@@ -4,7 +4,7 @@
 // @description	Adds keyboard navigation shortcuts to XenForo.
 // @include	*
 // @grant	none
-// @version	2.0.4
+// @version	2.0.5
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -144,7 +144,7 @@ function scrollToNext(context, collection, dir) {
 				item = collection[i];
 
 				if (getPosition(item).y < context.scrollTop - 2) {
-					scrollTo(context, getPosition(item).y, 50);
+					scrollTo(context, getPosition(item).y, 100);
 					break;
 				}
 			}
@@ -155,7 +155,7 @@ function scrollToNext(context, collection, dir) {
 				item = collection[i];
 
 				if (getPosition(item).y > context.scrollTop + 2) {
-					scrollTo(context, getPosition(item).y, 50);
+					scrollTo(context, getPosition(item).y, 100);
 					break;
 				}
 			}
