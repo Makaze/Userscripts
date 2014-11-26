@@ -45,13 +45,15 @@ if (document.documentElement.id === 'XenForo') {
 			"$('.searchResult').each(function() {" +
 				"var id = $(this).get(0).id;" +
 
-				"$(this).find('.snippet').fadeOut('slow');" +
+				"if (id.substr(0, 7) !== 'profile') {" +
+					"$(this).find('.snippet').fadeOut('slow');" +
 
-				"$(this).find('.snippet').load($(this).find('.snippet a').get(0).href + ' #' + id + ' .messageText:first', function() {" +
-					"$('#' + id).find('.snippet').find('.messageAd, style').remove();" +
+					"$(this).find('.snippet').load($(this).find('.snippet a').get(0).href + ' #' + id + ' .messageText:first', function() {" +
+						"$('#' + id).find('.snippet').find('.messageAd, style').remove();" +
 
-					"$('#' + id).find('.snippet').fadeIn('slow');" +
-				"});" +
+						"$('#' + id).find('.snippet').fadeIn('slow');" +
+					"});" +
+				"}" +
 			"});"
 		);
 	}
