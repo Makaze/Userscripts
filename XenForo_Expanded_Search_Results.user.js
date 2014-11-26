@@ -31,7 +31,6 @@ if (document.documentElement.id === 'XenForo') {
 	if (document.getElementsByClassName('searchResult')[0] != null) {
 		for (i = 0; i < document.head.getElementsByTagName('link').length; i++) {
 			if (document.head.getElementsByTagName('link')[i].getAttribute('href').substr(0, 12) === 'css.php?css=') {
-
 				document.head.appendChild(createElement('link', function(css) {
 					css.rel = 'stylesheet';
 					css.setAttribute('href',
