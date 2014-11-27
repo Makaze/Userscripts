@@ -57,7 +57,7 @@ if (document.documentElement.id === 'XenForo') {
 				'overflow: hidden;\n' +
 			'}\n\n' +
 
-			'.searchResult .snippet a {\n' +
+			'.searchResult .snippet .messageText a {\n' +
 				'font-size: 100%;\n' +
 			'}\n\n' +
 
