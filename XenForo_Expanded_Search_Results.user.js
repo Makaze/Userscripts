@@ -4,8 +4,12 @@
 // @description	Shows expanded posts in search results instead of snippets.
 // @include	*
 // @grant	none
-// @version	1.0.0
+// @version	1.1.0
 // ==/UserScript==
+
+var MakazeScriptStyles,
+styleElem,
+i;
 
 function createElement(type, callback) {
 	var element = document.createElement(type);
@@ -29,6 +33,40 @@ function runInGlobal(code) {
 
 if (document.documentElement.id === 'XenForo') {
 	if (document.getElementsByClassName('searchResult')[0] != null) {
+		//Styling
+
+		if (document.getElementById('MakazeScriptStyles') == null) {
+			MakazeScriptStyles = createElement('style', function(style) {
+				style.id = 'MakazeScriptStyles';
+				style.type = 'text/css';
+			});
+			document.head.appendChild(MakazeScriptStyles);
+		}
+
+		styleElem = document.getElementById('MakazeScriptStyles');
+
+		if (styleElem.hasChildNodes()) {
+			styleElem.childNodes[0].nodeValue += '\n\n';
+		} else {
+			styleElem.appendChild(document.createTextNode(''));
+		}
+
+		styleElem.childNodes[0].nodeValue +=
+			'.snippet {\n' +
+				'position: relative;\n' +
+				'overflow: hidden;\n' +
+			'}\n\n' +
+
+			'.searchResult .snippet a {\n' +
+				'font-size: 100%;\n' +
+			'}\n\n' +
+
+			'.searchExpand {\n' +
+				'display: block;\n' +
+				'position: absolute;\n' +
+				'z-index: 1;\n' +
+			'}';
+
 		for (i = 0; i < document.head.getElementsByTagName('link').length; i++) {
 			if (document.head.getElementsByTagName('link')[i].getAttribute('href').substr(0, 12) === 'css.php?css=') {
 				document.head.appendChild(createElement('link', function(css) {
@@ -42,19 +80,46 @@ if (document.documentElement.id === 'XenForo') {
 		}
 
 		runInGlobal(
+			createElement.toString() +
 			"$('.searchResult').each(function() {" +
-				"var id = $(this).get(0).id;" +
+				"var id = $(this).get(0).id," +
+				"self = this;" +
 
 				"if (id.substr(0, 7) !== 'profile') {" +
-					"$(this).find('.snippet').fadeOut('slow');" +
+					"$(this).find('.contentType').append(createElement('a', function(cut) {" +
+						"cut.className = 'searchExpand';" +
+						"cut.href = 'javascript:void(0)';" +
+						"cut.appendChild(document.createTextNode('Expand'));" +
 
-					"$(this).find('.snippet').load($(this).find('.snippet a').get(0).href + ' #' + id + ' .messageText:first', function() {" +
-						"$('#' + id).find('.snippet').find('.messageAd, style').remove();" +
+						"$(cut).on('click', function() {" +
+							"var expand = this;" +
 
-						"$('#' + id).find('.snippet').fadeIn('slow');" +
-					"});" +
+							"$(self).find('.snippet').fadeOut('slow');" +
+
+							"$(expand).fadeOut('slow');" +
+
+							"$(self).find('.snippet').load($(self).find('.snippet a').get(0).href + ' #' + id + ' .messageText:first', function() {" +
+								"$('#' + id).find('.snippet').find('.messageAd, style').remove();" +
+
+								"$('#' + id).find('.snippet').fadeIn('slow');" +
+							"});" +
+						"});" +
+					"}));" +
 				"}" +
-			"});"
+			"});" +
+
+			"$('.pageNavLinkGroup .linkGroup').append(createElement('a', function(all) {" +
+				"all.href = 'javascript:void(0)';" +
+				"all.appendChild(document.createTextNode('Expand All'));" +
+
+				"$(all).on('click', function() {" +
+					"$('.searchExpand').each(function() {" +
+						"$(this).click();" +
+					"});" +
+					
+					"$(this).fadeOut('slow');" +
+				"});" +
+			"}));"
 		);
 	}
 }
