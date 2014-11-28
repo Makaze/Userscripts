@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	IP.Board Post Auto-Saving + Management
+// @name	IP.Board - Post Auto-Saving + Management
 // @namespace	Makaze
 // @description	Save and manage post drafts for IP.Board forums.
 // @include	*
