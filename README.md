@@ -118,7 +118,7 @@ A collection of my client-side userscripts.
 **Description**: Add secondary nicknames for users - shown only in IP.Chat.  
 
 #### `IP.Chat_Pings.user.js`  
-**Name**: IP.Chat Pings + Highlight  
+**Name**: IP.Chat Pings + Highlights   
 **Description**: Pings you when specified words are said in the chat.  
 
 #### `SF_Change_FE_in_Miniprofiles.user.js`  
