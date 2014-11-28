@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	IP.Chat Pings + Highlight
+// @name	IP.Chat Pings + Highlights
 // @namespace	Makaze
 // @description	Pings you when specified words are said in the chat.
 // @include	*
