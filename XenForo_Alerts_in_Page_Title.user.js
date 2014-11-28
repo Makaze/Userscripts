@@ -15,7 +15,7 @@ function alerts() {
 	total = PMs + Alerts;
 
 	if (total > 0) {
-		document.title = '(' + total + ') ' + defaultTitle;
+		document.title = '[' + total + '] ' + defaultTitle;
 	} else if (document.title !== defaultTitle) {
 		document.title = defaultTitle;
 	}
