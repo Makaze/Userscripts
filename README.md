@@ -194,7 +194,7 @@ Miscellaneous
 **Name**: Freeze All GIFs  
 **Description**: Freezes all animated GIFs on a page.  
 
-#### `GlobalVariableConstructor.user.js` [More](../../wiki/Miscellaneous:-Access-Global_Variables_from_Userscripts "Wiki")  
+#### `GlobalVariableConstructor.user.js` [More](../../wiki/Miscellaneous:-Access-Global-Variables-from-Userscripts "Wiki")  
 **Name**: Access Global Variables from Userscripts  
 **Description**: Constructor/library to read and set globals from the content/userscript scope. Works in Google Chrome.  
 
