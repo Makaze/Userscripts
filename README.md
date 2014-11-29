@@ -49,7 +49,7 @@ A collection of my client-side userscripts.
 
 ## Invision Power
 
-#### `IP.Board_Auto-Save_Posts.user.js` [[Wiki]](IP.Board_Auto-Save_Posts.user.js "Wiki")  
+#### `IP.Board_Auto-Save_Posts.user.js` [More](IP.Board_Auto-Save_Posts.user.js "Wiki")  
 **Name**: IP.Board Post Auto-Saving + Management  
 **Description**: Save and manage post drafts for IP.Board forums.  
 
@@ -61,19 +61,19 @@ A collection of my client-side userscripts.
 **Name**: IP.Board - Hide Gender in Miniprofiles  
 **Description**: IP.Board - Hide Gender in Miniprofiles  
 
-#### `IP.Board_Isolate_Posts_by_User.user.js` [[Wiki]](IP.Board_Isolate_Posts_by_User.user.js "Wiki")  
+#### `IP.Board_Isolate_Posts_by_User.user.js` [More](IP.Board_Isolate_Posts_by_User.user.js "Wiki")  
 **Name**: IP.Board - Isolate Posts by User  
 **Description**: Adds links to 'Who posted in' lists and posts that generate all posts by that user in the thread.  
 
-#### `IP.Board_Member_Nicknames.user.js` [[Wiki]](IP.Board_Member_Nicknames.user.js "Wiki")  
+#### `IP.Board_Member_Nicknames.user.js` [More](IP.Board_Member_Nicknames.user.js "Wiki")  
 **Name**: IP.Board - Member Nicknames  
 **Description**: Adds an optional customized Nickname field to the profiles of members of your choice.  
 
-#### `IP.Board_Navigation_Shortcuts.user.js` [[Wiki]](IP.Board_Navigation_Shortcuts.user.js "Wiki")  
+#### `IP.Board_Navigation_Shortcuts.user.js` [More](IP.Board_Navigation_Shortcuts.user.js "Wiki")  
 **Name**: IP.Board - Navigation Shortcuts  
 **Description**: Adds keyboard navigation shortcuts to XenForo.  
 
-#### `IP.Board_Plaintext_BBCode.user.js` [[Wiki]](IP.Board_Plaintext_BBCode.user.js "Wiki")  
+#### `IP.Board_Plaintext_BBCode.user.js` [More](IP.Board_Plaintext_BBCode.user.js "Wiki")  
 **Name**: IP.Board - Plaintext BBCode  
 **Description**: Adds BBCode button support to Plaintext editor mode.  
 
@@ -81,7 +81,7 @@ A collection of my client-side userscripts.
 **Name**: IP.Board Post Loss Prevention  
 **Description**: Force the browser to ask you before leaving a page with an unfinished post.  
 
-#### `IP.Board_Post_Style.user.js` [[Wiki]](IP.Board_Post_Style.user.js "Wiki")  
+#### `IP.Board_Post_Style.user.js` [More](IP.Board_Post_Style.user.js "Wiki")  
 **Name**: IP.Board - Post Style  
 **Description**: Adds options to apply a predefined style to posts in a variety of ways.  
 
@@ -93,15 +93,15 @@ A collection of my client-side userscripts.
 **Name**: IP.Chat - Auto-Resizing Popup  
 **Description**: Automatically resizes the chat container to fill the window when in pop-up mode.  
 
-#### `IP.Chat_Convert_Smilies_to_Text.user.js` [[Wiki]](IP.Chat_Convert_Smilies_to_Text.user.js "Wiki")  
+#### `IP.Chat_Convert_Smilies_to_Text.user.js` [More](IP.Chat_Convert_Smilies_to_Text.user.js "Wiki")  
 **Name**: IP.Chat - Convert Smilies to Text  
 **Description**: Like it says on the tin.  
 
-#### `IP.Chat_Extension.user.js` [[Wiki]](IP.Chat_Extension.user.js "Wiki")  
+#### `IP.Chat_Extension.user.js` [More](IP.Chat_Extension.user.js "Wiki")  
 **Name**: IP.Chat Extended History + Concise Format  
 **Description**: Extend IP.Chat history and make messages concise (optional).  
 
-#### `IP.Chat_Ignore.user.js` [[Wiki]](IP.Chat_Ignore.user.js "Wiki")  
+#### `IP.Chat_Ignore.user.js` [More](IP.Chat_Ignore.user.js "Wiki")  
 **Name**: IP.Chat Ignore  
 **Description**: Allows you to ignore chat messages from specific users.  
 
@@ -109,15 +109,15 @@ A collection of my client-side userscripts.
 **Name**: IP.Chat Kick Notice  
 **Description**: Adds [KICKED] to the page title when you have been kicked.  
 
-#### `IP.Chat_Logs.user.js` [[Wiki]](IP.Chat_Logs.user.js "Wiki")  
+#### `IP.Chat_Logs.user.js` [More](IP.Chat_Logs.user.js "Wiki")  
 **Name**: IP.Chat Logs  
 **Description**: Keep and manage IRC-like logs for IP.Chat clients.  
 
-#### `IP.Chat_Nickname_Users.user.js` [[Wiki]](IP.Chat_Nickname_Users.user.js "Wiki")  
+#### `IP.Chat_Nickname_Users.user.js` [More](IP.Chat_Nickname_Users.user.js "Wiki")  
 **Name**: IP.Chat - Nickname Users  
 **Description**: Add secondary nicknames for users - shown only in IP.Chat.  
 
-#### `IP.Chat_Pings.user.js` [[Wiki]](IP.Chat_Pings.user.js "Wiki")  
+#### `IP.Chat_Pings.user.js` [More](IP.Chat_Pings.user.js "Wiki")  
 **Name**: IP.Chat Pings + Highlights   
 **Description**: Pings you when specified words are said in the chat.  
 
@@ -129,29 +129,29 @@ A collection of my client-side userscripts.
 **Name**: SF Mafia - Disable Post Editing  
 **Description**: Disables the post editing button in the mafia subforum.  
 
-#### `dice_concise.user.js` [[Wiki]](dice_concise.user.js "Wiki")  
+#### `dice_concise.user.js` [More](dice_concise.user.js "Wiki")  
 **Name**: dice_concise for IP.Chat  
 **Description**: A concise dice simulator for IP.Chat.  
 
 ## XenForo
 
-#### `XenForo_Alerts_in_Page_Title.user.js` [[Wiki]](XenForo_Alerts_in_Page_Title.user.js "Wiki")  
+#### `XenForo_Alerts_in_Page_Title.user.js` [More](XenForo_Alerts_in_Page_Title.user.js "Wiki")  
 **Name**: XenForo - Alerts in Page Title  
 **Description**: Shows the number of alerts in the page title.  
 
-#### `XenForo_Auto-applying_Macros.user.js` [[Wiki]](XenForo_Auto-applying_Macros.user.js "Wiki")  
+#### `XenForo_Auto-applying_Macros.user.js` [More](XenForo_Auto-applying_Macros.user.js "Wiki")  
 **Name**: XenForo - Auto-applying Macros  
 **Description**: Adds an option to automatically apply XenForo Macros.  
 
-#### `XenForo_Avatar_Preview.user.js` [[Wiki]](XenForo_Avatar_Preview.user.js "Wiki")  
+#### `XenForo_Avatar_Preview.user.js` [More](XenForo_Avatar_Preview.user.js "Wiki")  
 **Name**: XenForo - Avatar Preview  
 **Description**: Generates a post preview for an avatar.  
 
-#### `XenForo_Block_Signatures.user.js` [[Wiki]](XenForo_Block_Signatures.user.js "Wiki")  
+#### `XenForo_Block_Signatures.user.js` [More](XenForo_Block_Signatures.user.js "Wiki")  
 **Name**: XenForo - Hide Signatures for Certain Users  
 **Description**: Adds an option to hide users' signatures on XenForo.  
 
-#### `XenForo_Expanded_Search_Results.user.js` [[Wiki]](XenForo_Expanded_Search_Results.user.js "Wiki")  
+#### `XenForo_Expanded_Search_Results.user.js` [More](XenForo_Expanded_Search_Results.user.js "Wiki")  
 **Name**: XenForo - Expanded Search Results  
 **Description**: Shows expanded posts in search results instead of snippets.  
 
@@ -159,34 +159,34 @@ A collection of my client-side userscripts.
 **Name**: XenForo - Hide Gender in Miniprofiles  
 **Description**: Like it says on the tin.  
 
-#### `XenForo_Isolate_Posts_by_User.user.js` [[Wiki]](XenForo_Isolate_Posts_by_User.user.js "Wiki")  
+#### `XenForo_Isolate_Posts_by_User.user.js` [More](XenForo_Isolate_Posts_by_User.user.js "Wiki")  
 **Name**: XenForo - Isolate Posts by User  
 **Description**: Adds a button to the Mini-profilw to display all posts by that user in the thread.  
 
-#### `XenForo_Member_Nicknames.user.js` [[Wiki]](XenForo_Member_Nicknames.user.js "Wiki")  
+#### `XenForo_Member_Nicknames.user.js` [More](XenForo_Member_Nicknames.user.js "Wiki")  
 **Name**: XenForo - Member Nicknames  
 **Description**: Adds an optional customized Nickname field to the profiles of members of your choice.  
 
-#### `XenForo_Message_Archiver.user.js` [[Wiki]](XenForo_Message_Archiver.user.js "Wiki")  
+#### `XenForo_Message_Archiver.user.js` [More](XenForo_Message_Archiver.user.js "Wiki")  
 **Name**: XenForo - Message Archiver  
 **Description**: Converts XenForo thread and conversation messages into text format for easy archiving.  
 
-#### `XenForo_Navigation_Shortcuts.user.js` [[Wiki]](XenForo_Navigation_Shortcuts.user.js "Wiki")  
+#### `XenForo_Navigation_Shortcuts.user.js` [More](XenForo_Navigation_Shortcuts.user.js "Wiki")  
 **Name**: XenForo - Navigation Shortcuts  
 **Description**: Adds keyboard navigation shortcuts to XenForo.  
 
-#### `XenForo_Plaintext_BBCode.user.js` [[Wiki]](XenForo_Plaintext_BBCode.user.js "Wiki")  
+#### `XenForo_Plaintext_BBCode.user.js` [More](XenForo_Plaintext_BBCode.user.js "Wiki")  
 **Name**: XenForo - Plaintext BBCode  
 **Description**: Adds BBCode buttons to Plaintext Mode on XenForo.  
 
-#### `XenForo_Post_Style.user.js` [[Wiki]](XenForo_Post_Style.user.js "Wiki")  
+#### `XenForo_Post_Style.user.js` [More](XenForo_Post_Style.user.js "Wiki")  
 **Name**: XenForo - Post Style  
 **Description**: Adds options to apply a predefined style to posts in a variety of ways.  
 
 Miscellaneous
 ===============
 
-#### `EventHandler.user.js` [[Wiki]](EventHandler.user.js "Wiki")  
+#### `EventHandler.user.js` [More](EventHandler.user.js "Wiki")  
 **Name**: EventHandler - Manage JavaScript Events  
 **Description**: Constructor/library to add, search through and remove event listeners. Supports adding and removing multiple types of events simultaneously.  
 
@@ -194,11 +194,11 @@ Miscellaneous
 **Name**: Freeze All GIFs  
 **Description**: Freezes all animated GIFs on a page.  
 
-#### `GlobalVariableConstructor.user.js` [[Wiki]](GlobalVariableConstructor.user.js "Wiki")  
+#### `GlobalVariableConstructor.user.js` [More](GlobalVariableConstructor.user.js "Wiki")  
 **Name**: Access Global Variables from Userscripts  
 **Description**: Constructor/library to read and set globals from the content/userscript scope. Works in Google Chrome.  
 
-#### `MakazeScriptOptions_Menu.user.js` [[Wiki]](MakazeScriptOptions_Menu.user.js "Wiki")  
+#### `MakazeScriptOptions_Menu.user.js` [More](MakazeScriptOptions_Menu.user.js "Wiki")  
 **Name**: Makaze Scripts Options Menu  
 **Description**: Creates, edits and deletes options for my scripts.  
 
