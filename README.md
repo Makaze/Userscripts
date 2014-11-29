@@ -49,7 +49,7 @@ A collection of my client-side userscripts.
 
 ## Invision Power
 
-#### `IP.Board_Auto-Save_Posts.user.js` [More](https://github.com/Makaze/Userscripts/wiki/IP.Board:-Post-Auto-Saving-&-Management "Wiki")  
+#### `IP.Board_Auto-Save_Posts.user.js` [More](../../wiki/IP.Board:-Post-Auto-Saving-&-Management "Wiki")  
 **Name**: IP.Board Post Auto-Saving + Management  
 **Description**: Save and manage post drafts for IP.Board forums.  
 
@@ -61,19 +61,19 @@ A collection of my client-side userscripts.
 **Name**: IP.Board - Hide Gender in Miniprofiles  
 **Description**: IP.Board - Hide Gender in Miniprofiles  
 
-#### `IP.Board_Isolate_Posts_by_User.user.js` [More](https://github.com/Makaze/Userscripts/wiki/IP.Board:-Isolate-Posts-by-User "Wiki")  
+#### `IP.Board_Isolate_Posts_by_User.user.js` [More](../../wiki/IP.Board:-Isolate-Posts-by-User "Wiki")  
 **Name**: IP.Board - Isolate Posts by User  
 **Description**: Adds links to 'Who posted in' lists and posts that generate all posts by that user in the thread.  
 
-#### `IP.Board_Member_Nicknames.user.js` [More](https://github.com/Makaze/Userscripts/wiki/IP.Board:-Member-Nicknames "Wiki")  
+#### `IP.Board_Member_Nicknames.user.js` [More](../../wiki/IP.Board:-Member-Nicknames "Wiki")  
 **Name**: IP.Board - Member Nicknames  
 **Description**: Adds an optional customized Nickname field to the profiles of members of your choice.  
 
-#### `IP.Board_Navigation_Shortcuts.user.js` [More](https://github.com/Makaze/Userscripts/wiki/IP.Board:-Navigation-Shortcuts "Wiki")  
+#### `IP.Board_Navigation_Shortcuts.user.js` [More](../../wiki/IP.Board:-Navigation-Shortcuts "Wiki")  
 **Name**: IP.Board - Navigation Shortcuts  
 **Description**: Adds keyboard navigation shortcuts to XenForo.  
 
-#### `IP.Board_Plaintext_BBCode.user.js` [More](https://github.com/Makaze/Userscripts/wiki/IP.Board:-Plaintext-BBCode "Wiki")  
+#### `IP.Board_Plaintext_BBCode.user.js` [More](../../wiki/IP.Board:-Plaintext-BBCode "Wiki")  
 **Name**: IP.Board - Plaintext BBCode  
 **Description**: Adds BBCode button support to Plaintext editor mode.  
 
@@ -81,7 +81,7 @@ A collection of my client-side userscripts.
 **Name**: IP.Board Post Loss Prevention  
 **Description**: Force the browser to ask you before leaving a page with an unfinished post.  
 
-#### `IP.Board_Post_Style.user.js` [More](https://github.com/Makaze/Userscripts/wiki/IP.Board:-Post-Style "Wiki")  
+#### `IP.Board_Post_Style.user.js` [More](../../wiki/IP.Board:-Post-Style "Wiki")  
 **Name**: IP.Board - Post Style  
 **Description**: Adds options to apply a predefined style to posts in a variety of ways.  
 
@@ -93,15 +93,15 @@ A collection of my client-side userscripts.
 **Name**: IP.Chat - Auto-Resizing Popup  
 **Description**: Automatically resizes the chat container to fill the window when in pop-up mode.  
 
-#### `IP.Chat_Convert_Smilies_to_Text.user.js` [More](https://github.com/Makaze/Userscripts/wiki/IP.Chat:-Convert-Smilies-to-Text "Wiki")  
+#### `IP.Chat_Convert_Smilies_to_Text.user.js` [More](../../wiki/IP.Chat:-Convert-Smilies-to-Text "Wiki")  
 **Name**: IP.Chat - Convert Smilies to Text  
 **Description**: Like it says on the tin.  
 
-#### `IP.Chat_Extension.user.js` [More](https://github.com/Makaze/Userscripts/wiki/IP.Chat:-Extended-History-&-Concise-Format "Wiki")  
+#### `IP.Chat_Extension.user.js` [More](../../wiki/IP.Chat:-Extended-History-&-Concise-Format "Wiki")  
 **Name**: IP.Chat Extended History + Concise Format  
 **Description**: Extend IP.Chat history and make messages concise (optional).  
 
-#### `IP.Chat_Ignore.user.js` [More](https://github.com/Makaze/Userscripts/wiki/IP.Chat:-Ignore "Wiki")  
+#### `IP.Chat_Ignore.user.js` [More](../../wiki/IP.Chat:-Ignore "Wiki")  
 **Name**: IP.Chat Ignore  
 **Description**: Allows you to ignore chat messages from specific users.  
 
@@ -109,15 +109,15 @@ A collection of my client-side userscripts.
 **Name**: IP.Chat Kick Notice  
 **Description**: Adds [KICKED] to the page title when you have been kicked.  
 
-#### `IP.Chat_Logs.user.js` [More](https://github.com/Makaze/Userscripts/wiki/IP.Chat:-Logs "Wiki")  
+#### `IP.Chat_Logs.user.js` [More](../../wiki/IP.Chat:-Logs "Wiki")  
 **Name**: IP.Chat Logs  
 **Description**: Keep and manage IRC-like logs for IP.Chat clients.  
 
-#### `IP.Chat_Nickname_Users.user.js` [More](https://github.com/Makaze/Userscripts/wiki/IP.Chat:-Nickname-Users "Wiki")  
+#### `IP.Chat_Nickname_Users.user.js` [More](../../wiki/IP.Chat:-Nickname-Users "Wiki")  
 **Name**: IP.Chat - Nickname Users  
 **Description**: Add secondary nicknames for users - shown only in IP.Chat.  
 
-#### `IP.Chat_Pings.user.js` [More](https://github.com/Makaze/Userscripts/wiki/IP.Chat:-Pings-&-Highlights "Wiki")  
+#### `IP.Chat_Pings.user.js` [More](../../wiki/IP.Chat:-Pings-&-Highlights "Wiki")  
 **Name**: IP.Chat Pings + Highlights   
 **Description**: Pings you when specified words are said in the chat.  
 
@@ -129,7 +129,7 @@ A collection of my client-side userscripts.
 **Name**: SF Mafia - Disable Post Editing  
 **Description**: Disables the post editing button in the mafia subforum.  
 
-#### `dice_concise.user.js` [More](https://github.com/Makaze/Userscripts/wiki/dice_concise-for-IP.Chat "Wiki")  
+#### `dice_concise.user.js` [More](../../wiki/dice_concise-for-IP.Chat "Wiki")  
 **Name**: dice_concise for IP.Chat  
 **Description**: A concise dice simulator for IP.Chat.  
 
@@ -139,19 +139,19 @@ A collection of my client-side userscripts.
 **Name**: XenForo - Alerts in Page Title  
 **Description**: Shows the number of alerts in the page title.  
 
-#### `XenForo_Auto-applying_Macros.user.js` [More](https://github.com/Makaze/Userscripts/wiki/XenForo:-Auto-applying-Macros "Wiki")  
+#### `XenForo_Auto-applying_Macros.user.js` [More](../../wiki/XenForo:-Auto-applying-Macros "Wiki")  
 **Name**: XenForo - Auto-applying Macros  
 **Description**: Adds an option to automatically apply XenForo Macros.  
 
-#### `XenForo_Avatar_Preview.user.js` [More](https://github.com/Makaze/Userscripts/wiki/XenForo:-Avatar-Preview "Wiki")  
+#### `XenForo_Avatar_Preview.user.js` [More](../../wiki/XenForo:-Avatar-Preview "Wiki")  
 **Name**: XenForo - Avatar Preview  
 **Description**: Generates a post preview for an avatar.  
 
-#### `XenForo_Block_Signatures.user.js` [More](https://github.com/Makaze/Userscripts/wiki/XenForo:-Hide-Signatures-for-Certain-Users "Wiki")  
+#### `XenForo_Block_Signatures.user.js` [More](../../wiki/XenForo:-Hide-Signatures-for-Certain-Users "Wiki")  
 **Name**: XenForo - Hide Signatures for Certain Users  
 **Description**: Adds an option to hide users' signatures on XenForo.  
 
-#### `XenForo_Expanded_Search_Results.user.js` [More](https://github.com/Makaze/Userscripts/wiki/XenForo:-Expanded-Search-Results "Wiki")  
+#### `XenForo_Expanded_Search_Results.user.js` [More](../../wiki/XenForo:-Expanded-Search-Results "Wiki")  
 **Name**: XenForo - Expanded Search Results  
 **Description**: Shows expanded posts in search results instead of snippets.  
 
@@ -159,34 +159,34 @@ A collection of my client-side userscripts.
 **Name**: XenForo - Hide Gender in Miniprofiles  
 **Description**: Like it says on the tin.  
 
-#### `XenForo_Isolate_Posts_by_User.user.js` [More](https://github.com/Makaze/Userscripts/wiki/XenForo:-Isolate-Posts-by-User "Wiki")  
+#### `XenForo_Isolate_Posts_by_User.user.js` [More](../../wiki/XenForo:-Isolate-Posts-by-User "Wiki")  
 **Name**: XenForo - Isolate Posts by User  
 **Description**: Adds a button to the Mini-profilw to display all posts by that user in the thread.  
 
-#### `XenForo_Member_Nicknames.user.js` [More](https://github.com/Makaze/Userscripts/wiki/XenForo:-Member-Nicknames "Wiki")  
+#### `XenForo_Member_Nicknames.user.js` [More](../../wiki/XenForo:-Member-Nicknames "Wiki")  
 **Name**: XenForo - Member Nicknames  
 **Description**: Adds an optional customized Nickname field to the profiles of members of your choice.  
 
-#### `XenForo_Message_Archiver.user.js` [More](https://github.com/Makaze/Userscripts/wiki/XenForo:-Message-Archiver "Wiki")  
+#### `XenForo_Message_Archiver.user.js` [More](../../wiki/XenForo:-Message-Archiver "Wiki")  
 **Name**: XenForo - Message Archiver  
 **Description**: Converts XenForo thread and conversation messages into text format for easy archiving.  
 
-#### `XenForo_Navigation_Shortcuts.user.js` [More](https://github.com/Makaze/Userscripts/wiki/XenForo:-Navigation-Shortcuts "Wiki")  
+#### `XenForo_Navigation_Shortcuts.user.js` [More](../../wiki/XenForo:-Navigation-Shortcuts "Wiki")  
 **Name**: XenForo - Navigation Shortcuts  
 **Description**: Adds keyboard navigation shortcuts to XenForo.  
 
-#### `XenForo_Plaintext_BBCode.user.js` [More](https://github.com/Makaze/Userscripts/wiki/XenForo:-Plaintext-BBCode "Wiki")  
+#### `XenForo_Plaintext_BBCode.user.js` [More](../../wiki/XenForo:-Plaintext-BBCode "Wiki")  
 **Name**: XenForo - Plaintext BBCode  
 **Description**: Adds BBCode buttons to Plaintext Mode on XenForo.  
 
-#### `XenForo_Post_Style.user.js` [More](https://github.com/Makaze/Userscripts/wiki/XenForo:-Post-Style "Wiki")  
+#### `XenForo_Post_Style.user.js` [More](../../wiki/XenForo:-Post-Style "Wiki")  
 **Name**: XenForo - Post Style  
 **Description**: Adds options to apply a predefined style to posts in a variety of ways.  
 
 Miscellaneous
 ===============
 
-#### `EventHandler.user.js` [More](https://github.com/Makaze/Userscripts/wiki/Miscellaneous:-EventHandler:-Manage-JavaScript-Events "Wiki")  
+#### `EventHandler.user.js` [More](../../wiki/Miscellaneous:-EventHandler:-Manage-JavaScript-Events "Wiki")  
 **Name**: EventHandler - Manage JavaScript Events  
 **Description**: Constructor/library to add, search through and remove event listeners. Supports adding and removing multiple types of events simultaneously.  
 
@@ -194,11 +194,11 @@ Miscellaneous
 **Name**: Freeze All GIFs  
 **Description**: Freezes all animated GIFs on a page.  
 
-#### `GlobalVariableConstructor.user.js` [More](https://github.com/Makaze/Userscripts/wiki/Miscellaneous:-Access-Global_Variables_from_Userscripts "Wiki")  
+#### `GlobalVariableConstructor.user.js` [More](../../wiki/Miscellaneous:-Access-Global_Variables_from_Userscripts "Wiki")  
 **Name**: Access Global Variables from Userscripts  
 **Description**: Constructor/library to read and set globals from the content/userscript scope. Works in Google Chrome.  
 
-#### `MakazeScriptOptions_Menu.user.js` [More](https://github.com/Makaze/Userscripts/wiki/Miscellaneous:-Makaze-Scripts-Options-Menu "Wiki")  
+#### `MakazeScriptOptions_Menu.user.js` [More](../../wiki/Miscellaneous:-Makaze-Scripts-Options-Menu "Wiki")  
 **Name**: Makaze Scripts Options Menu  
 **Description**: Creates, edits and deletes options for my scripts.  
 
