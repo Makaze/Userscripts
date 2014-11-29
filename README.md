@@ -135,7 +135,7 @@ A collection of my client-side userscripts.
 
 ## XenForo
 
-#### `XenForo_Alerts_in_Page_Title.user.js` [More](https://github.com/Makaze/Userscripts/wiki/XenForo:-Alerts-in-Page-Title "Wiki")  
+#### `XenForo_Alerts_in_Page_Title.user.js`  
 **Name**: XenForo - Alerts in Page Title  
 **Description**: Shows the number of alerts in the page title.  
 
