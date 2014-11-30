@@ -4,7 +4,7 @@
 // @namespace	Makaze
 // @include	*
 // @grant	none
-// @version	1.0.9
+// @version	1.1.0
 // ==/UserScript==
 
 var thisViews,
@@ -174,7 +174,7 @@ var generateLinks = function(event) {
 			usersPosts = thisUser.getElementsByTagName('td')[1];
 			usersPosts.className = 'blend_links';
 			
-			newLink = createIsoOnWho(author, threadNameInList, thisThreadInList, usersPosts);
+			newLink = createIsoOnWho(encodeURIComponent(author), threadNameInList, thisThreadInList, usersPosts);
 			
 			empty(usersPosts);
 			usersPosts.appendChild(newLink);
@@ -213,7 +213,7 @@ if (document.body.id === 'ipboard_body') {
 			threadNameInThread = posts[i].getElementsByTagName('a')[0].title.split(': post #')[0];
 			authorInThread = posts[i].parentNode.parentNode.getElementsByClassName('author')[0].textContent.trim();
 
-			posts[i].parentNode.appendChild(createIsoOnPost(authorInThread, threadNameInThread, thisThreadInThread));
+			posts[i].parentNode.appendChild(createIsoOnPost(encodeURIComponent(authorInThread), threadNameInThread, thisThreadInThread));
 		}
 	}
 
@@ -232,7 +232,7 @@ if (document.body.id === 'ipboard_body') {
 				usersPosts = thisUser.getElementsByTagName('td')[1];
 				usersPosts.className = 'blend_links';
 
-				newLink = createIsoOnWho(authorOnPage, threadNameOnPage, thisThreadOnPage, usersPosts);
+				newLink = createIsoOnWho(encodeURIComponent(authorOnPage), threadNameOnPage, thisThreadOnPage, usersPosts);
 				
 				empty(usersPosts);
 				usersPosts.appendChild(newLink);
