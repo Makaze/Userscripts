@@ -4,7 +4,7 @@
 // @description	Adds an optional customized Nickname field to the profiles of members of your choice. 
 // @include	*
 // @grant	none
-// @version	1.0.4
+// @version	1.0.5
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -29,6 +29,10 @@ function empty(elem) {
 	while (elem.hasChildNodes()) {
 		elem.removeChild(elem.lastChild);
 	}
+}
+
+function insertAfter(newNode, referenceNode) {
+	referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
 function selectAll(el) {
@@ -139,7 +143,7 @@ function addNick(nickobj, context, specialClass) {
 		specialClass = '';
 	}
 
-	context.appendChild(createElement('span', function(cont) {
+	insertAfter(createElement('span', function(cont) {
 		cont.className = specialClass + 'memberNickname memberNickname_' + nickobj.user;
 		cont.appendChild(document.createTextNode(' / '));
 
@@ -147,7 +151,7 @@ function addNick(nickobj, context, specialClass) {
 			field.className = 'nickname';
 			field.appendChild(document.createTextNode(nickobj.nickname));
 		}));
-	}));
+	}), context);
 }
 
 if (document.body.id === 'ipboard_body') {
