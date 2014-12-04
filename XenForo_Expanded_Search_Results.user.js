@@ -4,7 +4,7 @@
 // @description	Shows expanded posts in search results instead of snippets.
 // @include	*
 // @grant	none
-// @version	1.1.0
+// @version	1.2.0
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -57,10 +57,6 @@ if (document.documentElement.id === 'XenForo') {
 				'overflow: hidden;\n' +
 			'}\n\n' +
 
-			'.searchResult .snippet .messageText a {\n' +
-				'font-size: 100%;\n' +
-			'}\n\n' +
-
 			'.searchExpand {\n' +
 				'display: block;\n' +
 				'position: absolute;\n' +
@@ -98,10 +94,16 @@ if (document.documentElement.id === 'XenForo') {
 
 							"$(expand).fadeOut('slow');" +
 
-							"$(self).find('.snippet').load($(self).find('.snippet a').get(0).href + ' #' + id + ' .messageText:first', function() {" +
-								"$('#' + id).find('.snippet').find('.messageAd, style').remove();" +
+							"if (!$(self).find('.fullPost').length) {" +
+								"$(self).find('.snippet').after(createElement('blockquote', function(full) {" +
+									"full.className = 'fullPost';" +
+								"}));" +
+							"}" +
 
-								"$('#' + id).find('.snippet').fadeIn('slow');" +
+							"$(self).find('.fullPost').load($(self).find('.snippet a').get(0).href + ' #' + id + ' .messageText:first', function() {" +
+								"$('#' + id).find('.fullPost').find('.messageAd, style').remove();" +
+
+								"$('#' + id).find('.fullPost').fadeIn('slow');" +
 							"});" +
 						"});" +
 					"}));" +
