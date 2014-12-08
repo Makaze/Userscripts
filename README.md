@@ -15,6 +15,7 @@ A collection of my client-side userscripts.
     * [`IP.Board_Plaintext_BBCode.user.js`](#ipboard_plaintext_bbcodeuserjs)
     * [`IP.Board_Post_Loss_Prevention.user.js`](#ipboard_post_loss_preventionuserjs)
     * [`IP.Board_Post_Style.user.js`](#ipboard_post_styleuserjs)
+    * [`IP.Board_Prevent_Video_Preload.user.js`](#ipboard_prevent_video_preloaduserjs)
     * [`IP.Chat-Specific_Theme.user.js`](#ipchat-specific_themeuserjs)
     * [`IP.Chat_Auto-Resizing_Popup.user.js`](#ipchat_auto-resizing_popupuserjs)
     * [`IP.Chat_Convert_Smilies_to_Text.user.js`](#ipchat_convert_smilies_to_textuserjs)
@@ -40,6 +41,7 @@ A collection of my client-side userscripts.
     * [`XenForo_Navigation_Shortcuts.user.js`](#xenforo_navigation_shortcutsuserjs)
     * [`XenForo_Plaintext_BBCode.user.js`](#xenforo_plaintext_bbcodeuserjs)
     * [`XenForo_Post_Style.user.js`](#xenforo_post_styleuserjs)
+    * [`XenForo_Prevent_Video_Preload.user.js`](#xenforo_prevent_video_preloaduserjs)
   * [Miscellaneous](#miscellaneous)
     * [`EventHandler.user.js`](#eventhandleruserjs)
     * [`Freeze_All_GIFs.user.js`](#freeze_all_gifsuserjs)
@@ -84,6 +86,10 @@ A collection of my client-side userscripts.
 #### `IP.Board_Post_Style.user.js` [More](../../wiki/IP.Board:-Post-Style "Wiki")  
 **Name**: IP.Board - Post Style  
 **Description**: Adds options to apply a predefined style to posts in a variety of ways.  
+
+#### `IP.Board_Prevent_Video_Preload.user.js`  
+**Name**: IP.Board - Prevent Video Preload  
+**Description**: Prevents the browser from pre-downloading embedded videos.  
 
 #### `IP.Chat-Specific_Theme.user.js`  
 **Name**: IP.Chat-Specific Theme  
@@ -182,6 +188,10 @@ A collection of my client-side userscripts.
 #### `XenForo_Post_Style.user.js` [More](../../wiki/XenForo:-Post-Style "Wiki")  
 **Name**: XenForo - Post Style  
 **Description**: Adds options to apply a predefined style to posts in a variety of ways.  
+
+#### `XenForo_Prevent_Video_Preload.user.js`  
+**Name**: XenForo - Prevent Video Preload  
+**Description**: Prevents the browser from pre-downloading embedded videos.  
 
 Miscellaneous
 ===============
