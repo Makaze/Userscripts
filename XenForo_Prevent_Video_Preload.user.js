@@ -4,7 +4,7 @@
 // @description	Prevents the browser from pre-downloading embedded videos. 
 // @include	*
 // @grant	none
-// @version	1.0.0
+// @version	1.0.1
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -85,8 +85,18 @@ if (document.documentElement.id === 'XenForo') {
 		'}';
 
 	for (i = 0; i < document.getElementsByTagName('iframe').length; i++) {
-		if (document.getElementsByTagName('iframe')[i].src.match(/www\.youtube\.com/)) {
+		if (document.getElementsByTagName('iframe')[i].src.match(/www\.youtube\.com/) && !document.getElementsByTagName('iframe')[i].hasAttribute('data-src')) {
 			replaceVideo(document.getElementsByTagName('iframe')[i]);
 		}
 	}
+
+	document.addEventListener('DOMNodeInserted', function(event) {
+		var vids = event.target.parentNode.getElementsByTagName('iframe');
+
+		for (i = 0; i < vids.length; i++) {
+			if (vids[i].className === 'EmbeddedVideo' && !vids[i].hasAttribute('data-src')) {
+				replaceVideo(vids[i]);
+			}
+		}
+	}, false);
 }
