@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name	XenForo - Show/Hide Categories
+// @name	XenForo - Toggle Categories
 // @namespace	Makaze
 // @description	Toggle the visibility of categories by clicking the title bar.
 // @include	*
