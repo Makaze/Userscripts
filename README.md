@@ -196,7 +196,7 @@ A collection of my client-side userscripts.
 **Description**: Prevents the browser from pre-downloading embedded videos.  
 
 #### `XenForo_Toggle_Categories.user.js`  
-**Name**: XenForo - Show/Hide Categories  
+**Name**: XenForo - Toggle Categories Categories  
 **Description**: Toggle the visibility of categories by clicking the title bar.  
 
 Miscellaneous
