@@ -42,6 +42,7 @@ A collection of my client-side userscripts.
     * [`XenForo_Plaintext_BBCode.user.js`](#xenforo_plaintext_bbcodeuserjs)
     * [`XenForo_Post_Style.user.js`](#xenforo_post_styleuserjs)
     * [`XenForo_Prevent_Video_Preload.user.js`](#xenforo_prevent_video_preloaduserjs)
+    * [`XenForo_Toggle_Category_Visibility.user.js`](#xenforo_toggle_category_visibilityuserjs)
   * [Miscellaneous](#miscellaneous)
     * [`EventHandler.user.js`](#eventhandleruserjs)
     * [`Freeze_All_GIFs.user.js`](#freeze_all_gifsuserjs)
@@ -193,6 +194,10 @@ A collection of my client-side userscripts.
 #### `XenForo_Prevent_Video_Preload.user.js`  
 **Name**: XenForo - Prevent Video Preload  
 **Description**: Prevents the browser from pre-downloading embedded videos.  
+
+#### `XenForo_Toggle_Category_Visibility.user.js`  
+**Name**: XenForo - Show/Hide Categories  
+**Description**: Toggle the visibility of categories by clicking the title bar.  
 
 Miscellaneous
 ===============
