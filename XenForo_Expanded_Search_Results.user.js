@@ -4,7 +4,7 @@
 // @description	Shows expanded posts in search results instead of snippets.
 // @include	*
 // @grant	none
-// @version	1.2.0
+// @version	1.2.1
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -111,6 +111,7 @@ if (document.documentElement.id === 'XenForo') {
 			"});" +
 
 			"$('.pageNavLinkGroup .linkGroup').append(createElement('a', function(all) {" +
+				"all.className = 'expandAll';" +
 				"all.href = 'javascript:void(0)';" +
 				"all.appendChild(document.createTextNode('Expand All'));" +
 
@@ -119,7 +120,7 @@ if (document.documentElement.id === 'XenForo') {
 						"$(this).click();" +
 					"});" +
 					
-					"$(this).fadeOut('slow');" +
+					"$('.expandAll').fadeOut('slow');" +
 				"});" +
 			"}));"
 		);
