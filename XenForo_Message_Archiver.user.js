@@ -4,7 +4,7 @@
 // @description	Converts XenForo thread and conversation messages into text format for easy archiving.
 // @include	*
 // @grant	none
-// @version	2.0.0
+// @version	2.0.1
 // ==/UserScript==
 
 function runInGlobal(code) {
@@ -27,8 +27,12 @@ function init() {
 	lastPage = '',
 	load,
 	progress,
+	save,
 	posts,
 	timer,
+	title,
+	type,
+	pages,
 	i = 0;
 
 	function createElement(type, callback) {
@@ -39,17 +43,8 @@ function init() {
 		return element;
 	}
 
-	function selectRange(elem, start, end) {
-		if (elem.setSelectionRange) {
-			elem.focus();
-			elem.setSelectionRange(start, end);
-		} else if (elem.createTextRange) {
-			var range = elem.createTextRange();
-			range.collapse(true);
-			range.moveEnd('character', end);
-			range.moveStart('character', start);
-			range.select();
-		}
+	function sanitize(str) {
+		return str.replace(/[\/\\]/g, '-');
 	}
 
 	function convertChildren(parent) {
@@ -278,20 +273,31 @@ function init() {
 		} else {
 			$(progress).find('.progressMessage').text('Done!');
 			$(progress).attr('href', 'javascript:void(0)');
+			$(progress).css({'cursor': 'auto'});
+
+			title = document.getElementsByClassName('titleBar')[0].getElementsByTagName('h1')[0].textContent.trim();
+			type = ((document.getElementById('content').className.indexOf('conversation_view') > -1) ? 'Conversation' : 'Thread');
+			pages = ((lastPage.length) ? 'Pages ' + firstPage + '-' + lastPage : 'Page ' + firstPage);
 
 			$(progress).on('click.toggle', function() {
-				var display = (posts.style.display.length && posts.style.display !== 'none'),
-				scroll = { 'firefox': document.documentElement.scrollTop, 'chrome': document.body.scrollTop };
+				var display = (posts.style.display.length && posts.style.display !== 'none');
 
 				$(posts).slideToggle('medium');
 
 				if (!display) {
-					$(progress).find('.progressMessage').text('Close');
-					selectRange(posts, 0, posts.value.length);
-					document.documentElement.scrollTop = scroll.firefox;
-					document.body.scrollTop = scroll.chrome;
+					$(progress).fadeOut(10, function() {
+						$(progress).find('.progressMessage').text('Close');
+
+						$(save).attr('download', sanitize(title + ' - ' + pages) + '.txt').attr('href', 'data:text/plain;charset=UTF-8,' + encodeURIComponent(posts.value));
+						$(save).css({
+							right: 30 + $('.progressBar').outerWidth() + 'px'
+						});
+						$(save).slideDown('medium');
+					}).slideDown('medium');
 				} else {
-					progress.remove();
+					$(progress).add(save).slideUp('medium', function() {
+						$(this).remove();
+					});
 				}
 			});
 
@@ -299,10 +305,11 @@ function init() {
 			$(progress).find('.animation').text('');
 
 			posts.value =
-				'# Archive: ' + document.getElementsByClassName('titleBar')[0].getElementsByTagName('h1')[0].textContent.trim() + '\n' +
-				'# Type: ' + ((document.getElementById('content').className.indexOf('conversation_view') > -1) ? 'Conversation' : 'Thread') + '\n\n' +
+				'# Archive: ' + title + '\n' +
+				'# Type: ' + type + '\n\n' +
 
-				'## Page' + ((lastPage.length) ? 's ' + firstPage + '-' + lastPage : ' ' + firstPage) + '\n\n' +
+				'## ' + pages + '\n\n' +
+
 				posts.value;
 		}
 	}
@@ -332,18 +339,27 @@ function init() {
 	}
 
 	styleElem.childNodes[0].nodeValue +=
-		'.progressBar {\n' +
-			'display: none;\n' +
+		'.progressBar, .saveButton {\n' +
 			'position: fixed;\n' +
-			'padding: 10px;\n' +
 			'bottom: 15px;\n' +
 			'right: 15px;\n' +
+			'display: none;\n' +
+			'padding: 10px;\n' +
 			'background-color: #222;\n' +
 			'font-family: Consolas, monospace;\n' +
+			'color: #eee;\n' +
 			'border: 2px solid #111;\n' +
 			'border-radius: 5px;\n' +
 			'box-shadow: 0px 0px 5px #111;\n' +
 			'z-index: 999999;\n' +
+		'}\n\n' +
+
+		'.progressBar {\n' +
+			'cursor: progress;\n' +
+		'}\n\n' +
+
+		'.saveButton {\n' +
+			'cursor: copy;\n' +
 		'}\n\n' +
 
 		'.exportMessages {\n' +
@@ -366,6 +382,7 @@ function init() {
 			'resize: none;\n' +
 			'outline: none;\n' +
 			'z-index: 999999;\n' +
+			'cursor: copy;\n' +
 		'}';
 
 	document.getElementsByClassName('linkGroup')[0].insertBefore(createElement('a', function(button) {
@@ -388,6 +405,12 @@ function init() {
 				}));
 			}));
 
+			save = document.body.appendChild(createElement('a', function(btn) {
+				btn.className = 'saveButton';
+
+				btn.appendChild(document.createTextNode('Download'));
+			}));
+
 			timer = setInterval(function() {
 				var text = $(progress).find('.animation').text();
 
@@ -406,7 +429,9 @@ function init() {
 				}
 			}, 100);
 
-			$(progress).slideUp('medium');
+			$(progress).slideDown('medium');
+
+			posts.value = '';
 
 			loadPosts(false);
 		};
