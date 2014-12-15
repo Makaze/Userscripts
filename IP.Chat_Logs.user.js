@@ -4,12 +4,13 @@
 // @description	Keep and manage IRC-like logs for IP.Chat clients.
 // @include	*
 // @grant	none
-// @version	1.3.4
+// @version	1.4.0
 // ==/UserScript==
 
 var IPChatMenuItems,
 menuButton,
 logs,
+style,
 CAPACITY = 5242880,
 filled = 0,
 occupied = 0,
@@ -95,23 +96,23 @@ function dateAndTime(which) {
 	
 	switch (which) {
 		case 'time':
-			output = ((currentdate.getHours() < 10) ? '0' + currentdate.getHours() : currentdate.getHours()) + ":"
-				+ ((currentdate.getMinutes() < 10) ? '0' + currentdate.getMinutes() : currentdate.getMinutes()) + ":"
-				+ ((currentdate.getSeconds() < 10) ? '0' + currentdate.getSeconds() : currentdate.getSeconds());
+			output = ((currentdate.getHours() < 10) ? '0' + currentdate.getHours() : currentdate.getHours()) + ":" +
+				((currentdate.getMinutes() < 10) ? '0' + currentdate.getMinutes() : currentdate.getMinutes()) + ":" +
+				((currentdate.getSeconds() < 10) ? '0' + currentdate.getSeconds() : currentdate.getSeconds());
 		break;
 		case 'date':
-			output = (((currentdate.getMonth() + 1) < 10) ? '0' + (currentdate.getMonth() + 1)  : (currentdate.getMonth() + 1)) + "/"
-				+ ((currentdate.getDate() < 10) ? '0' + currentdate.getDate() : currentdate.getDate()) + "/"
-				+ currentdate.getFullYear();
+			output = (((currentdate.getMonth() + 1) < 10) ? '0' + (currentdate.getMonth() + 1)  : (currentdate.getMonth() + 1)) + "/" +
+				((currentdate.getDate() < 10) ? '0' + currentdate.getDate() : currentdate.getDate()) + "/" +
+				currentdate.getFullYear();
 		break;
 		default:
-			output = ((currentdate.getHours() < 10) ? '0' + currentdate.getHours() : currentdate.getHours()) + ":"
-				+ ((currentdate.getMinutes() < 10) ? '0' + currentdate.getMinutes() : currentdate.getMinutes()) + ":"
-				+ ((currentdate.getSeconds() < 10) ? '0' + currentdate.getSeconds() : currentdate.getSeconds())
-				+ ' on '
-				+ (((currentdate.getMonth() + 1) < 10) ? '0' + (currentdate.getMonth() + 1)  : (currentdate.getMonth() + 1)) + "/"
-				+ ((currentdate.getDate() < 10) ? '0' + currentdate.getDate() : currentdate.getDate()) + "/"
-				+ currentdate.getFullYear();
+			output = ((currentdate.getHours() < 10) ? '0' + currentdate.getHours() : currentdate.getHours()) + ":" +
+				((currentdate.getMinutes() < 10) ? '0' + currentdate.getMinutes() : currentdate.getMinutes()) + ":" +
+				((currentdate.getSeconds() < 10) ? '0' + currentdate.getSeconds() : currentdate.getSeconds()) +
+				' on ' +
+				(((currentdate.getMonth() + 1) < 10) ? '0' + (currentdate.getMonth() + 1)  : (currentdate.getMonth() + 1)) + "/" +
+				((currentdate.getDate() < 10) ? '0' + currentdate.getDate() : currentdate.getDate()) + "/" +
+				currentdate.getFullYear();
 	}
 	return output;
 }
@@ -205,6 +206,14 @@ function createLog(logs, i) {
 	return createElement('div', function(el) {
 		el.className = 'log';
 
+		el.appendChild(createElement('div', function(down) {
+			down.className = 'delete';
+			down.appendChild(document.createTextNode('Download'));
+			down.onclick = function() {
+				downloadLog(logs, i);
+			};
+		}));
+
 		el.appendChild(createElement('div', function(del) {
 			del.className = 'delete';
 			del.appendChild(document.createTextNode('Delete'));
@@ -219,6 +228,22 @@ function createLog(logs, i) {
 			content.innerHTML = logs[i].log;
 		}));
 	});
+}
+
+function downloadLog(logs, i) {
+	var load = new DocumentFragment(),
+	content = load.appendChild(createElement('div', function(cont) {
+		cont.innerHTML = logs[i].log;
+	})).textContent,
+	link = load.appendChild(createElement('a', function(dl) {
+		dl.setAttribute('download', logs[i].initiated.replace(/[\/:]/g, '.') + '.log');
+		dl.setAttribute('href', 'data:text/plain;charset=UTF-8,' + encodeURIComponent(
+			'-----\nLog started at [' + logs[i].initiated + ']\n-----\n' +
+			content
+		));
+	}));
+
+	link.click();
 }
 
 function deleteLog(logElement, date) {
@@ -487,9 +512,6 @@ if (document.body.id === 'ipboard_body' && document.getElementById('chat-form') 
 }
 
 if (window.location.href === window.location.origin + '/#IP.Chat_Logs' && localStorage.getItem('IP.Chat Logs')) {
-	var style,
-	funcs;
-
 	logs = JSON.parse(localStorage.getItem('IP.Chat Logs'));
 
 	style = createElement('style', function(el) {
@@ -601,6 +623,40 @@ if (window.location.href === window.location.origin + '/#IP.Chat_Logs' && localS
 
 		space.appendChild(document.createTextNode('0% full'));
 
+		space.appendChild(createElement('a', function(download) {
+			download.id = 'download_logs';
+			download.className = 'delete';
+			download.appendChild(document.createTextNode('Download All'));
+			download.onclick = function() {
+				var load = new DocumentFragment().appendChild(document.getElementById('logs').cloneNode(true)),
+				file = '',
+				items = load.getElementsByClassName('log'),
+				deletes = load.getElementsByClassName('delete'),
+				link,
+				name = String(items[0].textContent.match(/(\[.*?\])/)[1] + ' to ' + items[items.length - 1].textContent.match(/(\[.*?\])/)[1]).replace(/[\/:]/g, '.'),
+				i = 0;
+
+				while (deletes[0] != null) {
+					deletes[0].remove();
+				}
+
+				for (i = 0; i < items.length; i++) {
+					if (file.length) {
+						file += '\n\n';
+					}
+
+					file += items[i].textContent;
+				}
+
+				link = load.appendChild(createElement('a', function(dl) {
+					dl.setAttribute('download', name + '.log');
+					dl.setAttribute('href', 'data:text/plain;charset=UTF-8,' + encodeURIComponent(file));
+				}));
+
+				link.click();
+			};
+		}));
+
 		space.appendChild(createElement('span', function(delete_all) {
 			delete_all.id = 'delete_all';
 			delete_all.className = 'delete';
@@ -611,15 +667,14 @@ if (window.location.href === window.location.origin + '/#IP.Chat_Logs' && localS
 		space.appendChild(createElement('span', function(hide) {
 			hide.id = 'hide_non-logs';
 			hide.className = 'delete';
-			hide.style.marginRight = '10px';
+			hide.style.marginRight = '1px';
 			hide.appendChild(document.createTextNode('Hide Non-Logs'));
 			hide.onclick = function() {
-				var i = 0,
-				deletes;
-
+				var deletes = document.getElementsByClassName('delete');
 				fade(document.getElementById('space'), 'out');
-				for (i = 0, deletes = document.getElementsByClassName('delete'); i < deletes.length; i++) {
-					fade(deletes[i], 'out');
+
+				while (deletes[0] != null) {
+					deletes[0].remove();
 				}
 			};
 		}));
