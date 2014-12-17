@@ -5,7 +5,7 @@ A collection of my client-side userscripts.
 
 ## Table of Contents
 
-  * [Invision Power](#invision-power)
+  * [IP.Board](#ipboard)
     * [`IP.Board_Auto-Save_Posts.user.js`](#ipboard_auto-save_postsuserjs-more)
     * [`IP.Board_Forum_Cleanup.user.js`](#ipboard_forum_cleanupuserjs)
     * [`IP.Board_Hide_Gender_in_Miniprofies.user.js`](#ipboard_hide_gender_in_miniprofiesuserjs)
@@ -16,6 +16,7 @@ A collection of my client-side userscripts.
     * [`IP.Board_Post_Loss_Prevention.user.js`](#ipboard_post_loss_preventionuserjs)
     * [`IP.Board_Post_Style.user.js`](#ipboard_post_styleuserjs-more)
     * [`IP.Board_Prevent_Video_Preload.user.js`](#ipboard_prevent_video_preloaduserjs)
+  * [IP.Chat](#ipchat)
     * [`IP.Chat-Specific_Theme.user.js`](#ipchat-specific_themeuserjs)
     * [`IP.Chat_Auto-Resizing_Popup.user.js`](#ipchat_auto-resizing_popupuserjs)
     * [`IP.Chat_Convert_Smilies_to_Text.user.js`](#ipchat_convert_smilies_to_textuserjs-more)
@@ -25,8 +26,6 @@ A collection of my client-side userscripts.
     * [`IP.Chat_Logs.user.js`](#ipchat_logsuserjs-more)
     * [`IP.Chat_Nickname_Users.user.js`](#ipchat_nickname_usersuserjs-more)
     * [`IP.Chat_Pings.user.js`](#ipchat_pingsuserjs-more)
-    * [`SF_Change_FE_in_Miniprofiles.user.js`](#sf_change_fe_in_miniprofilesuserjs)
-    * [`SF_Mafia_Disable_Post_Editing.user.js`](#sf_mafia_disable_post_editinguserjs)
     * [`dice_concise.user.js`](#dice_conciseuserjs-more)
   * [XenForo](#xenforo)
     * [`XenForo_Alerts_in_Page_Title.user.js`](#xenforo_alerts_in_page_titleuserjs)
@@ -50,9 +49,11 @@ A collection of my client-side userscripts.
     * [`GlobalVariableConstructor.user.js`](#globalvariableconstructoruserjs-more)
     * [`MakazeScriptOptions_Menu.user.js`](#makazescriptoptions_menuuserjs-more)
     * [`OMF_QT_Gen.user.js`](#omf_qt_genuserjs)
+    * [`SF_Change_FE_in_Miniprofiles.user.js`](#sf_change_fe_in_miniprofilesuserjs)
+    * [`SF_Mafia_Disable_Post_Editing.user.js`](#sf_mafia_disable_post_editinguserjs)
     * [`Tumblr_Custom_Buttons.user.js`](#tumblr_custom_buttonsuserjs)
 
-## Invision Power
+## IP.Board
 
 #### `IP.Board_Auto-Save_Posts.user.js` [More](../../wiki/IP.Board:-Post-Auto-Saving-&-Management "Wiki")  
 **Name**: IP.Board Post Auto-Saving + Management  
@@ -94,6 +95,8 @@ A collection of my client-side userscripts.
 **Name**: IP.Board - Prevent Video Preload  
 **Description**: Prevents the browser from pre-downloading embedded videos.  
 
+## IP.Chat
+
 #### `IP.Chat-Specific_Theme.user.js`  
 **Name**: IP.Chat-Specific Theme  
 **Description**: IP.Chat-Specific Theme  
@@ -129,14 +132,6 @@ A collection of my client-side userscripts.
 #### `IP.Chat_Pings.user.js` [More](../../wiki/IP.Chat:-Pings-&-Highlights "Wiki")  
 **Name**: IP.Chat Pings + Highlights   
 **Description**: Pings you when specified words are said in the chat.  
-
-#### `SF_Change_FE_in_Miniprofiles.user.js`  
-**Name**: Serenes Forest - Change 'Favorite Fire Emblem' to 'Favorite FE' in Miniprofiles  
-**Description**: Like it says on the tin.  
-
-#### `SF_Mafia_Disable_Post_Editing.user.js`  
-**Name**: SF Mafia - Disable Post Editing  
-**Description**: Disables the post editing button in the mafia subforum.  
 
 #### `dice_concise.user.js` [More](../../wiki/dice_concise-for-IP.Chat "Wiki")  
 **Name**: dice_concise for IP.Chat  
@@ -226,6 +221,14 @@ Miscellaneous
 #### `OMF_QT_Gen.user.js`  
 **Name**: OMF Question Time Generation
 **Description**: OMF Question Time Generation  
+
+#### `SF_Change_FE_in_Miniprofiles.user.js`  
+**Name**: Serenes Forest - Change 'Favorite Fire Emblem' to 'Favorite FE' in Miniprofiles  
+**Description**: Like it says on the tin.  
+
+#### `SF_Mafia_Disable_Post_Editing.user.js`  
+**Name**: SF Mafia - Disable Post Editing  
+**Description**: Disables the post editing button in the mafia subforum.  
 
 #### `Tumblr_Custom_Buttons.user.js`  
 **Name**: Tumblr - Custom Buttons  
