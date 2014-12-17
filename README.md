@@ -36,6 +36,7 @@ A collection of my client-side userscripts.
     * [`XenForo_Expanded_Search_Results.user.js`](#xenforo_expanded_search_resultsuserjs-more)
     * [`XenForo_Hide_Gender_in_Miniprofiles.user.js`](#xenforo_hide_gender_in_miniprofilesuserjs)
     * [`XenForo_Isolate_Posts_by_User.user.js`](#xenforo_isolate_posts_by_useruserjs-more)
+    * [`XenForo_Lockpick_Quotes.user.js`](#xenforo_lockpick_quotesuserjs)
     * [`XenForo_Member_Nicknames.user.js`](#xenforo_member_nicknamesuserjs-more)
     * [`XenForo_Message_Archiver.user.js`](#xenforo_message_archiveruserjs-more)
     * [`XenForo_Navigation_Shortcuts.user.js`](#xenforo_navigation_shortcutsuserjs-more)
@@ -170,6 +171,10 @@ A collection of my client-side userscripts.
 #### `XenForo_Isolate_Posts_by_User.user.js` [More](../../wiki/XenForo:-Isolate-Posts-by-User "Wiki")  
 **Name**: XenForo - Isolate Posts by User  
 **Description**: Adds a button to the Mini-profilw to display all posts by that user in the thread.  
+
+#### `XenForo_Lockpick_Quotes.user.js`  
+**Name**: XenForo - Lockpick Quotes  
+**Description**: Enables quoting posts from locked threads as MultiQuotes.  
 
 #### `XenForo_Member_Nicknames.user.js` [More](../../wiki/XenForo:-Member-Nicknames "Wiki")  
 **Name**: XenForo - Member Nicknames  
