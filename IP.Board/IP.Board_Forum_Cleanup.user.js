@@ -34,7 +34,10 @@ function clean() {
 
 	for (i = 0, collection = document.getElementsByClassName('shareButtons'); i < collection.length; i++) {
 		collection[i].style.display = 'none';
-		console.log('Cleaned up', collection[i]);
+	}
+
+	if (collection.length) {
+		console.log('Cleaned up', collection);
 	}
 }
 
