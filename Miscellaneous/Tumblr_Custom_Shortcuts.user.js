@@ -204,7 +204,7 @@ var addShortcutHandler = function(event) {
 	bindTo;
 
 	var shortcutHandler = function(event) {
-		if (event.altKey && event.shiftKey && event.keyCode === 83) {
+		if (event.altKey && event.shiftKey && event.keyCode === String('S').charCodeAt(0)) {
 			wrapHTML(context, '<small>', '</small>');
 		}
 	};
