@@ -30,6 +30,7 @@ A collection of my client-side userscripts.
   * [XenForo](#xenforo)
     * [`XenForo_Alerts_in_Page_Title.user.js`](#xenforo_alerts_in_page_titleuserjs)
     * [`XenForo_Auto-applying_Macros.user.js`](#xenforo_auto-applying_macrosuserjs-more)
+    * [`XenForo_Auto-refresh_Users_Viewing_Thread.user.js`](#xenforo_auto-refresh_users_viewing_threaduserjs)
     * [`XenForo_Avatar_Preview.user.js`](#xenforo_avatar_previewuserjs-more)
     * [`XenForo_Block_Signatures.user.js`](#xenforo_block_signaturesuserjs-more)
     * [`XenForo_Expanded_Search_Results.user.js`](#xenforo_expanded_search_resultsuserjs-more)
@@ -147,6 +148,10 @@ A collection of my client-side userscripts.
 #### `XenForo_Auto-applying_Macros.user.js` [More](../../wiki/XenForo:-Auto-applying-Macros "Wiki")  
 **Name**: XenForo - Auto-applying Macros  
 **Description**: Adds an option to automatically apply XenForo Macros.  
+
+#### `XenForo_Auto-refresh_Users_Viewing_Thread.user.js`  
+**Name**: XenForo - Auto-refresh Users Viewing Thread  
+**Description**: Refreshes the 'Users Viewing Thread' field every 10 seconds.  
 
 #### `XenForo_Avatar_Preview.user.js` [More](../../wiki/XenForo:-Avatar-Preview "Wiki")  
 **Name**: XenForo - Avatar Preview  
