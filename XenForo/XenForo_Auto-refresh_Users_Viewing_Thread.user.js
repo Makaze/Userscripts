@@ -2,7 +2,7 @@
 // @name	XenForo - Auto-refresh Users Viewing Thread
 // @namespace	Makaze
 // @description	Refreshes the 'Users Viewing Thread' field every 10 seconds.
-// @include	*kh-vids.net/*
+// @include	*
 // @grant	none
 // @version	1.0.0
 // ==/UserScript==
