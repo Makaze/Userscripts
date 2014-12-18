@@ -52,6 +52,7 @@ A collection of my client-side userscripts.
     * [`SF_Change_FE_in_Miniprofiles.user.js`](#sf_change_fe_in_miniprofilesuserjs)
     * [`SF_Mafia_Disable_Post_Editing.user.js`](#sf_mafia_disable_post_editinguserjs)
     * [`Tumblr_Custom_Buttons.user.js`](#tumblr_custom_buttonsuserjs)
+    * [`Tumblr_Custom_Shortcuts.user.js`](#tumblr_custom_shortcutsuserjs)
 
 ## IP.Board
 
@@ -233,3 +234,7 @@ Miscellaneous
 #### `Tumblr_Custom_Buttons.user.js`  
 **Name**: Tumblr - Custom Buttons  
 **Description**: Adds custom buttons to the Tumblr Editor.  
+
+#### `Tumblr_Custom_Shortcuts.user.js`  
+**Name**: Tumblr - Custom Shortcuts  
+**Description**: Adds custom shortcuts to the Tumblr Editor.  

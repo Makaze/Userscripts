@@ -199,7 +199,7 @@ function wrapHTML(context, open, close) {
 	}
 }
 
-var addButtonHandler = function(event) {
+var addShortcutHandler = function(event) {
 	var context,
 	bindTo;
 
@@ -230,5 +230,4 @@ var addButtonHandler = function(event) {
 	event.target.setAttribute('custombuttons', '');
 };
 
-
-document.addEventListener('mouseover', addButtonHandler, false);
+document.addEventListener('mouseover', addShortcutHandler, false);
