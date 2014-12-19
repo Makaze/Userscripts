@@ -4,7 +4,7 @@
 // @description	Adds an optional customized Nickname field to the profiles of members of your choice. 
 // @include	*
 // @grant	none
-// @version	1.0.5
+// @version	1.0.6
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -102,7 +102,7 @@ function editNick(event) {
 
 					for (i = 0; i < document.getElementsByClassName('author').length; i++) {
 						context = document.getElementsByClassName('author')[i];
-						if (context.getElementsByClassName('memberNickname')[0] == null) {
+						if (context.parentNode.getElementsByClassName('memberNickname')[0] == null) {
 							if (context.getElementsByTagName('a')[0] != null) {
 								userID = context.getElementsByTagName('a')[0].href.match(/showuser=(\d+)/i)[1];
 								appendLocation = context;
