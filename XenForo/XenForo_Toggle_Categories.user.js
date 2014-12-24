@@ -4,7 +4,7 @@
 // @description	Toggle the visibility of categories by clicking the title bar.
 // @include	*
 // @grant	none
-// @version	1.0.0
+// @version	1.0.1
 // ==/UserScript==
 
 function createElement(type, callback) {
@@ -50,6 +50,10 @@ function toggleCategories() {
 		if (toggled.hasOwnProperty(id)) {
 			$(this).next('.nodeList').slideToggle('medium');
 		}
+
+		$(this).find('a:first').on('click', function(event) {
+			event.stopPropagation();
+		});
 	});
 
 	$('.categoryNodeInfo').on('click', function() {
