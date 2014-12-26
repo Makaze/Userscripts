@@ -294,7 +294,7 @@ function init() {
 					$(progress).fadeOut(10, function() {
 						$(progress).find('.progressMessage').text('Close');
 
-						$(save).attr('download', sanitize(title + ' - ' + pages) + '.txt').attr('href', 'data:text/plain;charset=UTF-8,' + encodeURIComponent(posts.value));
+						$(save).attr('download', sanitize(title + ' - ' + pages) + '.md').attr('href', 'data:text/plain;charset=UTF-8,' + encodeURIComponent(posts.value));
 						$(save).css({
 							right: 30 + $('.progressBar').outerWidth() + 'px'
 						});
