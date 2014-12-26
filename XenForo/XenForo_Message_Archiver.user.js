@@ -4,7 +4,7 @@
 // @description	Converts XenForo thread and conversation messages into text format for easy archiving.
 // @include	*
 // @grant	none
-// @version	2.0.1
+// @version	2.0.2
 // ==/UserScript==
 
 function runInGlobal(code) {
@@ -60,7 +60,7 @@ function init() {
 				.replace(/<\/?i>/gi, '_')
 				.replace(/<a href="(.*?)".*?>(.*?)<\/a>/gi, '[$2]($1)')
 				.replace(/<\/?a>/gi, '')
-				.replace(/<img src="(.*?)".*?>/gi, '[IMG: $1]')
+				.replace(/<img src="(.*?)".*?>/gi, '![IMG]($1)')
 				.replace(/<\/?span.*?>/gi, '')
 				.replace(/<div style="padding-left: \d+px;?">([^]*?)<\/div>/gi, '$1')
 				.replace(/<.*?>/g, '')
