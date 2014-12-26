@@ -4,7 +4,7 @@
 // @description	Converts XenForo thread and conversation messages into text format for easy archiving.
 // @include	*
 // @grant	none
-// @version	2.0.2
+// @version	2.0.3
 // ==/UserScript==
 
 function runInGlobal(code) {
@@ -146,6 +146,12 @@ function init() {
 				doc.getElementsByTagName('style')[0].remove();
 			}
 		}
+
+		$(doc).find('iframe').replaceWith(function() {
+			var src = $(this).attr("src")
+			return "[" + src + "](" + src + ")";
+
+		});
 
 		temp = doc.innerHTML;
 
