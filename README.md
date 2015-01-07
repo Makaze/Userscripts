@@ -6,10 +6,12 @@ A collection of my client-side userscripts.
 ## Table of Contents
 
   * [IP.Board](#ipboard)
+    * [`IP.Board_Automatic_Notifications.user.js`](#ipboard_automatic_notificationsuserjs)
     * [`IP.Board_Auto-Save_Posts.user.js`](#ipboard_auto-save_postsuserjs-more)
     * [`IP.Board_Forum_Cleanup.user.js`](#ipboard_forum_cleanupuserjs)
     * [`IP.Board_Hide_Gender_in_Miniprofies.user.js`](#ipboard_hide_gender_in_miniprofiesuserjs)
     * [`IP.Board_Isolate_Posts_by_User.user.js`](#ipboard_isolate_posts_by_useruserjs-more)
+    * [`IP.Board_Lockpick_Quotes.user.js`](#ipboard_lockpick_quotesuserjs)
     * [`IP.Board_Member_Nicknames.user.js`](#ipboard_member_nicknamesuserjs-more)
     * [`IP.Board_Navigation_Shortcuts.user.js`](#ipboard_navigation_shortcutsuserjs-more)
     * [`IP.Board_Plaintext_BBCode.user.js`](#ipboard_plaintext_bbcodeuserjs-more)
@@ -57,6 +59,10 @@ A collection of my client-side userscripts.
 
 ## IP.Board
 
+#### `IP.Board_Automatic_Notifications.user.js`
+**Name**: IP.Board - Automatic Notifications  
+**Description**: Automatically loads new Forum and Messages notifications without refreshing the page.  
+
 #### `IP.Board_Auto-Save_Posts.user.js` [More](../../wiki/IP.Board:-Post-Auto-Saving-&-Management "Wiki")  
 **Name**: IP.Board Post Auto-Saving + Management  
 **Description**: Save and manage post drafts for IP.Board forums.  
@@ -72,6 +78,10 @@ A collection of my client-side userscripts.
 #### `IP.Board_Isolate_Posts_by_User.user.js` [More](../../wiki/IP.Board:-Isolate-Posts-by-User "Wiki")  
 **Name**: IP.Board - Isolate Posts by User  
 **Description**: Adds links to 'Who posted in' lists and posts that generate all posts by that user in the thread.  
+
+#### `IP.Board_Lockpick_Quotes.user.js`  
+**Name**: IP.Board - Lockpick Quotes  
+**Description**: Enables quoting posts from locked threads as MultiQuotes.  
 
 #### `IP.Board_Member_Nicknames.user.js` [More](../../wiki/IP.Board:-Member-Nicknames "Wiki")  
 **Name**: IP.Board - Member Nicknames  
