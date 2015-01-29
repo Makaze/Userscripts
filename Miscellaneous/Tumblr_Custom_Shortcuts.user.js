@@ -4,7 +4,7 @@
 // @description	Adds custom shortcuts to the Tumblr Editor.
 // @include	*www.tumblr.com/*
 // @grant	none
-// @version	1.5.0
+// @version	1.5.1
 // ==/UserScript==
 
 // Classes constructor
@@ -204,7 +204,7 @@ var addShortcutHandler = function(event) {
 	bindTo;
 
 	var shortcutHandler = function(event) {
-		if (event.altKey && event.shiftKey && event.keyCode === String('S').charCodeAt(0)) {
+		if (event.altKey && event.shiftKey && event.keyCode === 83) {
 			wrapHTML(context, '<small>', '</small>');
 		}
 	};
