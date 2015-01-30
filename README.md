@@ -56,6 +56,7 @@ A collection of my client-side userscripts.
     * [`SF_Mafia_Disable_Post_Editing.user.js`](#sf_mafia_disable_post_editinguserjs)
     * [`Tumblr_Custom_Buttons.user.js`](#tumblr_custom_buttonsuserjs)
     * [`Tumblr_Custom_Shortcuts.user.js`](#tumblr_custom_shortcutsuserjs)
+    * [`Tumblr_Inline_Queue_Button.user.js`](#tumblr_inline_queue_buttonuserjs)
 
 ## IP.Board
 
@@ -253,3 +254,7 @@ Miscellaneous
 #### `Tumblr_Custom_Shortcuts.user.js`  
 **Name**: Tumblr - Custom Shortcuts  
 **Description**: Adds custom shortcuts to the Tumblr Editor.  
+
+#### `Tumblr_Inline_Queue_Button.user.js`  
+**Name**: Tumblr - Inline Queue Button  
+**Description**: Adds a Queue button to avoid using the submission dropdown.  
