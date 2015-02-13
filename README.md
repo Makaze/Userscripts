@@ -8,6 +8,7 @@ A collection of my client-side userscripts.
   * [IP.Board](#ipboard)
     * [`IP.Board_Auto-Save_Posts.user.js`](#ipboard_auto-save_postsuserjs-more)
     * [`IP.Board_Automatic_Notifications.user.js`](#ipboard_automatic_notificationsuserjs)
+    * [`IP.Board_Custom_Avatars.user.js`](#ipboard_custom_avatarsuserjs)
     * [`IP.Board_Forum_Cleanup.user.js`](#ipboard_forum_cleanupuserjs)
     * [`IP.Board_Hide_Gender_in_Miniprofies.user.js`](#ipboard_hide_gender_in_miniprofiesuserjs)
     * [`IP.Board_Isolate_Posts_by_User.user.js`](#ipboard_isolate_posts_by_useruserjs-more)
@@ -67,6 +68,10 @@ A collection of my client-side userscripts.
 #### `IP.Board_Automatic_Notifications.user.js`
 **Name**: IP.Board - Automatic Notifications  
 **Description**: Automatically loads new Forum and Messages notifications without refreshing the page.  
+
+#### `IP.Board_Custom_Avatars.user.js`  
+**Name**: IP.Board - Custom Avatars  
+**Description**: AAllows users to constomize or remove avatars on their display on a user-by-user basis.  
 
 #### `IP.Board_Forum_Cleanup.user.js`  
 **Name**: IP.Board - Forum Cleanup  
