@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name	IP.Board - Custom Avatars
 // @namespace	Makaze
-// @description	Allows users to constomize or remove avatars on their display on a user-by-user basis.
+// @description	Allows users to customise or remove avatars on their display on a user-by-user basis.
 // @include	*
 // @grant	none
 // @version	1.0.0
