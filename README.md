@@ -71,7 +71,7 @@ A collection of my client-side userscripts.
 
 #### `IP.Board_Custom_Avatars.user.js`  
 **Name**: IP.Board - Custom Avatars  
-**Description**: AAllows users to constomize or remove avatars on their display on a user-by-user basis.  
+**Description**: AAllows users to customise or remove avatars on their display on a user-by-user basis.  
 
 #### `IP.Board_Forum_Cleanup.user.js`  
 **Name**: IP.Board - Forum Cleanup  
