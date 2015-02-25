@@ -49,7 +49,7 @@ A collection of my client-side userscripts.
     * [`XenForo_Toggle_Categories.user.js`](#xenforo_toggle_categoriesuserjs)
   * [Miscellaneous](#miscellaneous)
     * [`EventHandler.user.js`](#eventhandleruserjs-more)
-    * [`Facebook_Page_Moderation_Tool.user.js`](#facevook_page_moderation_tooluserjs-more)
+    * [`Facebook_Page_Moderation_Tool.user.js`](#facebook_page_moderation_tooluserjs-more)
     * [`Freeze_All_GIFs.user.js`](#freeze_all_gifsuserjs)
     * [`GlobalVariableConstructor.user.js`](#globalvariableconstructoruserjs-more)
     * [`MakazeScriptOptions_Menu.user.js`](#makazescriptoptions_menuuserjs-more)
