@@ -49,7 +49,7 @@ A collection of my client-side userscripts.
     * [`XenForo_Toggle_Categories.user.js`](#xenforo_toggle_categoriesuserjs)
   * [Miscellaneous](#miscellaneous)
     * [`EventHandler.user.js`](#eventhandleruserjs-more)
-    * [`Facebook_Page_Moderation_Tool.user.js`](#facebook_page_moderation_tooluserjs-more)
+    * [`Facebook_Page_Moderation_Tools.user.js`](#facebook_page_moderation_toolsuserjs-more)
     * [`Freeze_All_GIFs.user.js`](#freeze_all_gifsuserjs)
     * [`GlobalVariableConstructor.user.js`](#globalvariableconstructoruserjs-more)
     * [`MakazeScriptOptions_Menu.user.js`](#makazescriptoptions_menuuserjs-more)
@@ -229,8 +229,8 @@ Miscellaneous
 **Name**: EventHandler - Manage JavaScript Events  
 **Description**: Constructor/library to add, search through and remove event listeners. Supports adding and removing multiple types of events simultaneously.  
 
-#### `Facebook_Page_Moderation_Tool.user.js` [More](../../wiki/Miscellaneous:-Facebook-Page-Moderation-Tool "Wiki")  
-**Name**: Facebook - Page Moderation Tool  
+#### `Facebook_Page_Moderation_Tools.user.js` [More](../../wiki/Miscellaneous:-Facebook-Page-Moderation-Tools "Wiki")  
+**Name**: Facebook - Page Moderation Tools  
 **Description**: Adds an automated method for banning members from a page even before they like or comment.  
 
 #### `Freeze_All_GIFs.user.js`  
