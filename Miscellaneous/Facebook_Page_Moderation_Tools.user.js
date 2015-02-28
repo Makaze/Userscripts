@@ -4,7 +4,7 @@
 // @description	Adds automated features for moderation of Facebook Pages.
 // @include	*facebook.com/*
 // @grant	none
-// @version	1.2.0
+// @version	1.2.1
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -664,39 +664,41 @@ if (document.getElementsByTagName('a')[0] != null) {
 	}, 500);
 }
 
-if (config.ban_tool.enabled) {
-	pageTimer = setInterval(pageInit, 500);
-}
-
-document.getElementsByClassName('uiTextareaAutogrow')[0].addEventListener('focus', function() {
-	var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
-	ModTools = (opts.hasOwnProperty('fb_moderation_tool_settings')) ? opts.fb_moderation_tool_settings : {},
-	config = (ModTools.hasOwnProperty('pages')) ? ModTools.pages : {
-		'ban_tool': {
-			'enabled': false
-		},
-		'auto_signature': {
-			'enabled': false,
-			'signature': ''
-		}
-	},
-	sig = config.auto_signature.signature,
-	self = this;
-
-	if (config.auto_signature.enabled) {
-		if (!this.value.length) {
-			this.value += ' ' + sig;
-
-			setTimeout(function() {
-				selectRange(self, 0, 0);
-			}, 0);
-		} else {
-			setTimeout(function() {
-				selectRange(self, self.value.length - (sig.length + 1), self.value.length - (sig.length + 1));
-			}, 0);
-		}
+if (document.getElementById('pages_manager_top_bar_container') != null) {
+	if (config.ban_tool.enabled) {
+		pageTimer = setInterval(pageInit, 500);
 	}
-}, false);
+
+	document.getElementsByClassName('uiTextareaAutogrow')[0].addEventListener('focus', function() {
+		var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
+		ModTools = (opts.hasOwnProperty('fb_moderation_tool_settings')) ? opts.fb_moderation_tool_settings : {},
+		config = (ModTools.hasOwnProperty('pages')) ? ModTools.pages : {
+			'ban_tool': {
+				'enabled': false
+			},
+			'auto_signature': {
+				'enabled': false,
+				'signature': ''
+			}
+		},
+		sig = config.auto_signature.signature,
+		self = this;
+
+		if (config.auto_signature.enabled) {
+			if (!this.value.length) {
+				this.value += ' ' + sig;
+
+				setTimeout(function() {
+					selectRange(self, 0, 0);
+				}, 0);
+			} else {
+				setTimeout(function() {
+					selectRange(self, self.value.length - (sig.length + 1), self.value.length - (sig.length + 1));
+				}, 0);
+			}
+		}
+	}, false);
+}
 
 if (document.getElementById('userNavigationMenu') != null) {
 	// Styling
