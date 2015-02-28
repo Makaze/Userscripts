@@ -1,20 +1,30 @@
 // ==UserScript==
-// @name	Facebook - Page Moderation Tool
+// @name	Facebook - Page Moderation Tools
 // @namespace	Makaze
-// @description	Adds an automated method for banning members from a page even before they like or comment.
+// @description	Adds automated features for moderation of Facebook Pages.
 // @include	*facebook.com/*
 // @grant	none
-// @version	1.0.1
+// @version	1.2.0
 // ==/UserScript==
 
-var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
-banned = (opts.hasOwnProperty('fb_ban_queue')) ? opts.fb_ban_queue : [],
-banHandler,
-pageID,
-alreadyBanned = false,
+var MakazeScriptStyles,
+styleElem,
+opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
+banned = (opts.hasOwnProperty('fb_moderation_tool_ban_queue')) ? opts.fb_moderation_tool_ban_queue : [],
+ModTools = (opts.hasOwnProperty('fb_moderation_tool_settings')) ? opts.fb_moderation_tool_settings : {},
+config = (ModTools.hasOwnProperty('pages')) ? ModTools.pages : {
+	'ban_tool': {
+		'enabled': false
+	},
+	'auto_signature': {
+		'enabled': false,
+		'signature': ''
+	}
+},
 hoverTimer,
 pageTimer,
-links,
+menu,
+item,
 i = 0,
 j = 0;
 
@@ -24,6 +34,88 @@ function createElement(type, callback) {
 	callback(element);
 
 	return element;
+}
+
+function fade(elem, type, speed) {
+	var defaultOpacity,
+	currentDisplay = elem.style.display || window.getComputedStyle(elem).display;
+
+	elem.style.opacity = '';
+	defaultOpacity = window.getComputedStyle(elem).opacity;
+	elem.style.opacity = 0;
+
+	// Default values:
+
+	switch (arguments.length) {
+		case 1:
+			type = 'toggle';
+		case 2:
+			speed = 300;
+		break;
+	}
+
+	switch (type) {
+		case 'in':
+			elem.style.display = '';
+			setTimeout(function() {
+				elem.style.transition = 'all ' + speed + 'ms ease-in-out';
+				elem.style.opacity = defaultOpacity;
+				setTimeout(function() {
+					elem.style.transition = '';
+					elem.style.opacity = '';
+				}, speed + 10);
+			}, 1);
+		break;
+		case 'out':
+			elem.style.transition = '';
+			elem.style.opacity = defaultOpacity;
+			elem.style.transition = 'all ' + speed + 'ms ease-in-out';
+			elem.style.opacity = 0;
+			setTimeout(function() {
+				elem.style.display = 'none';
+				elem.style.transition = '';
+				elem.style.opacity = '';
+			}, speed + 10);
+		break;
+		case 'toggle':
+		default:
+			if (currentDisplay === 'none') {
+				elem.style.display = '';
+				setTimeout(function() {
+					elem.style.transition = 'all ' + speed + 'ms ease-in-out';
+					elem.style.opacity = defaultOpacity;
+					setTimeout(function() {
+						elem.style.transition = '';
+						elem.style.opacity = '';
+					}, speed + 10);
+				}, 1);
+			} else {
+				elem.style.transition = '';
+				elem.style.opacity = defaultOpacity;
+				elem.style.transition = 'all ' + speed + 'ms ease-in-out';
+				elem.style.opacity = 0;
+				setTimeout(function() {
+					elem.style.display = 'none';
+					elem.style.transition = '';
+					elem.style.opacity = '';
+				}, speed + 10);
+			}
+	}
+}
+
+function selectRange(elem, start, end) {
+	var range;
+
+	if (elem.setSelectionRange) {
+		elem.focus();
+		elem.setSelectionRange(start, end);
+	} else if (elem.createTextRange) {
+		range = elem.createTextRange();
+		range.collapse(true);
+		range.moveEnd('character', end);
+		range.moveStart('character', start);
+		range.select();
+	}
 }
 
 function banHoverCards(event) {
@@ -42,7 +134,7 @@ function banHoverCards(event) {
 	}
 
 	opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {};
-	banned = (opts.hasOwnProperty('fb_ban_queue')) ? opts.fb_ban_queue : [];
+	banned = (opts.hasOwnProperty('fb_moderation_tool_ban_queue')) ? opts.fb_moderation_tool_ban_queue : [];
 
 	id = context.getAttribute('data-hovercard').match(/id=(\d+)/)[1];
 	name = context.textContent.replace(/\s+/g, ' ').trim();
@@ -53,7 +145,7 @@ function banHoverCards(event) {
 		}
 	}
 
-	hoverTimer = setInterval(function() {
+	hoverTimer = setTimeout(function() {
 		if (document.getElementsByClassName('HovercardMessagesButton')[0] != null) {
 			hoverContext = document.getElementsByClassName('HovercardMessagesButton')[0];
 
@@ -71,7 +163,7 @@ function banHoverCards(event) {
 
 					ban.onclick = function() {
 						var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
-						banned = (opts.hasOwnProperty('fb_ban_queue')) ? opts.fb_ban_queue : [],
+						banned = (opts.hasOwnProperty('fb_moderation_tool_ban_queue')) ? opts.fb_moderation_tool_ban_queue : [],
 						i = 0; 
 
 						if (this.childNodes[0].nodeValue !== 'Banned') {
@@ -79,7 +171,7 @@ function banHoverCards(event) {
 
 							banned.push({ 'id': id, 'name': name });
 
-							opts.fb_ban_queue = banned;
+							opts.fb_moderation_tool_ban_queue = banned;
 
 							localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
 						} else {
@@ -92,7 +184,7 @@ function banHoverCards(event) {
 								}
 							}
 
-							opts.fb_ban_queue = banned;
+							opts.fb_moderation_tool_ban_queue = banned;
 
 							localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
 						}
@@ -102,21 +194,14 @@ function banHoverCards(event) {
 
 			clearTimeout(hoverTimer);
 		}
-	}, 100);
-}
-
-if (document.getElementsByTagName('a')[0] != null) {
-	hoverTimer = setInterval(function() {
-		for (i = 0, links = document.getElementsByTagName('a'); i < links.length; i++) {
-			if (links[i].hasAttribute('data-hovercard') && links[i].className.indexOf('banHoverCards') < 0) {
-				links[i].addEventListener('mouseover', banHoverCards, false);
-				links[i].className += ' banHoverCard';
-			}
-		}
-	}, 500);
+	}, 1000);
 }
 
 function pageInit() {
+	var pageID,
+	banHandler,
+	alreadyBanned = false;
+
 	if (document.getElementById('pagesManagerSpringboard') != null) {
 		pageID = JSON.parse(document.getElementById('pagelet_timeline_main_column').getAttribute('data-gt')).profile_owner;
 
@@ -167,7 +252,7 @@ function pageInit() {
 										ban.checked = true;
 										ban.parentNode.parentNode.parentNode.getElementsByClassName('layerConfirm')[0].click();
 									}
-								}, 50);
+								}, 100);
 							};
 						}));
 
@@ -180,7 +265,7 @@ function pageInit() {
 							clear.onclick = function() {
 								var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {};
 
-								delete opts['fb_ban_queue'];
+								delete opts['fb_moderation_tool_ban_queue'];
 
 								localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
 
@@ -207,7 +292,7 @@ function pageInit() {
 									ban.parentNode.parentNode.parentNode.getElementsByClassName('layerConfirm')[0].click();
 
 									opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {};
-									banned = (opts.hasOwnProperty('fb_ban_queue')) ? opts.fb_ban_queue : [];
+									banned = (opts.hasOwnProperty('fb_moderation_tool_ban_queue')) ? opts.fb_moderation_tool_ban_queue : [];
 
 									for (k = 0; k < banned.length; k++) {
 										if (banned[k].id === self.getAttribute('data-userid')) {
@@ -221,7 +306,7 @@ function pageInit() {
 										}
 									}
 
-									opts.fb_ban_queue = banned;
+									opts.fb_moderation_tool_ban_queue = banned;
 
 									localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
 
@@ -277,4 +362,437 @@ function pageInit() {
 	}
 }
 
-pageTimer = setInterval(pageInit, 100);
+function toolOptions(settings) {
+	var bantool = settings.ban_tool.enabled,
+	autosignature = settings.auto_signature.enabled;
+
+	return createElement('div', function(cont) {
+		cont.className = 'ModToolOptions';
+		cont.setAttribute('data-name', 'pages');
+
+		cont.appendChild(createElement('div', function(option) {
+			option.className = 'ModToolOption';
+			option.setAttribute('data-name', 'ban_tool');
+
+			option.appendChild(createElement('input', function(check) {
+				check.className = 'ModToolEnable';
+				check.type = 'checkbox';
+
+				if (bantool) {
+					check.checked = true;
+				}
+			}));
+
+			option.appendChild(document.createTextNode(' Ban Queue'));
+		}));
+
+		cont.appendChild(createElement('div', function(option) {
+			option.className = 'ModToolOption';
+			option.setAttribute('data-name', 'auto_signature');
+
+			option.appendChild(createElement('input', function(check) {
+				check.className = 'ModToolEnable';
+				check.type = 'checkbox';
+
+				if (autosignature) {
+					check.checked = true;
+				}
+
+				check.onchange = function() {
+					var sub = this.parentNode.getElementsByClassName('subOptions')[0],
+					container = document.getElementById('ModToolPopupForeground');
+
+					if (this.checked) {
+						sub.style.display = 'block';
+					} else {
+						sub.style.display = 'none';
+					}
+
+					container.style.marginTop = '-' + (container.offsetHeight / 2) + 'px';
+				};
+			}));
+
+			option.appendChild(document.createTextNode(' Automatic Signature (Posts only)'));
+
+			option.appendChild(createElement('div', function(sub) {
+				sub.className = 'subOptions';
+
+				if (!autosignature) {
+					sub.style.display = 'none';
+				}
+
+				sub.appendChild(createElement('div', function(field) {
+					field.className = 'subOption';
+					field.setAttribute('data-name', 'signature');
+					field.setAttribute('data-type', 'textarea');
+					field.appendChild(document.createTextNode('↳ Signature: '));
+
+					field.appendChild(createElement('textarea', function(text) {
+						text.placeholder = 'Enter signature';
+
+						text.value = settings.auto_signature.signature;
+					}));
+
+					field.appendChild(createElement('a', function(save) {
+						save.className = '_42ft _4jy0 _4jy4 _517h _51sy';
+						save.setAttribute('role', 'button');
+						save.style.marginLeft = '5px';
+						save.appendChild(document.createTextNode('Save'));
+
+						save.onclick = function() {
+							var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
+							toolSettings = (opts.hasOwnProperty('fb_moderation_tool_settings')) ? opts.fb_moderation_tool_settings : {},
+							context = document.getElementById('ModToolPopupForeground'),
+							toolType = context.getElementsByClassName('ModToolOptions')[0].getAttribute('data-name'),
+							toolSetting = (toolSettings.hasOwnProperty(toolType)) ? toolSettings[toolType] : {},
+							settings,
+							settingName,
+							setting,
+							subSettings,
+							subSettingName,
+							subSettingType,
+							subSetting,
+							items,
+							i = 0,
+							j = 0,
+							k = 0;
+
+							for (i = 0, settings = context.getElementsByClassName('ModToolOption'); i < settings.length; i++) {
+								settingName = settings[i].getAttribute('data-name');
+								setting = settings[i].getElementsByClassName('ModToolEnable')[0].checked;
+
+								toolSetting[settingName] = { 'enabled': setting };
+
+								for (j = 0, subSettings = settings[i].getElementsByClassName('subOption'); j < subSettings.length; j++) {
+									subSettingName = subSettings[j].getAttribute('data-name');
+									subSettingType = subSettings[j].getAttribute('data-type');
+
+									switch (subSettingType) {
+										case 'textarea':
+											subSetting = subSettings[j].getElementsByTagName('textarea')[0].value;
+										break;
+										case 'text':
+											subSetting = subSettings[j].getElementsByTagName('input')[0].value;
+										break;
+										case 'checkbox':
+											subSetting = subSettings[j].getElementsByTagName('input')[0].checked;
+										break;
+										case 'radio':
+											for (k = 0, items = subSettings[j].getElementsByTagName('input'); k < items.length; k++) {
+												if (items[k].checked) {
+													subSetting = items[k].value;
+													break;
+												}
+											}
+										break;
+									}
+
+									toolSetting[settingName][subSettingName] = subSetting;
+								}
+							}
+
+							toolSettings[toolType] = toolSetting;
+
+							opts.fb_moderation_tool_settings = toolSettings;
+
+							localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
+						};
+					}));
+				}));
+			}));
+		}));
+
+		cont.appendChild(createElement('div', function(footer) {
+			footer.style.textAlign = 'right';
+
+			footer.appendChild(createElement('a', function(cancel) {
+				cancel.className = '_42ft _4jy0 _4jy4 _517h _51sy';
+				cancel.setAttribute('role', 'button');
+				cancel.appendChild(document.createTextNode('Cancel'));
+
+				cancel.onclick = function() {
+					fade(document.getElementById('ModToolPopupBackground'), 'out');
+					fade(document.getElementById('ModToolPopupForeground'), 'out');
+					document.getElementById('ModToolPopupForeground').style.marginTop = '0px';
+				};
+			}));
+
+			footer.appendChild(createElement('a', function(save) {
+				save.className = '_42ft _4jy0 _4jy4 _517h _51sy';
+				save.setAttribute('role', 'button');
+				save.appendChild(document.createTextNode('Save'));
+
+				save.onclick = function() {
+					var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
+					toolSettings = (opts.hasOwnProperty('fb_moderation_tool_settings')) ? opts.fb_moderation_tool_settings : {},
+					context = document.getElementById('ModToolPopupForeground'),
+					toolType = context.getElementsByClassName('ModToolOptions')[0].getAttribute('data-name'),
+					toolSetting = (toolSettings.hasOwnProperty(toolType)) ? toolSettings[toolType] : {},
+					settings,
+					settingName,
+					setting,
+					subSettings,
+					subSettingName,
+					subSettingType,
+					subSetting,
+					items,
+					i = 0,
+					j = 0,
+					k = 0;
+
+					for (i = 0, settings = context.getElementsByClassName('ModToolOption'); i < settings.length; i++) {
+						settingName = settings[i].getAttribute('data-name');
+						setting = settings[i].getElementsByClassName('ModToolEnable')[0].checked;
+
+						toolSetting[settingName] = { 'enabled': setting };
+
+						for (j = 0, subSettings = settings[i].getElementsByClassName('subOption'); j < subSettings.length; j++) {
+							subSettingName = subSettings[j].getAttribute('data-name');
+							subSettingType = subSettings[j].getAttribute('data-type');
+
+							switch (subSettingType) {
+								case 'textarea':
+									subSetting = subSettings[j].getElementsByTagName('textarea')[0].value;
+								break;
+								case 'text':
+									subSetting = subSettings[j].getElementsByTagName('input')[0].value;
+								break;
+								case 'checkbox':
+									subSetting = subSettings[j].getElementsByTagName('input')[0].checked;
+								break;
+								case 'radio':
+									for (k = 0, items = subSettings[j].getElementsByTagName('input'); k < items.length; k++) {
+										if (items[k].checked) {
+											subSetting = items[k].value;
+											break;
+										}
+									}
+								break;
+							}
+
+							toolSetting[settingName][subSettingName] = subSetting;
+						}
+					}
+
+					toolSettings[toolType] = toolSetting;
+
+					opts.fb_moderation_tool_settings = toolSettings;
+
+					localStorage.setItem('MakazeScriptOptions', JSON.stringify(opts));
+
+					fade(document.getElementById('ModToolPopupBackground'), 'out');
+					fade(document.getElementById('ModToolPopupForeground'), 'out');
+					document.getElementById('ModToolPopupForeground').style.marginTop = '0px';
+				};
+			}));
+		}));
+	});
+}
+
+function popup(title, child) {
+	var context;
+
+	if (document.getElementById('ModToolPopupForeground') == null) {
+		document.body.appendChild(createElement('div', function(bg) {
+			bg.id = 'ModToolPopupBackground';
+			bg.style.display = 'none';
+
+			bg.onclick = function() {
+				fade(this, 'out');
+				fade(this.nextSibling, 'out');
+				this.nextSibling.style.marginTop = '0px';
+			};
+		}));
+
+		document.body.appendChild(createElement('div', function(pop) {
+			pop.id = 'ModToolPopupForeground';
+			pop.style.display = 'none';
+
+			pop.appendChild(createElement('h1', function(header) {
+				header.className = 'ModToolHeader';
+				header.appendChild(document.createTextNode(title));
+			}));
+
+			pop.appendChild(createElement('div', function(cont) {
+				cont.className = 'ModToolChildContainer';
+				cont.appendChild(child);
+			}));
+		}));
+
+		context = document.getElementById('ModToolPopupForeground');
+	} else {
+		context = document.getElementById('ModToolPopupForeground');
+
+		context.getElementsByClassName('ModToolHeader')[0].childNodes[0].nodeValue = title;
+
+		context.getElementsByClassName('ModToolChildContainer')[0].firstChild.remove();
+		context.getElementsByClassName('ModToolChildContainer')[0].appendChild(child);
+	}
+
+	fade(context.previousSibling, 'in');
+	fade(context, 'in');
+
+	context.style.marginTop = '-' + (context.offsetHeight / 2) + 'px';
+}
+
+
+if (document.getElementsByTagName('a')[0] != null) {
+	hoverTimer = setInterval(function() {
+		var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
+		ModTools = (opts.hasOwnProperty('fb_moderation_tool_settings')) ? opts.fb_moderation_tool_settings : {},
+		config = (ModTools.hasOwnProperty('pages')) ? ModTools.pages : {
+			'ban_tool': {
+				'enabled': false
+			},
+			'auto_signature': {
+				'enabled': false,
+				'signature': ''
+			}
+		};
+
+		if (config.ban_tool.enabled) {
+			var links,
+			i = 0;
+
+			for (i = 0, links = document.getElementsByTagName('a'); i < links.length; i++) {
+				if (links[i].hasAttribute('data-hovercard') && links[i].className.indexOf('banHoverCards') < 0) {
+					links[i].addEventListener('mouseover', banHoverCards, false);
+					links[i].className += ' banHoverCard';
+				}
+			}
+		}
+	}, 500);
+}
+
+if (config.ban_tool.enabled) {
+	pageTimer = setInterval(pageInit, 500);
+}
+
+document.getElementsByClassName('uiTextareaAutogrow')[0].addEventListener('focus', function() {
+	var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
+	ModTools = (opts.hasOwnProperty('fb_moderation_tool_settings')) ? opts.fb_moderation_tool_settings : {},
+	config = (ModTools.hasOwnProperty('pages')) ? ModTools.pages : {
+		'ban_tool': {
+			'enabled': false
+		},
+		'auto_signature': {
+			'enabled': false,
+			'signature': ''
+		}
+	},
+	sig = config.auto_signature.signature,
+	self = this;
+
+	if (config.auto_signature.enabled) {
+		if (!this.value.length) {
+			this.value += ' ' + sig;
+
+			setTimeout(function() {
+				selectRange(self, 0, 0);
+			}, 0);
+		} else {
+			setTimeout(function() {
+				selectRange(self, self.value.length - (sig.length + 1), self.value.length - (sig.length + 1));
+			}, 0);
+		}
+	}
+}, false);
+
+if (document.getElementById('userNavigationMenu') != null) {
+	// Styling
+
+	if (document.getElementById('MakazeScriptStyles') == null) {
+		MakazeScriptStyles = createElement('style', function(style) {
+			style.id = 'MakazeScriptStyles';
+			style.type = 'text/css';
+		});
+		document.head.appendChild(MakazeScriptStyles);
+	}
+
+	styleElem = document.getElementById('MakazeScriptStyles');
+
+	if (styleElem.hasChildNodes()) {
+		styleElem.childNodes[0].nodeValue += '\n\n';
+	} else {
+		styleElem.appendChild(document.createTextNode(''));
+	}
+
+	styleElem.childNodes[0].nodeValue +=
+		'#ModToolPopupBackground {\n' +
+			'position: fixed;\n' +
+			'z-index: 9999;\n' +
+			'top: 0;\n' +
+			'left: 0;\n' +
+			'background-color: rgba(0, 0, 0, .4);\n' +
+			'width: 100%;\n' +
+			'height: 100%;\n' +
+		'}\n\n' +
+
+		'#ModToolPopupForeground {\n' +
+			'position: fixed;\n' +
+			'z-index: 10000;\n' +
+			'top: 50%;\n' +
+			'left: 50%;\n' +
+			'width: 500px;\n' +
+			'margin-left: -250px;\n' +
+			'background-color: #fff;\n' +
+			'padding: 15px;\n' +
+			'border-radius: 3px;\n' +
+			'box-shadow: 0px 0px 2px #000;\n' +
+			'transition: all .3s ease-in-out;\n' +
+		'}\n\n' +
+
+		'#ModToolPopupForeground * {\n' +
+			'vertical-align: middle;\n' +
+		'}\n\n' +
+
+		'.ModToolHeader {\n' +
+			'margin-bottom: 1em;\n' +
+		'}\n\n' +
+
+		'.ModToolOption {\n' +
+			'padding: 1em 0;\n' +
+			'color: #555;\n' +
+		'}\n\n' +
+
+		'.ModToolOption:not(:first-of-type) {\n' +
+			'border-top: 1px solid #ccc;\n' +
+		'}\n\n' +
+
+		'.subOptions {\n' +
+			'padding: .5em 8px;\n' +
+		'}';
+
+	menu = document.getElementById('userNavigationMenu');
+	item = menu.getElementsByClassName('menuDivider')[1];
+	
+	item.parentNode.insertBefore(createElement('li', function(item) {
+		item.role = 'menuitem';
+		item.className = 'ModToolsMenuButton';
+
+		item.appendChild(createElement('a', function(link) {
+			link.className = 'navSubmenu';
+			link.appendChild(document.createTextNode('Page Moderation Tools'));
+
+			link.onclick = function() {
+				var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
+				ModTools = (opts.hasOwnProperty('fb_moderation_tool_settings')) ? opts.fb_moderation_tool_settings : {},
+				config = (ModTools.hasOwnProperty('pages')) ? ModTools.pages : {
+					'ban_tool': {
+						'enabled': false
+					},
+					'auto_signature': {
+						'enabled': false,
+						'signature': ''
+					}
+				};
+
+				popup('Page Moderation Tools Settings', toolOptions(config));
+			};
+		}));
+	}), item);
+}
+
+if (!ModTools.hasOwnProperty('pages')) {
+	popup('Page Moderation Tools Settings', toolOptions(config));
+}
