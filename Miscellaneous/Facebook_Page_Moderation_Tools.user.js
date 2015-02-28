@@ -4,7 +4,7 @@
 // @description	Adds automated features for moderation of Facebook Pages.
 // @include	*facebook.com/*
 // @grant	none
-// @version	1.2.1
+// @version	1.2.2
 // ==/UserScript==
 
 var MakazeScriptStyles,
