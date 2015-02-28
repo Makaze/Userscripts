@@ -23,6 +23,8 @@ config = (ModTools.hasOwnProperty('pages')) ? ModTools.pages : {
 },
 hoverTimer,
 pageTimer,
+postTimer,
+dropdownTimer,
 menu,
 item,
 i = 0,
@@ -669,35 +671,41 @@ if (document.getElementById('pages_manager_top_bar_container') != null) {
 		pageTimer = setInterval(pageInit, 500);
 	}
 
-	document.getElementsByClassName('uiTextareaAutogrow')[0].addEventListener('focus', function() {
-		var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
-		ModTools = (opts.hasOwnProperty('fb_moderation_tool_settings')) ? opts.fb_moderation_tool_settings : {},
-		config = (ModTools.hasOwnProperty('pages')) ? ModTools.pages : {
-			'ban_tool': {
-				'enabled': false
-			},
-			'auto_signature': {
-				'enabled': false,
-				'signature': ''
-			}
-		},
-		sig = config.auto_signature.signature,
-		self = this;
+	postTimer = setInterval(function() {
+		if (document.getElementsByClassName('uiTextareaAutogrow')[0] != null) {
+			document.getElementsByClassName('uiTextareaAutogrow')[0].addEventListener('focus', function() {
+				var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
+				ModTools = (opts.hasOwnProperty('fb_moderation_tool_settings')) ? opts.fb_moderation_tool_settings : {},
+				config = (ModTools.hasOwnProperty('pages')) ? ModTools.pages : {
+					'ban_tool': {
+						'enabled': false
+					},
+					'auto_signature': {
+						'enabled': false,
+						'signature': ''
+					}
+				},
+				sig = config.auto_signature.signature,
+				self = this;
 
-		if (config.auto_signature.enabled) {
-			if (!this.value.length) {
-				this.value += ' ' + sig;
+				if (config.auto_signature.enabled) {
+					if (!this.value.length) {
+						this.value += ' ' + sig;
 
-				setTimeout(function() {
-					selectRange(self, 0, 0);
-				}, 0);
-			} else {
-				setTimeout(function() {
-					selectRange(self, self.value.length - (sig.length + 1), self.value.length - (sig.length + 1));
-				}, 0);
-			}
+						setTimeout(function() {
+							selectRange(self, 0, 0);
+						}, 0);
+					} else {
+						setTimeout(function() {
+							selectRange(self, self.value.length - (sig.length + 1), self.value.length - (sig.length + 1));
+						}, 0);
+					}
+				}
+			}, false);
+
+			clearTimeout(postTimer);
 		}
-	}, false);
+	}, 500);
 }
 
 if (document.getElementById('userNavigationMenu') != null) {
@@ -765,34 +773,40 @@ if (document.getElementById('userNavigationMenu') != null) {
 			'padding: .5em 8px;\n' +
 		'}';
 
-	menu = document.getElementById('userNavigationMenu');
-	item = menu.getElementsByClassName('menuDivider')[1];
-	
-	item.parentNode.insertBefore(createElement('li', function(item) {
-		item.role = 'menuitem';
-		item.className = 'ModToolsMenuButton';
+	dropdownTimer = setInterval(function() {
+		menu = document.getElementById('userNavigationMenu');
+		item = menu.getElementsByClassName('menuDivider')[1];
 
-		item.appendChild(createElement('a', function(link) {
-			link.className = 'navSubmenu';
-			link.appendChild(document.createTextNode('Page Moderation Tools'));
+		if (item != null) {
+			item.parentNode.insertBefore(createElement('li', function(item) {
+				item.role = 'menuitem';
+				item.className = 'ModToolsMenuButton';
 
-			link.onclick = function() {
-				var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
-				ModTools = (opts.hasOwnProperty('fb_moderation_tool_settings')) ? opts.fb_moderation_tool_settings : {},
-				config = (ModTools.hasOwnProperty('pages')) ? ModTools.pages : {
-					'ban_tool': {
-						'enabled': false
-					},
-					'auto_signature': {
-						'enabled': false,
-						'signature': ''
-					}
-				};
+				item.appendChild(createElement('a', function(link) {
+					link.className = 'navSubmenu';
+					link.appendChild(document.createTextNode('Page Moderation Tools'));
 
-				popup('Page Moderation Tools Settings', toolOptions(config));
-			};
-		}));
-	}), item);
+					link.onclick = function() {
+						var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
+						ModTools = (opts.hasOwnProperty('fb_moderation_tool_settings')) ? opts.fb_moderation_tool_settings : {},
+						config = (ModTools.hasOwnProperty('pages')) ? ModTools.pages : {
+							'ban_tool': {
+								'enabled': false
+							},
+							'auto_signature': {
+								'enabled': false,
+								'signature': ''
+							}
+						};
+
+						popup('Page Moderation Tools Settings', toolOptions(config));
+					};
+				}));
+			}), item);
+
+			clearTimeout(dropdownTimer);
+		}
+	}, 500);
 }
 
 if (!ModTools.hasOwnProperty('pages')) {
