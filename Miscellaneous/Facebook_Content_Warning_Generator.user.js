@@ -4,7 +4,7 @@
 // @description	Adds a content warning generator dropdown for posts.
 // @include	*facebook.com/*
 // @grant	none
-// @version	1.0.0
+// @version	1.0.1
 // ==/UserScript==
 
 var prefixes = [
@@ -230,8 +230,8 @@ function arrow(field) {
 
 		arrow.title = 'Content Warning';
 
-		arrow.appendChild(createElement('i', function(button) {
-			button.className = '_3-99 img sp_x2Btx44FsW7 sx_e206a0';
+		arrow.appendChild(createElement('div', function(button) {
+			button.className = 'arrow';
 		}));
 
 		arrow.onclick = function() {
@@ -401,94 +401,107 @@ function arrow(field) {
 	}), field.nextSibling);
 }
 
-if (document.getElementsByClassName('_1dsl')[0] != null) {
-	// Styling
 
-	if (document.getElementById('MakazeScriptStyles') == null) {
-		MakazeScriptStyles = createElement('style', function(style) {
-			style.id = 'MakazeScriptStyles';
-			style.type = 'text/css';
-		});
-		document.head.appendChild(MakazeScriptStyles);
-	}
+// Styling
 
-	styleElem = document.getElementById('MakazeScriptStyles');
+if (document.getElementById('MakazeScriptStyles') == null) {
+	MakazeScriptStyles = createElement('style', function(style) {
+		style.id = 'MakazeScriptStyles';
+		style.type = 'text/css';
+	});
+	document.head.appendChild(MakazeScriptStyles);
+}
 
-	if (styleElem.hasChildNodes()) {
-		styleElem.childNodes[0].nodeValue += '\n\n';
-	} else {
-		styleElem.appendChild(document.createTextNode(''));
-	}
+styleElem = document.getElementById('MakazeScriptStyles');
 
-	styleElem.childNodes[0].nodeValue +=
-		'.CWDropArrow {\n' +
-			'cursor: pointer;\n' +
-		'}\n\n' +
+if (styleElem.hasChildNodes()) {
+	styleElem.childNodes[0].nodeValue += '\n\n';
+} else {
+	styleElem.appendChild(document.createTextNode(''));
+}
 
-		'.CWDropContainer {\n' +
-			'color: #555;\n' +
-			'transition: all .3s ease-in-out;\n' +
-			'overflow: hidden;\n' +
-			'max-height: 0px;\n' +
-			'opacity: 0;\n' +
-		'}\n\n' +
+styleElem.childNodes[0].nodeValue +=
+	'.CWDropArrow {\n' +
+		'cursor: pointer;\n' +
+	'}\n\n' +
 
-		'.CWDropDown {\n' +
-		 	'max-height: 10000px;\n' +
-			'opacity: 1;\n' +
-			'overflow: hidden;\n' +
-			'transition: all .3s ease-in-out;\n' +
-		'}\n\n' +
+	'.CWDropArrow .arrow {\n' +
+		'border: 5px solid transparent;\n' +
+		'border-top: 5px solid #888 ! important;\n' +
+		'display: inline-block;\n' +
+		'vertical-align: middle;\n' +
+		'margin-bottom: -2.5px;\n' +
+	'}\n\n' +
 
-		'.CWDropUp {\n' +
-		 	'max-height: 0px ! important;\n' +
-			'opacity: 0 ! important;\n' +
-			'overflow: hidden ! important;\n' +
-		'}\n\n' +
+	'.CWDropContainer {\n' +
+		'color: #555;\n' +
+		'transition: all .3s ease-in-out;\n' +
+		'overflow: hidden;\n' +
+		'max-height: 0px;\n' +
+		'opacity: 0;\n' +
+	'}\n\n' +
 
-		'.CWDropContainer *, .CWDropArrow {\n' +
-			'vertical-align: middle;\n' +
-			'transition: all .2s ease-in-out;\n' +
-		'}\n\n' +
+	'.CWDropDown {\n' +
+	 	'max-height: 10000px;\n' +
+		'opacity: 1;\n' +
+		'overflow: hidden;\n' +
+		'transition: all .3s ease-in-out;\n' +
+	'}\n\n' +
 
-		'.CWDropSection {\n' +
-			'height: auto ! important;\n' +
-			'padding: 10px 0px 8px 12px ! important;\n' +
-		'}\n\n' +
+	'.CWDropUp {\n' +
+	 	'max-height: 0px ! important;\n' +
+		'opacity: 0 ! important;\n' +
+		'overflow: hidden ! important;\n' +
+	'}\n\n' +
 
-		'.CWCheckbox {\n' +
-			'display: inline-block;\n' +
-			'margin: 0px 5px 5px 0px;\n' +
-			'padding: 3px 5px;\n' +
-			'background-color: #fafafa;\n' +
-			'border-radius: 2px;\n' +
-			'border: 1px solid #eee;\n' +
-			'cursor: pointer;\n' +
-		'}\n\n' +
+	'.CWDropContainer *, .CWDropArrow {\n' +
+		'vertical-align: middle;\n' +
+		'transition: all .2s ease-in-out;\n' +
+	'}\n\n' +
 
-		'.CWCheckbox.selected {\n' +
-			'background-color: #f5f5ff;\n' +
-			'border: 1px solid #bbf;\n' +
-			'box-shadow: 0px 0px 2px #bbf;\n' +
-		'}\n\n' +
+	'.CWDropSection {\n' +
+		'height: auto ! important;\n' +
+		'padding: 10px 0px 8px 12px ! important;\n' +
+	'}\n\n' +
 
-		'.CWCheckbox input[type=checkbox] {\n' +
-			'margin: 0;\n' +
-		'}\n\n' +
+	'.CWCheckbox {\n' +
+		'display: inline-block;\n' +
+		'margin: 0px 5px 5px 0px;\n' +
+		'padding: 3px 5px;\n' +
+		'background-color: #fafafa;\n' +
+		'border-radius: 2px;\n' +
+		'border: 1px solid #eee;\n' +
+		'cursor: pointer;\n' +
+	'}\n\n' +
 
-		'.CWCustomInput textarea {\n' +
-			'width: 100%;\n' +
-			'resize: none;\n' +
-			'box-sizing: border-box;\n' +
-		'}\n\n' +
+	'.CWCheckbox.selected {\n' +
+		'background-color: #f5f5ff;\n' +
+		'border: 1px solid #bbf;\n' +
+		'box-shadow: 0px 0px 2px #bbf;\n' +
+	'}\n\n' +
 
-		'.CWDropFooter {\n' +
-			'padding-top: 0 ! important;\n' +
-		'}';
+	'.CWCheckbox input[type=checkbox] {\n' +
+		'margin: 0;\n' +
+	'}\n\n' +
 
+	'.CWCustomInput textarea {\n' +
+		'width: 100%;\n' +
+		'resize: none;\n' +
+		'box-sizing: border-box;\n' +
+	'}\n\n' +
+
+	'.CWDropFooter {\n' +
+		'padding-top: 0 ! important;\n' +
+	'}';
+
+timer = setInterval(function() {
 	for (i = 0, fields = document.getElementsByClassName('_1dsl'); i < fields.length; i++) {
-		if (!isChildOf('.fbTimelineStickyHeader', fields[i])) {
-			arrow(fields[i]);
+		if (!fields[i].hasAttribute('contentWarningArrow')) {
+			fields[i].setAttribute('contentWarningArrow', '');
+			
+			if (!isChildOf('.fbTimelineStickyHeader', fields[i])) {
+				arrow(fields[i]);
+			}
 		}
 	}
-}
+}, 500);
