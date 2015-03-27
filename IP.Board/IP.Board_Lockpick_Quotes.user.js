@@ -4,11 +4,10 @@
 // @description	Enables quoting posts from locked threads as MultiQuotes.
 // @include	*
 // @grant	none
-// @version	1.0.0
+// @version	1.0.1
 // ==/UserScript==
 
-var quotes,
-posts,
+var posts,
 post,
 pid,
 i = 0;
@@ -45,12 +44,13 @@ function getCookie(name) {
 
 function addMQuote(id) {
 	var sel,
-	flag = false;
+	flag = false,
+	quotes = (getCookie('ipb_mqtids')) ? getCookie('ipb_mqtids').split(',') : [],
+	j = 0;
 
-	for (i = 0; i < quotes.length; i++) {
-		if (quotes[i] === id) {
+	for (j = 0; j < quotes.length; j++) {
+		if (quotes[j] === id) {
 			flag = true;
-			quotes.splice(i, 1);
 			break;
 		}
 	}
@@ -72,8 +72,6 @@ function addMQuote(id) {
 if (document.getElementsByTagName('body')[0].id === 'ipboard_body') {
 	if (document.getElementsByClassName('topic_buttons')[0] != null && document.getElementsByClassName('topic_buttons')[0].getElementsByClassName('important')[0] != null && document.getElementsByClassName('topic_buttons')[0].getElementsByClassName('important')[0].textContent.indexOf('locked') > -1) {
 		if (document.getElementsByClassName('post_controls')[0] != null) {
-			quotes = (getCookie('ipb_mqtids')) ? getCookie('ipb_mqtids').split(',') : [];
-
 			for (i = 0, posts = document.getElementsByClassName('post_controls'); i < posts.length; i++) {
 				post = posts[i];
 				pid = post.id.match(/(\d+)/)[1];
