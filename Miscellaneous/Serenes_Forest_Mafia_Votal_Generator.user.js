@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name	Serenes Forest - Mafia Votal Generator
 // @namespace	Makaze
-// @description	A feature-rich votal generator generator for Serenes Forest Mafia.
+// @description	A feature-rich votal generator for Serenes Forest Mafia.
 // @include	*://serenesforest.net/forums/*
 // @grant	none
 // @version	1.0.0
