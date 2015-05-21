@@ -55,9 +55,9 @@ A collection of my client-side userscripts.
     * [`GlobalVariableConstructor.user.js`](#globalvariableconstructoruserjs-more)
     * [`MakazeScriptOptions_Menu.user.js`](#makazescriptoptions_menuuserjs-more)
     * [`OMF_QT_Gen.user.js`](#omf_qt_genuserjs)
-    * [`Serenes_Forest_Mafia_Votal_Generator.user.js`](#sernes_forest_mafia_votal_generatoruserjs)
     * [`SF_Change_FE_in_Miniprofiles.user.js`](#sf_change_fe_in_miniprofilesuserjs)
     * [`SF_Mafia_Disable_Post_Editing.user.js`](#sf_mafia_disable_post_editinguserjs)
+    * [`Serenes_Forest_Mafia_Votal_Generator.user.js`](#sernes_forest_mafia_votal_generatoruserjs)
     * [`Tumblr_Custom_Buttons.user.js`](#tumblr_custom_buttonsuserjs)
     * [`Tumblr_Custom_Shortcuts.user.js`](#tumblr_custom_shortcutsuserjs)
     * [`Tumblr_Inline_Queue_Button.user.js`](#tumblr_inline_queue_buttonuserjs)
@@ -255,10 +255,6 @@ Miscellaneous
 **Name**: OMF Question Time Generation  
 **Description**: OMF Question Time Generation  
 
-#### `Serenes_Forest_Mafia_Votal_Generator.user.js`  
-**Name**: Serenes Forest - Mafia Votal Generator  
-**Description**: A feature-rich votal generator for Serenes Forest Mafia.  
-
 #### `SF_Change_FE_in_Miniprofiles.user.js`  
 **Name**: Serenes Forest - Change 'Favorite Fire Emblem' to 'Favorite FE' in Miniprofiles  
 **Description**: Like it says on the tin.  
@@ -266,6 +262,10 @@ Miscellaneous
 #### `SF_Mafia_Disable_Post_Editing.user.js`  
 **Name**: SF Mafia - Disable Post Editing  
 **Description**: Disables the post editing button in the mafia subforum.  
+
+#### `Serenes_Forest_Mafia_Votal_Generator.user.js`  
+**Name**: Serenes Forest - Mafia Votal Generator  
+**Description**: A feature-rich votal generator for Serenes Forest Mafia.  
 
 #### `Tumblr_Custom_Buttons.user.js`  
 **Name**: Tumblr - Custom Buttons  
