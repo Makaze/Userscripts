@@ -1088,7 +1088,7 @@ function VoteCounter() {
 								tip.className = 'tip';
 								tip.appendChild(document.createTextNode('The number of hours to wait between automated posts. ('));
 								tip.appendChild(createElement('em', function(i) {
-									i.appendChild(document.createTextNode('"Post at intervals" must be Enabled.'))
+									i.appendChild(document.createTextNode('"Post at intervals" must be Enabled.'));
 								}));
 								tip.appendChild(document.createTextNode(')'));
 							}));
@@ -1117,7 +1117,7 @@ function VoteCounter() {
 								tip.className = 'tip';
 								tip.appendChild(document.createTextNode('The number of posts to allow between automated posts. ('));
 								tip.appendChild(createElement('em', function(i) {
-									i.appendChild(document.createTextNode('"Post at intervals" must be Enabled.'))
+									i.appendChild(document.createTextNode('"Post at intervals" must be Enabled.'));
 								}));
 								tip.appendChild(document.createTextNode(')'));
 							}));
@@ -1216,7 +1216,7 @@ function VoteCounter() {
 								tip.className = 'tip';
 								tip.appendChild(document.createTextNode('If enabled, forces votals to appear in the Quick Reply box instead of posting. ('));
 								tip.appendChild(createElement('em', function(i) {
-									i.appendChild(document.createTextNode('CAUTION: Automated posting does not occur in this mode. Results must be submitted manually in the Quick Reply.'))
+									i.appendChild(document.createTextNode('CAUTION: Automated posting does not occur in this mode. Results must be submitted manually in the Quick Reply.'));
 								}));
 								tip.appendChild(document.createTextNode(')'));
 							}));
