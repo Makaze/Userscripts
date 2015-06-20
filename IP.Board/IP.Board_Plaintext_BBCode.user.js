@@ -4,7 +4,7 @@
 // @description	Adds BBCode button support to Plaintext editor mode.
 // @include	*
 // @grant	none
-// @version	5.0.2
+// @version	5.0.3
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -629,157 +629,6 @@ function removeListeners(element, callback, deleteElement) {
 	newElement.value = fullValue;
 	selectRange(newElement, start, end);
 }
-
-Events.selector(document).add('keydown', 'plaintext_shortcuts', function(event) {
-	var element = event.target;
-
-	if (!element.className || !Classes.hasClass(element, 'cke_source')) {
-		return false;
-	}
-
-	if (!element.hasAttribute('data-shortcutsenabled')) {
-		removeListeners(element, function(element, removed) {
-			var postFormParent = element.parentNode,
-			inputs,
-			thisInput,
-			i = 0;
-
-			removed.setAttribute('data-shortcutsenabled', '');
-
-			Events.selector(removed).add('input propertychange', 'edit', function() {
-				element.value = removed.value;
-			}, false);
-
-			while (postFormParent.getElementsByClassName('input_submit')[0] == null && postFormParent.parentNode) {
-				postFormParent = postFormParent.parentNode;
-			}
-
-			inputs = postFormParent.getElementsByClassName('input_submit');
-
-			// On submits
-
-			var deleteCloneListener = function() {
-				var texts = postFormParent.getElementsByTagName('textarea'),
-				thisOne,
-				i = 0;
-
-				for (i = 0; i < texts.length; i++) {
-					thisOne = texts[i];
-					if (thisOne.hasAttribute('data-shortcutsenabled')) {
-						thisOne.remove();
-						break;
-					}
-				}
-
-				element.style.display = '';
-
-				Events.selector(this).remove('click', 'deleteClone', deleteCloneListener, false);
-			};
-
-			for (i = 0; i < inputs.length; i++) {
-				thisInput = inputs[i];
-				Events.selector(thisInput).add('click', 'deleteClone', deleteCloneListener, false);
-			}
-		}, false);
-	}
-
-	if (event.ctrlKey || event.metaKey) {
-		switch (event.keyCode) {
-			case 66:
-				event.preventDefault();
-				wrapText(element, '[b]', '[/b]');
-			break;
-			case 73:
-				event.preventDefault();
-				wrapText(element, '[i]', '[/i]');
-			break;
-			case 85:
-				event.preventDefault();
-				wrapText(element, '[u]', '[/u]');
-			break;
-		}
-	}
-}, false);
-
-// Styling
-
-if (document.getElementById('MakazeScriptStyles') == null) {
-	MakazeScriptStyles = createElement('style', function(style) {
-		style.id = 'MakazeScriptStyles';
-		style.type = 'text/css';
-	});
-	document.head.appendChild(MakazeScriptStyles);
-}
-
-styleElem = document.getElementById('MakazeScriptStyles');
-
-if (styleElem.hasChildNodes()) {
-	styleElem.childNodes[0].nodeValue += '\n\n';
-} else {
-	styleElem.appendChild(document.createTextNode(''));
-}
-
-styleElem.childNodes[0].nodeValue +=
-	'#request-background {\n' +
-		'position: fixed;\n' +
-		'z-index: 9999998;\n' +
-		'top: 0px;\n' +
-		'left: 0px;\n' +
-		'opacity: 0.5;\n' +
-		'width: 100%;\n' +
-		'height: 100%;\n' +
-		'display: none;\n' +
-	'}\n\n' +
-
-	'.plaintextBBCodeRequest {\n' +
-		'z-index: 9999999;\n' +
-	'}\n\n' +
-
-	'.sp_BBCode_desc {\n' +
-		'color: #666 ! important;\n' +
-		'white-space: normal ! important;\n' +
-		'word-wrap: break-word;\n' +
-	'}\n\n' +
-
-	'.plaintextBBCode-dropdown {\n' +
-		'position: absolute;\n' +
-		'z-index: 9999;\n' +
-		'overflow-y: auto;\n' +
-		'background-color: #fff;\n' +
-		'border-top-left-radius: 0px;\n' +
-		'border-top-right-radius: 3px;\n' +
-		'border-bottom-right-radius: 3px;\n' +
-		'border-bottom-left-radius: 3px;\n' +
-		'border: 1px solid #aaa;\n' +
-		'color: #222;\n' +
-		'font-family: \'Helvetica Neue\', Arial, Verdana, sans-serif;\n' +
-		'display: none;\n' +
-	'}\n\n' +
-
-	'#font-dropdown {\n' +
-		'width: 300px;\n' +
-		'height: 170px;\n' +
-	'}\n\n' +
-
-	'#size-dropdown {\n' +
-		'width: 120px;\n' +
-		'height: 170px;\n' +
-	'}\n\n' +
-
-	'#color-dropdown {\n' +
-		'width: 154px;\n' +
-		'height: 134px;\n' +
-	'}\n\n' +
-
-	'.dropdown-link {\n' +
-		'padding: 2px;\n' +
-		'display: block;\n' +
-		'border: 1px solid #fff;\n' +
-		'color: inherit !important;\n' +
-		'text-decoration: none;\n' +
-		'overflow: hidden;\n' +
-		'text-overflow: ellipsis;\n' +
-	'}';
 
 function getBackgroundColor(elem) {
 	var bg;
@@ -2793,5 +2642,156 @@ var initBBCodeHandler = function(event) {
 };
 
 if (document.body.id === 'ipboard_body') {
+	Events.selector(document).add('keydown', 'plaintext_shortcuts', function(event) {
+		var element = event.target;
+
+		if (!element.className || !Classes.hasClass(element, 'cke_source')) {
+			return false;
+		}
+
+		if (!element.hasAttribute('data-shortcutsenabled')) {
+			removeListeners(element, function(element, removed) {
+				var postFormParent = element.parentNode,
+				inputs,
+				thisInput,
+				i = 0;
+
+				removed.setAttribute('data-shortcutsenabled', '');
+
+				Events.selector(removed).add('input propertychange', 'edit', function() {
+					element.value = removed.value;
+				}, false);
+
+				while (postFormParent.getElementsByClassName('input_submit')[0] == null && postFormParent.parentNode) {
+					postFormParent = postFormParent.parentNode;
+				}
+
+				inputs = postFormParent.getElementsByClassName('input_submit');
+
+				// On submits
+
+				var deleteCloneListener = function() {
+					var texts = postFormParent.getElementsByTagName('textarea'),
+					thisOne,
+					i = 0;
+
+					for (i = 0; i < texts.length; i++) {
+						thisOne = texts[i];
+						if (thisOne.hasAttribute('data-shortcutsenabled')) {
+							thisOne.remove();
+							break;
+						}
+					}
+
+					element.style.display = '';
+
+					Events.selector(this).remove('click', 'deleteClone', deleteCloneListener, false);
+				};
+
+				for (i = 0; i < inputs.length; i++) {
+					thisInput = inputs[i];
+					Events.selector(thisInput).add('click', 'deleteClone', deleteCloneListener, false);
+				}
+			}, false);
+		}
+
+		if (event.ctrlKey || event.metaKey) {
+			switch (event.keyCode) {
+				case 66:
+					event.preventDefault();
+					wrapText(element, '[b]', '[/b]');
+				break;
+				case 73:
+					event.preventDefault();
+					wrapText(element, '[i]', '[/i]');
+				break;
+				case 85:
+					event.preventDefault();
+					wrapText(element, '[u]', '[/u]');
+				break;
+			}
+		}
+	}, false);
+
+	// Styling
+
+	if (document.getElementById('MakazeScriptStyles') == null) {
+		MakazeScriptStyles = createElement('style', function(style) {
+			style.id = 'MakazeScriptStyles';
+			style.type = 'text/css';
+		});
+		document.head.appendChild(MakazeScriptStyles);
+	}
+
+	styleElem = document.getElementById('MakazeScriptStyles');
+
+	if (styleElem.hasChildNodes()) {
+		styleElem.childNodes[0].nodeValue += '\n\n';
+	} else {
+		styleElem.appendChild(document.createTextNode(''));
+	}
+
+	styleElem.childNodes[0].nodeValue +=
+		'#request-background {\n' +
+			'position: fixed;\n' +
+			'z-index: 9999998;\n' +
+			'top: 0px;\n' +
+			'left: 0px;\n' +
+			'opacity: 0.5;\n' +
+			'width: 100%;\n' +
+			'height: 100%;\n' +
+			'display: none;\n' +
+		'}\n\n' +
+
+		'.plaintextBBCodeRequest {\n' +
+			'z-index: 9999999;\n' +
+		'}\n\n' +
+
+		'.sp_BBCode_desc {\n' +
+			'color: #666 ! important;\n' +
+			'white-space: normal ! important;\n' +
+			'word-wrap: break-word;\n' +
+		'}\n\n' +
+
+		'.plaintextBBCode-dropdown {\n' +
+			'position: absolute;\n' +
+			'z-index: 9999;\n' +
+			'overflow-y: auto;\n' +
+			'background-color: #fff;\n' +
+			'border-top-left-radius: 0px;\n' +
+			'border-top-right-radius: 3px;\n' +
+			'border-bottom-right-radius: 3px;\n' +
+			'border-bottom-left-radius: 3px;\n' +
+			'border: 1px solid #aaa;\n' +
+			'color: #222;\n' +
+			'font-family: \'Helvetica Neue\', Arial, Verdana, sans-serif;\n' +
+			'display: none;\n' +
+		'}\n\n' +
+
+		'#font-dropdown {\n' +
+			'width: 300px;\n' +
+			'height: 170px;\n' +
+		'}\n\n' +
+
+		'#size-dropdown {\n' +
+			'width: 120px;\n' +
+			'height: 170px;\n' +
+		'}\n\n' +
+
+		'#color-dropdown {\n' +
+			'width: 154px;\n' +
+			'height: 134px;\n' +
+		'}\n\n' +
+
+		'.dropdown-link {\n' +
+			'padding: 2px;\n' +
+			'display: block;\n' +
+			'border: 1px solid #fff;\n' +
+			'color: inherit !important;\n' +
+			'text-decoration: none;\n' +
+			'overflow: hidden;\n' +
+			'text-overflow: ellipsis;\n' +
+		'}';
+
 	Events.selector(document).add('mouseover', 'initBBCode', initBBCodeHandler, false);
 }
