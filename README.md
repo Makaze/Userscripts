@@ -11,6 +11,7 @@ A collection of my client-side userscripts.
     * [`IP.Board_Custom_Avatars.user.js`](#ipboard_custom_avatarsuserjs)
     * [`IP.Board_Forum_Cleanup.user.js`](#ipboard_forum_cleanupuserjs)
     * [`IP.Board_Hide_Gender_in_Miniprofies.user.js`](#ipboard_hide_gender_in_miniprofiesuserjs)
+    * [`IP.Board_Hide_Ignored_Post_Notices.user.js`](#ipboard_hide_ignored_post_noticesuserjs)
     * [`IP.Board_Isolate_Posts_by_User.user.js`](#ipboard_isolate_posts_by_useruserjs-more)
     * [`IP.Board_Lockpick_Quotes.user.js`](#ipboard_lockpick_quotesuserjs)
     * [`IP.Board_Member_Nicknames.user.js`](#ipboard_member_nicknamesuserjs-more)
@@ -83,6 +84,10 @@ A collection of my client-side userscripts.
 #### `IP.Board_Hide_Gender_in_Miniprofies.user.js`  
 **Name**: IP.Board - Hide Gender in Miniprofiles  
 **Description**: IP.Board - Hide Gender in Miniprofiles  
+
+#### `IP.Board_Hide_Ignored_Post_Notices.user.js`  
+**Name**: IP.Board - Hide Ignored Post Notices
+**Description**: Hides notices that a post has been ignored in threads and thread summaries.
 
 #### `IP.Board_Isolate_Posts_by_User.user.js` [More](../../wiki/IP.Board:-Isolate-Posts-by-User "Wiki")  
 **Name**: IP.Board - Isolate Posts by User  
