@@ -4,7 +4,7 @@
 // @description	Adds a Queue button to avoid using the submission dropdown.
 // @include	*www.tumblr.com/*
 // @grant	none
-// @version	1.0.0
+// @version	1.0.1
 // ==/UserScript==
 
 function createElement(type, callback) {
@@ -182,9 +182,34 @@ function queueButtonHandler(event) {
 		return false;
 	}
 
-	console.log(context);
-
 	controls = context.getElementsByClassName('post-form--controls')[0].firstChild;
+
+	function addToQueue(event) {
+		if (event.keyCode !== 81 || !event.altKey) {
+			return false;
+		}
+
+		var dropButton = document.getElementById('queue-shortcut').parentNode.parentNode.nextSibling.getElementsByClassName('dropdown')[0],
+		context,
+		items,
+		item,
+		i = 0;
+
+		dropButton.click();
+
+		context = document.getElementsByClassName('popover--save-post-dropdown')[0];
+
+		for (i = 0, items = context.getElementsByClassName('item-option'); i < items.length; i++) {
+			item = items[i];
+			
+			if (item.hasAttribute('data-js-queue')) {
+				item.click();
+				break;
+			}
+		}
+
+		dropButton.previousSibling.click();
+	}
 
 	controls.insertBefore(createElement('div', function(queueButton) {
 		queueButton.className = 'queueButton control right';
@@ -193,6 +218,7 @@ function queueButtonHandler(event) {
 			chrome.style.marginRight = '5px';
 			chrome.appendChild(createElement('button', function(clickable) {
 				clickable.className = "flat-button blue caption create_post_button";
+				clickable.id = "queue-shortcut";
 				clickable.appendChild(document.createTextNode('Queue'));
 
 				clickable.onclick = function() {
@@ -220,6 +246,8 @@ function queueButtonHandler(event) {
 			}));
 		}));
 	}), controls.lastChild);
+
+	document.addEventListener('keydown', addToQueue, false);
 }
 
 document.addEventListener('mouseover', queueButtonHandler, false);
