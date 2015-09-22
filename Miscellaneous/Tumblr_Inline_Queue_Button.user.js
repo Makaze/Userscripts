@@ -189,6 +189,10 @@ function queueButtonHandler(event) {
 			return false;
 		}
 
+		if (document.getElementById('queue-shortcut') == null) {
+			return false;
+		}
+
 		var dropButton = document.getElementById('queue-shortcut').parentNode.parentNode.nextSibling.getElementsByClassName('dropdown')[0],
 		context,
 		items,
