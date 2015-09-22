@@ -4,7 +4,7 @@
 // @description	A feature-rich votal generator for Serenes Forest Mafia.
 // @include	*://serenesforest.net/forums/*
 // @grant	none
-// @version	1.0.0
+// @version	1.0.1
 // ==/UserScript==
 
 function createElement(type, callback) {
@@ -2069,7 +2069,7 @@ function VoteCounter() {
 										}
 									}
 
-									if (postNum > votes.history[votes.history.length - 1].post) {
+									if (!votes.history.length || postNum > votes.history[votes.history.length - 1].post) {
 										votes.history.push({ 'voter': playerName, 'vote': lynchee, 'post': postNum, 'url': postURL });
 									}
 									
