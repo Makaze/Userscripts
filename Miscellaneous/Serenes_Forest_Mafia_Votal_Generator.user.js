@@ -4,7 +4,7 @@
 // @description	A feature-rich votal generator for Serenes Forest Mafia.
 // @include	*://serenesforest.net/forums/*
 // @grant	none
-// @version	1.0.1
+// @version	1.0.2
 // ==/UserScript==
 
 function createElement(type, callback) {
@@ -2009,7 +2009,7 @@ function VoteCounter() {
 					postNum = jQuery(self).find('.post_id > a:first').text().trim(),
 					postContent = jQuery(self).find('.entry-content:first').text(),
 					unvote = postContent.match(/##Unvote/i),
-					vote = postContent.match(/##Vote:? .*?(?=jQuery|\n)/gi),
+					vote = postContent.match(/##Vote[ :]+.*?(?=$|\n)/gi),
 					trigger = postContent.match(/##Votal/i),
 					lastVote,
 					lynchee,
@@ -2033,7 +2033,7 @@ function VoteCounter() {
 							shownPower = (showVotePower) ? truePower : 1;
 
 							if (vote) {
-								lynchee = checkAlias(vote[vote.length - 1].split(/##Vote:? /i)[1].trim(), players).name;
+								lynchee = checkAlias(vote[vote.length - 1].split(/##Vote[ :]+/i)[1].trim(), players).name;
 								
 								if (lynchee !== false) {
 									if (lynchee !== lastVote) {
@@ -2089,7 +2089,7 @@ function VoteCounter() {
 
 									votes.recent[playerName] = { 'vote': lynchee, 'post': postNum, 'url': postURL };
 								} else {
-									votes.errors.push({ 'voter': playerName, 'vote': vote[vote.length - 1].split(/##Vote:? /i)[1].trim(), 'post': postNum, 'url': postURL });
+									votes.errors.push({ 'voter': playerName, 'vote': vote[vote.length - 1].split(/##Vote[ :]+/i)[1].trim(), 'post': postNum, 'url': postURL });
 								}
 							} else if (unvote) {
 								if (lastVote.length && votes.votals[lastVote] && lastVote !== 'Unvote') {
@@ -2172,6 +2172,10 @@ function VoteCounter() {
 					Votal(game, game.settings.order_method, endPhase, isHammer);
 					if (!debug_mode) {
 						jQuery('#submit_post', postFrame.contentWindow.document).click();
+					} else {
+						jQuery('html, body').animate({
+							scrollTop: jQuery('.cke_contents:first').offset().top
+						}, 300);
 					}
 					jQuery(notice).fadeOut('fast');
 					document.getElementById('VoteCounter_countdown').textContent = '0h0m';
