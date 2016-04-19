@@ -61,4 +61,6 @@ function main() {
 	}, 500);
 }
 
-runInJQuery(main.toString() + ';main();');
+if (document.body.id === 'ipboard_body') {
+	runInJQuery(main.toString() + ';main();');
+}
