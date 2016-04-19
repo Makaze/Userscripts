@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name	Serenes Forest - Change 'Favorite Fire Emblem' to 'Favorite FE' in Miniprofiles
+// @name	Serenes Forest - Hide 'Favourite Fire Emblem Game' in Miniprofile
 // @namespace	Makaze
 // @description	Like it says on the tin.
 // @include	http://*serenesforest.net/*
 // @grant	none
-// @version	1.0.2
+// @version	1.0.0
 // ==/UserScript==
 
 var i = 0,
