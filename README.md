@@ -20,6 +20,7 @@ A collection of my client-side userscripts.
     * [`IP.Board_Post_Loss_Prevention.user.js`](#ipboard_post_loss_preventionuserjs)
     * [`IP.Board_Post_Style.user.js`](#ipboard_post_styleuserjs-more)
     * [`IP.Board_Prevent_Video_Preload.user.js`](#ipboard_prevent_video_preloaduserjs)
+    * [`IP.Board_Quote_Search_Results.user.js`](#ipboard_quote_search_resultsuserjs)
     * [`IP.Board_True_Ignore.user.js`](#ipboard_true_ignoreuserjs)
   * [IP.Chat](#ipchat)
     * [`IP.Chat-Specific_Theme.user.js`](#ipchat-specific_themeuserjs)
@@ -121,6 +122,10 @@ A collection of my client-side userscripts.
 #### `IP.Board_Prevent_Video_Preload.user.js`  
 **Name**: IP.Board - Prevent Video Preload  
 **Description**: Prevents the browser from pre-downloading embedded videos.  
+
+#### `IP.Board_Quote_Search_Results.user.js`  
+**Name**: IP.Board - Quote Search Results 
+**Description**: Enables quoting posts from Search Results as MultiQuotes.  
 
 #### `IP.Board_True_Ignore.user.js`  
 **Name**: IP.Board - True Ignore  
