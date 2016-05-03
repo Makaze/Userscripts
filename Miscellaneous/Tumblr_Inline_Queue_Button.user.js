@@ -4,7 +4,7 @@
 // @description	Adds a Queue button to avoid using the submission dropdown.
 // @include	*www.tumblr.com/*
 // @grant	none
-// @version	1.0.1
+// @version	1.0.2
 // ==/UserScript==
 
 function createElement(type, callback) {
@@ -193,7 +193,7 @@ function queueButtonHandler(event) {
 			return false;
 		}
 
-		var dropButton = document.getElementById('queue-shortcut').parentNode.parentNode.nextSibling.getElementsByClassName('dropdown')[0],
+		var dropButton = document.getElementById('queue-shortcut').parentNode.parentNode.nextSibling.getElementsByClassName('dropdown-area')[0],
 		context,
 		items,
 		item,
@@ -226,7 +226,7 @@ function queueButtonHandler(event) {
 				clickable.appendChild(document.createTextNode('Queue'));
 
 				clickable.onclick = function() {
-					var dropButton = this.parentNode.parentNode.nextSibling.getElementsByClassName('dropdown')[0],
+					var dropButton = this.parentNode.parentNode.nextSibling.getElementsByClassName('dropdown-area')[0],
 					context,
 					items,
 					item,
