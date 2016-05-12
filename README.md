@@ -61,6 +61,7 @@ A collection of my client-side userscripts.
     * [`SF_Change_FE_in_Miniprofiles.user.js`](#sf_change_fe_in_miniprofilesuserjs)
     * [`SF_Mafia_Disable_Post_Editing.user.js`](#sf_mafia_disable_post_editinguserjs)
     * [`Serenes_Forest_Mafia_Votal_Generator.user.js`](#sernes_forest_mafia_votal_generatoruserjs)
+    * [`Serenes_Forest_Thread_Extractor.user.js`](#sernes_forest_thread_extractoruserjs)
     * [`Tumblr_Custom_Buttons.user.js`](#tumblr_custom_buttonsuserjs)
     * [`Tumblr_Custom_Shortcuts.user.js`](#tumblr_custom_shortcutsuserjs)
     * [`Tumblr_Inline_Queue_Button.user.js`](#tumblr_inline_queue_buttonuserjs)
@@ -281,6 +282,10 @@ Miscellaneous
 #### `Serenes_Forest_Mafia_Votal_Generator.user.js`  
 **Name**: Serenes Forest - Mafia Votal Generator  
 **Description**: A feature-rich votal generator for Serenes Forest Mafia.  
+
+#### `Serenes_Forest_Thread_Extractor.user.js`  
+**Name**: Serenes Forest - Thread Extractor  
+**Description**: Extracts threads as a sortable table.  
 
 #### `Tumblr_Custom_Buttons.user.js`  
 **Name**: Tumblr - Custom Buttons  
