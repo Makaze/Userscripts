@@ -4,7 +4,7 @@
 // @description	Adds BBCode button support to Plaintext editor mode.
 // @include	*
 // @grant	none
-// @version	5.0.3
+// @version	5.0.4
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -579,6 +579,7 @@ function selectRange(elem, start, end) {
 
 function wrapText(elementSelector, openTag, closeTag, contentField) {
 	var textArea = elementSelector,
+	startVal = textArea.value,
 	len = textArea.value.length,
 	start = textArea.selectionStart,
 	end = textArea.selectionEnd,
@@ -594,6 +595,9 @@ function wrapText(elementSelector, openTag, closeTag, contentField) {
 		paste.initTextEvent('textInput', true, true, null, replacement);
 		textArea.dispatchEvent(paste);
 	} else {
+		textArea.value = textArea.value.substring(0, start) + replacement + textArea.value.substring(end, len);
+	}
+	if (textArea.value == startVal) {
 		textArea.value = textArea.value.substring(0, start) + replacement + textArea.value.substring(end, len);
 	}
 	selectRange(textArea, start + openTag.length, start + replacement.length - closeTag.length);
