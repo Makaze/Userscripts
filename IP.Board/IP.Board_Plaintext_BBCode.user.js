@@ -579,25 +579,20 @@ function selectRange(elem, start, end) {
 
 function wrapText(elementSelector, openTag, closeTag, contentField) {
 	var textArea = elementSelector,
-	startVal = textArea.value,
 	len = textArea.value.length,
 	start = textArea.selectionStart,
 	end = textArea.selectionEnd,
 	selectedText = textArea.value.substring(start, end),
-	replacement,
-	paste = document.createEvent('TextEvent');
+	replacement;
 	if (contentField != null) {
 		replacement = openTag + contentField.value + closeTag;
 	} else {
 		replacement = openTag + selectedText + closeTag;
 	}
-	if (paste.initTextEvent) {
-		paste.initTextEvent('textInput', true, true, null, replacement);
-		textArea.dispatchEvent(paste);
+	if (document.execCommand) {
+		textArea.focus();
+		document.execCommand('insertText', false, replacement);
 	} else {
-		textArea.value = textArea.value.substring(0, start) + replacement + textArea.value.substring(end, len);
-	}
-	if (textArea.value == startVal) {
 		textArea.value = textArea.value.substring(0, start) + replacement + textArea.value.substring(end, len);
 	}
 	selectRange(textArea, start + openTag.length, start + replacement.length - closeTag.length);
