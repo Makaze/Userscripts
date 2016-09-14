@@ -4,7 +4,7 @@
 // @description	Adds BBCode buttons to Plaintext Mode on XenForo.
 // @include	*
 // @grant	none
-// @version	1.0.4
+// @version	1.0.5
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -115,18 +115,21 @@ function getSelection(elem) {
 	return selectedText;
 }
 
-function wrapText(elementSelector, openTag, closeTag) {
+function wrapText(elementSelector, openTag, closeTag, contentField) {
 	var textArea = elementSelector,
 	len = textArea.value.length,
 	start = textArea.selectionStart,
 	end = textArea.selectionEnd,
 	selectedText = textArea.value.substring(start, end),
-	replacement,
-	paste = document.createEvent('TextEvent');
-	replacement = openTag + selectedText + closeTag;
-	if (paste.initTextEvent) {
-		paste.initTextEvent('textInput', true, true, null, replacement);
-		textArea.dispatchEvent(paste);
+	replacement;
+	if (contentField != null) {
+		replacement = openTag + contentField.value + closeTag;
+	} else {
+		replacement = openTag + selectedText + closeTag;
+	}
+	if (document.execCommand) {
+		textArea.focus();
+		document.execCommand('insertText', false, replacement);
 	} else {
 		textArea.value = textArea.value.substring(0, start) + replacement + textArea.value.substring(end, len);
 	}
