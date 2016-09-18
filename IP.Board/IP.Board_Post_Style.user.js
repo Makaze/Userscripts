@@ -4,7 +4,7 @@
 // @description	Adds options to apply a predefined style to posts in a variety of ways.
 // @include	*
 // @grant	none
-// @version	1.0.5
+// @version	1.0.6
 // ==/UserScript==
 
 var opts,
@@ -155,11 +155,10 @@ function wrapText(elementSelector, openTag, closeTag) {
 	end = textArea.selectionEnd,
 	selectedText = textArea.value.substring(start, end),
 	replacement,
-	paste = document.createEvent('TextEvent');
 	replacement = openTag + selectedText + closeTag;
-	if (paste.initTextEvent) {
-		paste.initTextEvent('textInput', true, true, null, replacement);
-		textArea.dispatchEvent(paste);
+	if (document.execCommand) {
+		textArea.focus();
+		document.execCommand('insertText', false, replacement);
 	} else {
 		textArea.value = textArea.value.substring(0, start) + replacement + textArea.value.substring(end, len);
 	}
