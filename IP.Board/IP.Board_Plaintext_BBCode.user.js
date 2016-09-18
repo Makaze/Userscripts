@@ -579,6 +579,7 @@ function selectRange(elem, start, end) {
 
 function wrapText(elementSelector, openTag, closeTag, contentField) {
 	var textArea = elementSelector,
+	before = textArea.value,
 	len = textArea.value.length,
 	start = textArea.selectionStart,
 	end = textArea.selectionEnd,
@@ -593,6 +594,9 @@ function wrapText(elementSelector, openTag, closeTag, contentField) {
 		textArea.focus();
 		document.execCommand('insertText', false, replacement);
 	} else {
+		textArea.value = textArea.value.substring(0, start) + replacement + textArea.value.substring(end, len);
+	}
+	if (before === textArea.value) {
 		textArea.value = textArea.value.substring(0, start) + replacement + textArea.value.substring(end, len);
 	}
 	selectRange(textArea, start + openTag.length, start + replacement.length - closeTag.length);
