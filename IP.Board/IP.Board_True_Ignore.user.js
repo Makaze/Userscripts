@@ -37,7 +37,7 @@ function main() {
 	}).appendTo('body'),
 	blocked = [];
 
-	$block_content.load('/forums/index.php?/ignore/ #elIgnoredUsers"]', function() {
+	$block_content.load('/forums/index.php?/ignore/ #elIgnoredUsers', function() {
 		$block_content.find('li.ipsDataItem').each(function() {
 			if (jQuery(this).find('.ipsListInline li:first').text().indexOf('Post') > -1) {
 				blocked.push(jQuery(this).find('.ipsDataItem_title').text().trim());
