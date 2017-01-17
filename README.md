@@ -9,6 +9,7 @@ A collection of my client-side userscripts.
     * [`IP.Board_Auto-Save_Posts.user.js`](#ipboard_auto-save_postsuserjs-more)
     * [`IP.Board_Automatic_Notifications.user.js`](#ipboard_automatic_notificationsuserjs)
     * [`IP.Board_Custom_Avatars.user.js`](#ipboard_custom_avatarsuserjs)
+    * [`IP.Board_Expand_on_Click.user.js`](#ipboard_expand_on_clickuserjs)
     * [`IP.Board_Forum_Cleanup.user.js`](#ipboard_forum_cleanupuserjs)
     * [`IP.Board_Hide_Gender_in_Miniprofies.user.js`](#ipboard_hide_gender_in_miniprofiesuserjs)
     * [`IP.Board_Hide_Ignored_Post_Notices.user.js`](#ipboard_hide_ignored_post_noticesuserjs)
@@ -79,6 +80,10 @@ A collection of my client-side userscripts.
 #### `IP.Board_Custom_Avatars.user.js`  
 **Name**: IP.Board - Custom Avatars  
 **Description**: AAllows users to customise or remove avatars on their display on a user-by-user basis.  
+
+#### `IP.Board_Expand_on_Click.user.js`  
+**Name**: IP.Board - Expand on Click 
+**Description**: Makes Expanded view on Unread Content behave like Condensed view until items are clicked, revealing expanded content.  
 
 #### `IP.Board_Forum_Cleanup.user.js`  
 **Name**: IP.Board - Forum Cleanup  
