@@ -29,9 +29,30 @@ function runInJQuery(code) {
 }
 
 function main() {
-	jQuery('li.ipsStreamItem.ipsStreamItem_contentBlock.ipsStreamItem_expanded.ipsAreaBackground_reset.ipsPad .ipsStreamItem_snippet.ipsType_break').slideUp('fast');
+	// Styling
 
-	jQuery('li.ipsStreamItem.ipsStreamItem_contentBlock.ipsStreamItem_expanded.ipsAreaBackground_reset.ipsPad').on('click', function() {
+	if (document.getElementById('MakazeScriptStyles') == null) {
+		MakazeScriptStyles = createElement('style', function(style) {
+			style.id = 'MakazeScriptStyles';
+			style.type = 'text/css';
+		});
+		document.head.appendChild(MakazeScriptStyles);
+	}
+
+	styleElem = document.getElementById('MakazeScriptStyles');
+
+	if (styleElem.hasChildNodes()) {
+		styleElem.childNodes[0].nodeValue += '\n\n';
+	} else {
+		styleElem.appendChild(document.createTextNode(''));
+	}
+
+	styleElem.childNodes[0].nodeValue +=
+		'.ipsStream.ipsStream_withTimeline .ipsStreamItem_snippet.ipsType_break {\n' +
+			'display: none;\n' +
+		'}';
+
+	jQuery('.ipsStream.ipsStream_withTimeline').on('click', 'li.ipsStreamItem', function() {
 		jQuery(this).find('.ipsStreamItem_snippet.ipsType_break').slideToggle('fast');
 	});
 }
