@@ -51,11 +51,20 @@ function main() {
 	setInterval(function() {
 		var $quote,
 		$preview,
+		$notification,
 		i = 0;
 
 		for (i = 0; i < blocked.length; i++) {
 			$quote = jQuery('.ipsQuote[data-ipsquote-username="' + blocked[i] + '"]');
 			$quote.remove();
+
+			$preview = jQuery('cAuthorPane_author:contains("' + blocked[i] + '")').parents('article');
+			$preview.remove();
+
+			$notification = jQuery('#elFlashMessage:contains("' + blocked[i] + '")');
+			if ($notification.find('a[data-action="dismissFlashMessage"]').get(0) != null) {
+				$notification.find('a[data-action="dismissFlashMessage"]').get(0).click();
+			}
 		}
 	}, 500);
 }
