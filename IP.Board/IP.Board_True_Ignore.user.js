@@ -4,7 +4,7 @@
 // @description	Also blocks users' quotes and post previews when you have them on ignore.
 // @include	*
 // @grant	none
-// @version	1.0.1
+// @version	2.0.0
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -37,10 +37,10 @@ function main() {
 	}).appendTo('body'),
 	blocked = [];
 
-	$block_content.load('/forums/index.php?app=core&module=usercp&tab=core&area=ignoredusers&do=show&st= [summary="Ignore Preferences"]', function() {
-		$block_content.find('tr').each(function() {
-			if (jQuery(this).find('td.short:first').text().indexOf('Hide') > -1) {
-				blocked.push(jQuery(this).find('td:first strong:first').text().trim());
+	$block_content.load('/forums/index.php?/ignore/ #elIgnoredUsers"]', function() {
+		$block_content.find('li.ipsDataItem').each(function() {
+			if (jQuery(this).find('.ipsListInline li:first').text().indexOf('Post') > -1) {
+				blocked.push(jQuery(this).find('.ipsDataItem_title').text().trim());
 			}
 		});
 	});
@@ -51,34 +51,21 @@ function main() {
 		i = 0;
 
 		for (i = 0; i < blocked.length; i++) {
-			$quote = jQuery('.ipsBlockquote[data-author="' + blocked[i] + '"]');
-			$quote.prev('.citation').remove();
+			$quote = jQuery('.ipsQuote[data-ipsquote-username="' + blocked[i] + '"]');
 			$quote.remove();
-
-			$preview = jQuery('.preview_info .name').filter(function() {
-				return (jQuery(this).text().trim() == blocked[i]);
-			});
-			$preview.parents('.preview_col').prev().remove();
-			$preview.parents('.preview_col').remove();
 		}
 	}, 500);
 }
 
 function hidePreviews() {
-	var previewBlocks = document.getElementsByClassName('post_block topic_summary'),
-	post,
-	i = 0;
+	jQuery('.ipsComment_ignored').remove();
 
-	for (i = 0; i < previewBlocks.length; i++) {
-		post = previewBlocks[i].getElementsByClassName('post')[0].innerHTML;
-
-		if (post.indexOf('You have chosen to ignore all posts from:') == 0) {
-			previewBlocks[i].className += ' post_ignore';
-		}
-	}
+	setInterval(function() {
+		jQuery('.ipsComment_ignored').remove();
+	}, 500);
 }
 
-if (document.body.id === 'ipboard_body') {
+if (document.body.className.indexOf('ipsApp') > -1) {
 	// Styling
 
 	if (document.getElementById('MakazeScriptStyles') == null) {
@@ -102,7 +89,5 @@ if (document.body.id === 'ipboard_body') {
 			'display: none;\n' +
 		'}';
 
-	hidePreviews();
-
-	runInJQuery(main.toString() + ';main();');
+	runInJQuery(hidePreviews.toString() +  ';hidePreviews();' + main.toString() + ';main();');
 }
