@@ -19,6 +19,7 @@ A collection of my client-side userscripts.
     * [`IP.Board_Navigation_Shortcuts.user.js`](#ipboard_navigation_shortcutsuserjs-more)
     * [`IP.Board_Plaintext_BBCode.user.js`](#ipboard_plaintext_bbcodeuserjs-more)
     * [`IP.Board_Post_Loss_Prevention.user.js`](#ipboard_post_loss_preventionuserjs)
+    * [`IP.Board_Post_Numbers.user.js`](#ipboard_post_numbersuserjs)
     * [`IP.Board_Post_Style.user.js`](#ipboard_post_styleuserjs-more)
     * [`IP.Board_Prevent_Video_Preload.user.js`](#ipboard_prevent_video_preloaduserjs)
     * [`IP.Board_Quote_Search_Results.user.js`](#ipboard_quote_search_resultsuserjs)
@@ -121,6 +122,10 @@ A collection of my client-side userscripts.
 #### `IP.Board_Post_Loss_Prevention.user.js`
 **Name**: IP.Board Post Loss Prevention  
 **Description**: Force the browser to ask you before leaving a page with an unfinished post.  
+
+#### `IP.Board_Post_Loss_Prevention.user.js`
+**Name**: IP.Board - Post Numbers
+**Description**: Replaces the "Share post" icon with the post number.  
 
 #### `IP.Board_Post_Style.user.js` [More](../../wiki/IP.Board:-Post-Style "Wiki")  
 **Name**: IP.Board - Post Style  
