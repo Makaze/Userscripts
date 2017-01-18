@@ -107,5 +107,5 @@ if (document.body.className.indexOf('ipsApp') > -1) {
 			'display: none;\n' +
 		'}';
 
-	runInJQuery(hidePreviews.toString() +  ';hidePreviews();' + main.toString() + ';main();');
+	runInJQuery(createElement.toString() + hidePreviews.toString() +  ';hidePreviews();' + main.toString() + ';main();');
 }
