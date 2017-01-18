@@ -4,7 +4,7 @@
 // @description	Automatically adds a post template of your choice to the reply box.
 // @include	*
 // @grant	none
-// @version	1.0.1
+// @version	1.0.2
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -79,13 +79,15 @@ function main() {
 			'display: none;' +
 		'}';
 
-	jQuery('.ipsComposeArea_editor ul.ipsToolList').append('<li style="float:left;"><button type="button" class="ipsButton ipsButton_primary post_templates_button" tabindex="2" role="button" title="Click to edit the Post Template. Click again to save. Ctrl + click to erase your reply and apply the last saved template to the field.">Post Templates</button><div class="post_templates" contenteditable="">&lt;Edit HTML here.<div>Click Post Templates again to close this window and save.</div><div>Ctrl + click Post Templates to erase your reply and apply the last saved template to the field.&gt;</div></div></li>');
+	jQuery('.ipsComposeArea_editor ul.ipsToolList').append('<li style="float:left;"><button type="button" class="ipsButton ipsButton_primary post_templates_button" tabindex="2" role="button" title="Click to edit the Post Template. Click again to save. Ctrl + click to erase your reply and apply the last saved template to the field. Alt + click Post Templates to import the contents of the field to the HTML template editor.">Post Templates</button><div class="post_templates" contenteditable="">&lt;Edit HTML here.<div>Click Post Templates again to close this window and save.</div><div>Ctrl + click Post Templates to erase your reply and apply the last saved template to the field.</div><div>Alt + click Post Templates to import the contents of the field to the HTML template editor.&gt;</div></div></li>');
 
 	jQuery('.post_templates_button').on('click', function(event) {
 		$template = localStorage.getItem('ipb_RichPostTemplate');
 
-		if (event.ctrlKey) {
+		if (event.ctrlKey && !event.altKey) {
 			jQuery('.cke_wysiwyg_div').html($template);
+		} else if (event.altKey && !event.ctrlKey) {
+			jQuery('.post_templates').text(jQuery('.cke_wysiwyg_div').html());
 		} else if (jQuery('.post_templates').is(':visible')) {
 			localStorage.setItem('ipb_RichPostTemplate', jQuery('.post_templates').text());
 			jQuery('.post_templates').fadeOut('fast');
