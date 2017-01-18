@@ -102,5 +102,5 @@ function main() {
 }
 
 if (document.body.className.indexOf('ipsApp') > -1) {
-	runInJQuery(main.toString() + ';main();');
+	runInJQuery(createElement.toString() + main.toString() + ';main();');
 }
