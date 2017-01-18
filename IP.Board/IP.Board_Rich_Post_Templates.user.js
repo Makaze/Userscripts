@@ -73,7 +73,7 @@ function main() {
 			'display: none;' +
 		'}';
 
-	jQuery('.ipsComposeArea_editor ul.ipsToolList').append('<li><button type="button" class="ipsButton ipsButton_primary post_templates_button" tabindex="2" role="button" title="Click to edit the Post Template. Click again to save. Ctrl + click to erase your reply and apply the last saved template to the field.">Post Templates</button><div class="post_templates" contenteditable="">&lt;Edit HTML here.<div>Click Post Templates again to close this window and save.</div><div>Ctrl + click Post Templates to erase your reply and apply the last saved template to the field.&gt;</div></div></li>');
+	jQuery('.ipsComposeArea_editor ul.ipsToolList').append('<li style="float:left;"><button type="button" class="ipsButton ipsButton_primary post_templates_button" tabindex="2" role="button" title="Click to edit the Post Template. Click again to save. Ctrl + click to erase your reply and apply the last saved template to the field.">Post Templates</button><div class="post_templates" contenteditable="">&lt;Edit HTML here.<div>Click Post Templates again to close this window and save.</div><div>Ctrl + click Post Templates to erase your reply and apply the last saved template to the field.&gt;</div></div></li>');
 
 	jQuery('.post_templates_button').on('click', function(event) {
 		$template = localStorage.getItem('ipb_RichPostTemplate');
