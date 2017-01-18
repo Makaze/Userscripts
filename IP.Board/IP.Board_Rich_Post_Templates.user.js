@@ -93,8 +93,6 @@ function main() {
 	if ($template != null && $template.length) {
 		jQuery('.post_templates').text($template);
 	}
-	
-	jQuery('.cke_wysiwyg_div').html($template);
 }
 
 if (document.body.className.indexOf('ipsApp') > -1) {
