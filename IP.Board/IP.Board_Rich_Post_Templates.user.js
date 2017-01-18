@@ -33,7 +33,7 @@ function runInJQuery(code) {
 		}));
 	} else {
 		document.body.appendChild(createElement('script', function(content) {
-			content.appendChild(document.createTextNode('jQuery.noConflict();' + code));
+			content.appendChild(document.createTextNode(code));
 		}));
 	}
 }
