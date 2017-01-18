@@ -4,7 +4,7 @@
 // @description	Also blocks users' quotes and post previews when you have them on ignore.
 // @include	*
 // @grant	none
-// @version	2.0.0
+// @version	2.0.1
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -19,16 +19,22 @@ function createElement(type, callback) {
 }
 
 function runInJQuery(code) {
-	document.body.appendChild(createElement('script', function(jQ) {
-		jQ.type = 'text/javascript';
-		jQ.src = 'https://code.jquery.com/jquery-2.1.3.min.js';
+	if (typeof(jQuery) == "undefined") {
+		document.body.appendChild(createElement('script', function(jQ) {
+			jQ.type = 'text/javascript';
+			jQ.src = 'https://code.jquery.com/jquery-2.1.3.min.js';
 
-		jQ.onload = function() {
-			document.body.appendChild(createElement('script', function(content) {
-				content.appendChild(document.createTextNode('jQuery.noConflict();' + code));
-			}));
-		};
-	}));
+			jQ.onload = function() {
+				document.body.appendChild(createElement('script', function(content) {
+					content.appendChild(document.createTextNode('jQuery.noConflict();' + code));
+				}));
+			};
+		}));
+	} else {
+		document.body.appendChild(createElement('script', function(content) {
+			content.appendChild(document.createTextNode('jQuery.noConflict();' + code));
+		}));
+	}
 }
 
 function main() {
