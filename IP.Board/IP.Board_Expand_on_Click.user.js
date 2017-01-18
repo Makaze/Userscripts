@@ -7,6 +7,9 @@
 // @version	1.0.0
 // ==/UserScript==
 
+var MakazeScriptStyles,
+styleElem;
+
 function createElement(type, callback) {
 	var element = document.createElement(type);
 
