@@ -4,7 +4,7 @@
 // @description	Adds an optional customized Nickname field to the profiles of members of your choice. 
 // @include	*
 // @grant	none
-// @version	1.0.6
+// @version	2.0.0
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -46,7 +46,7 @@ function selectAll(el) {
 function editNick(event) {
 	var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
 	nicks = (opts.hasOwnProperty('ipb_member_nicknames')) ? opts.ipb_member_nicknames : [],
-	context = event.target.parentNode.parentNode,
+	context = event.target.parentNode.parentNode.parentNode.parentNode.parentNode,
 	user = event.target.getAttribute('data-userid'),
 	field,
 	edit = false,
@@ -62,7 +62,7 @@ function editNick(event) {
 	}
 	
 	if (context.getElementsByClassName('memberNickname')[0] == null) {
-		addNick({ 'nickname': '', 'user': user }, context.getElementsByClassName('author')[0]);
+		addNick({ 'nickname': '', 'user': user }, context.getElementsByClassName('cAuthorPane_author')[0]);
 	}
 	
 	field = context.getElementsByClassName('memberNickname')[0].getElementsByClassName('nickname')[0];
@@ -77,7 +77,7 @@ function editNick(event) {
 
 			var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
 			nicks = (opts.hasOwnProperty('ipb_member_nicknames')) ? opts.ipb_member_nicknames : [],
-			newNick = (event.target.childNodes[0] != null) ? event.target.textContent : '',
+			newNick = (event.target.childNodes[0] != null) ? event.target.innerHTML : '',
 			context,
 			userID,
 			appendLocation,
@@ -93,18 +93,18 @@ function editNick(event) {
 					nicks[index].nickname = newNick;
 
 					for (i = 0; i < document.getElementsByClassName('memberNickname_' + user).length; i++) {
-						document.getElementsByClassName('memberNickname_' + user)[i].getElementsByClassName('nickname')[0].childNodes[0].nodeValue = newNick;
+						document.getElementsByClassName('memberNickname_' + user)[i].getElementsByClassName('nickname')[0].innerHTML = newNick;
 					}
 				} else {
 					newNickObj = { 'user': user, 'nickname': newNick };
 
 					nicks.push(newNickObj);
 
-					for (i = 0; i < document.getElementsByClassName('author').length; i++) {
-						context = document.getElementsByClassName('author')[i];
+					for (i = 0; i < document.getElementsByClassName('cAuthorPane_author').length; i++) {
+						context = document.getElementsByClassName('cAuthorPane_author')[i];
 						if (context.parentNode.getElementsByClassName('memberNickname')[0] == null) {
 							if (context.getElementsByTagName('a')[0] != null) {
-								userID = context.getElementsByTagName('a')[0].href.match(/showuser=(\d+)/i)[1];
+								userID = context.getElementsByTagName('a')[0].href.match(/profile\/(\d+)/i)[1];
 								appendLocation = context;
 								
 								if (userID === newNickObj.user) {
@@ -143,18 +143,17 @@ function addNick(nickobj, context, specialClass) {
 		specialClass = '';
 	}
 
-	insertAfter(createElement('span', function(cont) {
+	context.appendChild(createElement('div', function(cont) {
 		cont.className = specialClass + 'memberNickname memberNickname_' + nickobj.user;
-		cont.appendChild(document.createTextNode(' / '));
 
 		cont.appendChild(createElement('span', function(field) {
 			field.className = 'nickname';
-			field.appendChild(document.createTextNode(nickobj.nickname));
+			field.innerHTML = nickobj.nickname;
 		}));
-	}), context);
+	}));
 }
 
-if (document.body.id === 'ipboard_body') {
+if (document.body.className.indexOf('ipsApp') > -1) {
 	// Styling
 
 	if (document.getElementById('MakazeScriptStyles') == null) {
@@ -174,6 +173,12 @@ if (document.body.id === 'ipboard_body') {
 	}
 
 	styleElem.childNodes[0].nodeValue +=
+		'.memberNickname {\n' +
+			'font-size: 60%;\n' +
+			'font-weight: bold;\n' +
+			'color: #525252;\n' +
+		'}\n\n' +
+
 		'.nickname {\n' +
 			'min-height: 1px;\n' +
 			'min-width: 1px;\n' +
@@ -181,8 +186,8 @@ if (document.body.id === 'ipboard_body') {
 		'}';
 
 	var nickButton = function() {
-		return createElement('span', function(cont) {
-			cont.className = 'right ipsType_small desc blend_links';
+		return createElement('p', function(cont) {
+			cont.className = 'ipsPos_right ipsType_reset ipsType_blendLinks ipsFaded ipsFaded_more';
 			cont.style.marginRight = '7px';
 			cont.appendChild(createElement('a', function(link) {
 				link.title = 'Edit this user\'s Nickname';
@@ -196,17 +201,17 @@ if (document.body.id === 'ipboard_body') {
 		});
 	};
 
-	if (document.getElementsByClassName('author')[0] != null) {
+	if (document.getElementsByClassName('cAuthorPane_author')[0] != null) {
 		opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {};
 		nicks = (opts.hasOwnProperty('ipb_member_nicknames')) ? opts.ipb_member_nicknames : [];
 
-		for (i = 0; i < document.getElementsByClassName('author').length; i++) {
-			context = document.getElementsByClassName('author')[i];
+		for (i = 0; i < document.getElementsByClassName('cAuthorPane_author').length; i++) {
+			context = document.getElementsByClassName('cAuthorPane_author')[i];
 			if (context.getElementsByTagName('a')[0] != null) {
-				userID = context.getElementsByTagName('a')[0].href.match(/showuser=(\d+)/i)[1];
+				userID = context.getElementsByTagName('a')[0].href.match(/profile\/(\d+)/i)[1];
 				appendLocation = context;
 
-				context.parentNode.appendChild(nickButton());
+				context.parentNode.parentNode.getElementsByClassName('ipsComment_meta')[0].insertBefore(nickButton(), context.parentNode.parentNode.getElementsByClassName('ipsComment_meta')[0].lastChild.previousSibling);
 
 				if (nicks.length) {
 					for (j = 0; j < nicks.length; j++) {
