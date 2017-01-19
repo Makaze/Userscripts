@@ -4,7 +4,7 @@
 // @description	Allows users to customise or remove avatars on their display on a user-by-user basis.
 // @include	*
 // @grant	none
-// @version	1.0.0
+// @version	2.0.0
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -137,12 +137,12 @@ function getRadioValue(name) {
 function loadAvatars() {
 	var opts = (localStorage.getItem('MakazeScriptOptions')) ? JSON.parse(localStorage.getItem('MakazeScriptOptions')) : {},
 	customAvatars = (opts.hasOwnProperty('ipb_custom_avatars')) ? opts.ipb_custom_avatars : {},
-	avatars = document.getElementsByClassName('ipsUserPhotoLink'),
+	avatars = document.getElementsByClassName('cAuthorPane_photo'),
 	userid,
 	i = 0;
 
 	for (i = 0; i < avatars.length; i++) {
-		userid = avatars[i].href.match(/showuser=(\d+)/i)[1];
+		userid = avatars[i].getElementsByClassName('ipsUserPhoto')[0].href.match(/profile\/(\d+)/i)[1];
 
 		if (customAvatars.hasOwnProperty(userid)) {
 			switch (customAvatars[userid]) {
@@ -245,7 +245,7 @@ function addButton(user) {
 			popup.appendChild(createElement('div', function(right) {
 				right.style.textAlign = 'right';
 				right.appendChild(createElement('input', function(submit) {
-					submit.type = 'submit';
+					submit.type = 'button';
 					submit.className = 'input_submit';
 					submit.value = 'Okay';
 
@@ -274,7 +274,7 @@ function addButton(user) {
 	});
 }
 
-if (document.body.id === 'ipboard_body') {
+if (document.body.className.indexOf('ipsApp') > -1) {
 	// Styling
 
 	if (document.getElementById('MakazeScriptStyles') == null) {
@@ -316,17 +316,17 @@ if (document.body.id === 'ipboard_body') {
 			'text-align: left;\n' +
 		'}';
 
-	if (document.getElementsByClassName('ipsUserPhotoLink')[0] != null) {
+	if (document.getElementsByClassName('cAuthorPane_photo')[0] != null) {
 		loadAvatars();
 	}
 
 	if (document.getElementById('profile_photo') != null) {
-		userID = location.href.match(/showuser=(\d+)/i)[1];
-		document.getElementById('profile_photo').parentNode.appendChild(addButton(userID));
+		userID = location.href.match(/profile\/(\d+)/i)[1];
+		document.getElementById('elProfilePhoto').parentNode.appendChild(addButton(userID));
 	}
 
-	for (i = 0, avatars = document.getElementsByClassName('avatar'); i < avatars.length; i++) {
-		userID = avatars[i].getElementsByClassName('ipsUserPhotoLink')[0].href.match(/showuser=(\d+)/i)[1];
+	for (i = 0, avatars = document.getElementsByClassName('cAuthorPane_photo'); i < avatars.length; i++) {
+		userID = avatars[i].getElementsByClassName('ipsUserPhoto')[0].href.match(/profile\/(\d+)/i)[1];
 		avatars[i].appendChild(addButton(userID));
 	}
 }
