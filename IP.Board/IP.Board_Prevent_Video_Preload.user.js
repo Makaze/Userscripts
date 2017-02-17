@@ -85,18 +85,16 @@ if (document.body.className.indexOf('ipsApp') > -1) {
 		'}';
 
 	for (i = 0; i < document.getElementsByClassName('ipsEmbeddedVideo').length; i++) {
-		if (!document.getElementsByClassName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0].hasAttribute('data-src')) {
+		if (document.getElementsByClassName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0] != null && !document.getElementsByClassName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0].hasAttribute('data-src')) {
 			replaceVideo(document.getElementsByClassName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0]);
 		}
 	}
 
-	document.addEventListener('DOMNodeInserted', function(event) {
-		var vids = event.target.parentNode.getElementsByTagName('iframe');
-
-		for (i = 0; i < vids.length; i++) {
-			if (vids[i].className === 'EmbeddedVideo' && !vids[i].hasAttribute('data-src')) {
-				replaceVideo(vids[i]);
+	var timer = setInterval(function() {
+		for (i = 0; i < document.getElementsByClassName('ipsEmbeddedVideo').length; i++) {
+			if (document.getElementsByClassName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0] != null && !document.getElementsByClassName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0].hasAttribute('data-src')) {
+				replaceVideo(document.getElementsByClassName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0]);
 			}
 		}
-	}, false);
+	}, 500);
 }
