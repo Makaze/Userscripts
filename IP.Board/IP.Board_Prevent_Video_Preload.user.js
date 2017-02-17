@@ -85,8 +85,8 @@ if (document.body.className.indexOf('ipsApp') > -1) {
 		'}';
 
 	for (i = 0; i < document.getElementsByClassName('ipsEmbeddedVideo').length; i++) {
-		if (!document.getElementsByTagName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0].hasAttribute('data-src')) {
-			replaceVideo(document.getElementsByTagName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0]);
+		if (!document.getElementsByClassName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0].hasAttribute('data-src')) {
+			replaceVideo(document.getElementsByClassName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0]);
 		}
 	}
 
