@@ -84,9 +84,9 @@ if (document.body.className.indexOf('ipsApp') > -1) {
 			'text-shadow: 0px 1px #444;\n' +
 		'}';
 
-	for (i = 0; i < document.getElementsByTagName('iframe').length; i++) {
-		if (document.getElementsByTagName('iframe')[i].className === 'EmbeddedVideo' && !document.getElementsByTagName('iframe')[i].hasAttribute('data-src')) {
-			replaceVideo(document.getElementsByTagName('iframe')[i]);
+	for (i = 0; i < document.getElementsByClassName('ipsEmbeddedVideo').length; i++) {
+		if (!document.getElementsByTagName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0].hasAttribute('data-src')) {
+			replaceVideo(document.getElementsByTagName('ipsEmbeddedVideo')[i].getElementsByTagName('iframe')[0]);
 		}
 	}
 
