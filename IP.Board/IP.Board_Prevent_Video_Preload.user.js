@@ -4,7 +4,7 @@
 // @description	Prevents the browser from pre-downloading embedded videos. 
 // @include	*
 // @grant	none
-// @version	1.0.1
+// @version	2.0.0
 // ==/UserScript==
 
 var MakazeScriptStyles,
@@ -50,7 +50,7 @@ function replaceVideo(vid) {
 }
 
 
-if (document.body.id === 'ipboard_body') {
+if (document.body.className.indexOf('ipsApp') > -1) {
 	// Styling
 
 	if (document.getElementById('MakazeScriptStyles') == null) {
