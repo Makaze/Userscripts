@@ -74,6 +74,7 @@ if (document.body.className.indexOf('ipsApp') > -1) {
 			'padding: 5px;\n' +
 			'background-color: #f8f8f8;\n' +
 			'border-radius: 3px;\n' +
+			'text-decoration: none ! important;\n' +
 		'}\n\n' +
 
 		'.EmbeddedIcon {\n' +
